@@ -1,0 +1,1328 @@
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"stage_rotor.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.stage_1,"ax",%progbits
+  20              		.align	2
+  21              		.global	stage_1
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	stage_1, %function
+  25              	stage_1:
+  26              	.LFB34:
+  27              		.file 1 "stage_rotor.c"
+   1:stage_rotor.c **** #include "lab.h"
+   2:stage_rotor.c **** 
+   3:stage_rotor.c **** void stage_1(void){
+  28              		.loc 1 3 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+   4:stage_rotor.c ****         Pin_1_Write(1);
+  36              		.loc 1 4 0
+  37 0002 0120     		movs	r0, #1
+  38 0004 FFF7FEFF 		bl	Pin_1_Write
+  39              	.LVL0:
+   5:stage_rotor.c ****         Pin_2_Write(1);
+  40              		.loc 1 5 0
+  41 0008 0120     		movs	r0, #1
+  42 000a FFF7FEFF 		bl	Pin_2_Write
+  43              	.LVL1:
+   6:stage_rotor.c ****         Pin_3_Write(0);
+  44              		.loc 1 6 0
+  45 000e 0020     		movs	r0, #0
+  46 0010 FFF7FEFF 		bl	Pin_3_Write
+  47              	.LVL2:
+   7:stage_rotor.c ****         Pin_4_Write(0);    
+  48              		.loc 1 7 0
+  49 0014 0020     		movs	r0, #0
+  50 0016 FFF7FEFF 		bl	Pin_4_Write
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 2
+
+
+  51              	.LVL3:
+   8:stage_rotor.c **** }
+  52              		.loc 1 8 0
+  53              		@ sp needed
+  54 001a 10BD     		pop	{r4, pc}
+  55              		.cfi_endproc
+  56              	.LFE34:
+  57              		.size	stage_1, .-stage_1
+  58              		.section	.text.stage_2,"ax",%progbits
+  59              		.align	2
+  60              		.global	stage_2
+  61              		.code	16
+  62              		.thumb_func
+  63              		.type	stage_2, %function
+  64              	stage_2:
+  65              	.LFB35:
+   9:stage_rotor.c **** 
+  10:stage_rotor.c **** void stage_2(void){
+  66              		.loc 1 10 0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 0
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70 0000 10B5     		push	{r4, lr}
+  71              		.cfi_def_cfa_offset 8
+  72              		.cfi_offset 4, -8
+  73              		.cfi_offset 14, -4
+  11:stage_rotor.c ****         Pin_1_Write(0);
+  74              		.loc 1 11 0
+  75 0002 0020     		movs	r0, #0
+  76 0004 FFF7FEFF 		bl	Pin_1_Write
+  77              	.LVL4:
+  12:stage_rotor.c ****         Pin_2_Write(1);
+  78              		.loc 1 12 0
+  79 0008 0120     		movs	r0, #1
+  80 000a FFF7FEFF 		bl	Pin_2_Write
+  81              	.LVL5:
+  13:stage_rotor.c ****         Pin_3_Write(0);
+  82              		.loc 1 13 0
+  83 000e 0020     		movs	r0, #0
+  84 0010 FFF7FEFF 		bl	Pin_3_Write
+  85              	.LVL6:
+  14:stage_rotor.c ****         Pin_4_Write(0);    
+  86              		.loc 1 14 0
+  87 0014 0020     		movs	r0, #0
+  88 0016 FFF7FEFF 		bl	Pin_4_Write
+  89              	.LVL7:
+  15:stage_rotor.c **** }
+  90              		.loc 1 15 0
+  91              		@ sp needed
+  92 001a 10BD     		pop	{r4, pc}
+  93              		.cfi_endproc
+  94              	.LFE35:
+  95              		.size	stage_2, .-stage_2
+  96              		.section	.text.stage_3,"ax",%progbits
+  97              		.align	2
+  98              		.global	stage_3
+  99              		.code	16
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 3
+
+
+ 100              		.thumb_func
+ 101              		.type	stage_3, %function
+ 102              	stage_3:
+ 103              	.LFB36:
+  16:stage_rotor.c **** 
+  17:stage_rotor.c **** void stage_3(void){
+ 104              		.loc 1 17 0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108 0000 10B5     		push	{r4, lr}
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 4, -8
+ 111              		.cfi_offset 14, -4
+  18:stage_rotor.c ****         Pin_1_Write(0);
+ 112              		.loc 1 18 0
+ 113 0002 0020     		movs	r0, #0
+ 114 0004 FFF7FEFF 		bl	Pin_1_Write
+ 115              	.LVL8:
+  19:stage_rotor.c ****         Pin_2_Write(1);
+ 116              		.loc 1 19 0
+ 117 0008 0120     		movs	r0, #1
+ 118 000a FFF7FEFF 		bl	Pin_2_Write
+ 119              	.LVL9:
+  20:stage_rotor.c ****         Pin_3_Write(1);
+ 120              		.loc 1 20 0
+ 121 000e 0120     		movs	r0, #1
+ 122 0010 FFF7FEFF 		bl	Pin_3_Write
+ 123              	.LVL10:
+  21:stage_rotor.c ****         Pin_4_Write(0);    
+ 124              		.loc 1 21 0
+ 125 0014 0020     		movs	r0, #0
+ 126 0016 FFF7FEFF 		bl	Pin_4_Write
+ 127              	.LVL11:
+  22:stage_rotor.c **** }
+ 128              		.loc 1 22 0
+ 129              		@ sp needed
+ 130 001a 10BD     		pop	{r4, pc}
+ 131              		.cfi_endproc
+ 132              	.LFE36:
+ 133              		.size	stage_3, .-stage_3
+ 134              		.section	.text.stage_4,"ax",%progbits
+ 135              		.align	2
+ 136              		.global	stage_4
+ 137              		.code	16
+ 138              		.thumb_func
+ 139              		.type	stage_4, %function
+ 140              	stage_4:
+ 141              	.LFB37:
+  23:stage_rotor.c **** 
+  24:stage_rotor.c **** void stage_4(void){
+ 142              		.loc 1 24 0
+ 143              		.cfi_startproc
+ 144              		@ args = 0, pretend = 0, frame = 0
+ 145              		@ frame_needed = 0, uses_anonymous_args = 0
+ 146 0000 10B5     		push	{r4, lr}
+ 147              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 4
+
+
+ 148              		.cfi_offset 4, -8
+ 149              		.cfi_offset 14, -4
+  25:stage_rotor.c ****         Pin_1_Write(0);
+ 150              		.loc 1 25 0
+ 151 0002 0020     		movs	r0, #0
+ 152 0004 FFF7FEFF 		bl	Pin_1_Write
+ 153              	.LVL12:
+  26:stage_rotor.c ****         Pin_2_Write(0);
+ 154              		.loc 1 26 0
+ 155 0008 0020     		movs	r0, #0
+ 156 000a FFF7FEFF 		bl	Pin_2_Write
+ 157              	.LVL13:
+  27:stage_rotor.c ****         Pin_3_Write(1);
+ 158              		.loc 1 27 0
+ 159 000e 0120     		movs	r0, #1
+ 160 0010 FFF7FEFF 		bl	Pin_3_Write
+ 161              	.LVL14:
+  28:stage_rotor.c ****         Pin_4_Write(0);    
+ 162              		.loc 1 28 0
+ 163 0014 0020     		movs	r0, #0
+ 164 0016 FFF7FEFF 		bl	Pin_4_Write
+ 165              	.LVL15:
+  29:stage_rotor.c **** }
+ 166              		.loc 1 29 0
+ 167              		@ sp needed
+ 168 001a 10BD     		pop	{r4, pc}
+ 169              		.cfi_endproc
+ 170              	.LFE37:
+ 171              		.size	stage_4, .-stage_4
+ 172              		.section	.text.stage_5,"ax",%progbits
+ 173              		.align	2
+ 174              		.global	stage_5
+ 175              		.code	16
+ 176              		.thumb_func
+ 177              		.type	stage_5, %function
+ 178              	stage_5:
+ 179              	.LFB38:
+  30:stage_rotor.c **** 
+  31:stage_rotor.c **** void stage_5(void){
+ 180              		.loc 1 31 0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+ 184 0000 10B5     		push	{r4, lr}
+ 185              		.cfi_def_cfa_offset 8
+ 186              		.cfi_offset 4, -8
+ 187              		.cfi_offset 14, -4
+  32:stage_rotor.c ****         Pin_1_Write(0);
+ 188              		.loc 1 32 0
+ 189 0002 0020     		movs	r0, #0
+ 190 0004 FFF7FEFF 		bl	Pin_1_Write
+ 191              	.LVL16:
+  33:stage_rotor.c ****         Pin_2_Write(0);
+ 192              		.loc 1 33 0
+ 193 0008 0020     		movs	r0, #0
+ 194 000a FFF7FEFF 		bl	Pin_2_Write
+ 195              	.LVL17:
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 5
+
+
+  34:stage_rotor.c ****         Pin_3_Write(1);
+ 196              		.loc 1 34 0
+ 197 000e 0120     		movs	r0, #1
+ 198 0010 FFF7FEFF 		bl	Pin_3_Write
+ 199              	.LVL18:
+  35:stage_rotor.c ****         Pin_4_Write(1);    
+ 200              		.loc 1 35 0
+ 201 0014 0120     		movs	r0, #1
+ 202 0016 FFF7FEFF 		bl	Pin_4_Write
+ 203              	.LVL19:
+  36:stage_rotor.c **** }
+ 204              		.loc 1 36 0
+ 205              		@ sp needed
+ 206 001a 10BD     		pop	{r4, pc}
+ 207              		.cfi_endproc
+ 208              	.LFE38:
+ 209              		.size	stage_5, .-stage_5
+ 210              		.section	.text.stage_6,"ax",%progbits
+ 211              		.align	2
+ 212              		.global	stage_6
+ 213              		.code	16
+ 214              		.thumb_func
+ 215              		.type	stage_6, %function
+ 216              	stage_6:
+ 217              	.LFB39:
+  37:stage_rotor.c **** 
+  38:stage_rotor.c **** void stage_6(void){
+ 218              		.loc 1 38 0
+ 219              		.cfi_startproc
+ 220              		@ args = 0, pretend = 0, frame = 0
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222 0000 10B5     		push	{r4, lr}
+ 223              		.cfi_def_cfa_offset 8
+ 224              		.cfi_offset 4, -8
+ 225              		.cfi_offset 14, -4
+  39:stage_rotor.c ****         Pin_1_Write(0);
+ 226              		.loc 1 39 0
+ 227 0002 0020     		movs	r0, #0
+ 228 0004 FFF7FEFF 		bl	Pin_1_Write
+ 229              	.LVL20:
+  40:stage_rotor.c ****         Pin_2_Write(0);
+ 230              		.loc 1 40 0
+ 231 0008 0020     		movs	r0, #0
+ 232 000a FFF7FEFF 		bl	Pin_2_Write
+ 233              	.LVL21:
+  41:stage_rotor.c ****         Pin_3_Write(0);
+ 234              		.loc 1 41 0
+ 235 000e 0020     		movs	r0, #0
+ 236 0010 FFF7FEFF 		bl	Pin_3_Write
+ 237              	.LVL22:
+  42:stage_rotor.c ****         Pin_4_Write(1);    
+ 238              		.loc 1 42 0
+ 239 0014 0120     		movs	r0, #1
+ 240 0016 FFF7FEFF 		bl	Pin_4_Write
+ 241              	.LVL23:
+  43:stage_rotor.c **** }
+ 242              		.loc 1 43 0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 6
+
+
+ 243              		@ sp needed
+ 244 001a 10BD     		pop	{r4, pc}
+ 245              		.cfi_endproc
+ 246              	.LFE39:
+ 247              		.size	stage_6, .-stage_6
+ 248              		.section	.text.stage_7,"ax",%progbits
+ 249              		.align	2
+ 250              		.global	stage_7
+ 251              		.code	16
+ 252              		.thumb_func
+ 253              		.type	stage_7, %function
+ 254              	stage_7:
+ 255              	.LFB40:
+  44:stage_rotor.c **** 
+  45:stage_rotor.c **** void stage_7(void){
+ 256              		.loc 1 45 0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260 0000 10B5     		push	{r4, lr}
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 4, -8
+ 263              		.cfi_offset 14, -4
+  46:stage_rotor.c ****         Pin_1_Write(1);
+ 264              		.loc 1 46 0
+ 265 0002 0120     		movs	r0, #1
+ 266 0004 FFF7FEFF 		bl	Pin_1_Write
+ 267              	.LVL24:
+  47:stage_rotor.c ****         Pin_2_Write(0);
+ 268              		.loc 1 47 0
+ 269 0008 0020     		movs	r0, #0
+ 270 000a FFF7FEFF 		bl	Pin_2_Write
+ 271              	.LVL25:
+  48:stage_rotor.c ****         Pin_3_Write(0);
+ 272              		.loc 1 48 0
+ 273 000e 0020     		movs	r0, #0
+ 274 0010 FFF7FEFF 		bl	Pin_3_Write
+ 275              	.LVL26:
+  49:stage_rotor.c ****         Pin_4_Write(1);    
+ 276              		.loc 1 49 0
+ 277 0014 0120     		movs	r0, #1
+ 278 0016 FFF7FEFF 		bl	Pin_4_Write
+ 279              	.LVL27:
+  50:stage_rotor.c **** }
+ 280              		.loc 1 50 0
+ 281              		@ sp needed
+ 282 001a 10BD     		pop	{r4, pc}
+ 283              		.cfi_endproc
+ 284              	.LFE40:
+ 285              		.size	stage_7, .-stage_7
+ 286              		.section	.text.stage_8,"ax",%progbits
+ 287              		.align	2
+ 288              		.global	stage_8
+ 289              		.code	16
+ 290              		.thumb_func
+ 291              		.type	stage_8, %function
+ 292              	stage_8:
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 7
+
+
+ 293              	.LFB41:
+  51:stage_rotor.c **** 
+  52:stage_rotor.c **** void stage_8(void){
+ 294              		.loc 1 52 0
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 0
+ 297              		@ frame_needed = 0, uses_anonymous_args = 0
+ 298 0000 10B5     		push	{r4, lr}
+ 299              		.cfi_def_cfa_offset 8
+ 300              		.cfi_offset 4, -8
+ 301              		.cfi_offset 14, -4
+  53:stage_rotor.c ****         Pin_1_Write(1);
+ 302              		.loc 1 53 0
+ 303 0002 0120     		movs	r0, #1
+ 304 0004 FFF7FEFF 		bl	Pin_1_Write
+ 305              	.LVL28:
+  54:stage_rotor.c ****         Pin_2_Write(0);
+ 306              		.loc 1 54 0
+ 307 0008 0020     		movs	r0, #0
+ 308 000a FFF7FEFF 		bl	Pin_2_Write
+ 309              	.LVL29:
+  55:stage_rotor.c ****         Pin_3_Write(0);
+ 310              		.loc 1 55 0
+ 311 000e 0020     		movs	r0, #0
+ 312 0010 FFF7FEFF 		bl	Pin_3_Write
+ 313              	.LVL30:
+  56:stage_rotor.c ****         Pin_4_Write(0);    
+ 314              		.loc 1 56 0
+ 315 0014 0020     		movs	r0, #0
+ 316 0016 FFF7FEFF 		bl	Pin_4_Write
+ 317              	.LVL31:
+  57:stage_rotor.c **** }
+ 318              		.loc 1 57 0
+ 319              		@ sp needed
+ 320 001a 10BD     		pop	{r4, pc}
+ 321              		.cfi_endproc
+ 322              	.LFE41:
+ 323              		.size	stage_8, .-stage_8
+ 324              		.global	stage_list
+ 325              		.data
+ 326              		.align	2
+ 327              		.type	stage_list, %object
+ 328              		.size	stage_list, 32
+ 329              	stage_list:
+ 330 0000 00000000 		.word	stage_1
+ 331 0004 00000000 		.word	stage_2
+ 332 0008 00000000 		.word	stage_3
+ 333 000c 00000000 		.word	stage_4
+ 334 0010 00000000 		.word	stage_5
+ 335 0014 00000000 		.word	stage_6
+ 336 0018 00000000 		.word	stage_7
+ 337 001c 00000000 		.word	stage_8
+ 338              		.text
+ 339              	.Letext0:
+ 340              		.file 2 "Generated_Source\\PSoC4/Pin_1.h"
+ 341              		.file 3 "Generated_Source\\PSoC4/Pin_2.h"
+ 342              		.file 4 "Generated_Source\\PSoC4/Pin_3.h"
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 8
+
+
+ 343              		.file 5 "Generated_Source\\PSoC4/Pin_4.h"
+ 344              		.section	.debug_info,"",%progbits
+ 345              	.Ldebug_info0:
+ 346 0000 CF030000 		.4byte	0x3cf
+ 347 0004 0400     		.2byte	0x4
+ 348 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 349 000a 04       		.byte	0x4
+ 350 000b 01       		.uleb128 0x1
+ 351 000c E1000000 		.4byte	.LASF26
+ 352 0010 0C       		.byte	0xc
+ 353 0011 A8000000 		.4byte	.LASF27
+ 354 0015 6F010000 		.4byte	.LASF28
+ 355 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 356 001d 00000000 		.4byte	0
+ 357 0021 00000000 		.4byte	.Ldebug_line0
+ 358 0025 02       		.uleb128 0x2
+ 359 0026 01       		.byte	0x1
+ 360 0027 06       		.byte	0x6
+ 361 0028 CD010000 		.4byte	.LASF0
+ 362 002c 02       		.uleb128 0x2
+ 363 002d 01       		.byte	0x1
+ 364 002e 08       		.byte	0x8
+ 365 002f 69000000 		.4byte	.LASF1
+ 366 0033 02       		.uleb128 0x2
+ 367 0034 02       		.byte	0x2
+ 368 0035 05       		.byte	0x5
+ 369 0036 AE010000 		.4byte	.LASF2
+ 370 003a 02       		.uleb128 0x2
+ 371 003b 02       		.byte	0x2
+ 372 003c 07       		.byte	0x7
+ 373 003d 89000000 		.4byte	.LASF3
+ 374 0041 02       		.uleb128 0x2
+ 375 0042 04       		.byte	0x4
+ 376 0043 05       		.byte	0x5
+ 377 0044 B8010000 		.4byte	.LASF4
+ 378 0048 02       		.uleb128 0x2
+ 379 0049 04       		.byte	0x4
+ 380 004a 07       		.byte	0x7
+ 381 004b 77000000 		.4byte	.LASF5
+ 382 004f 02       		.uleb128 0x2
+ 383 0050 08       		.byte	0x8
+ 384 0051 05       		.byte	0x5
+ 385 0052 9B010000 		.4byte	.LASF6
+ 386 0056 02       		.uleb128 0x2
+ 387 0057 08       		.byte	0x8
+ 388 0058 07       		.byte	0x7
+ 389 0059 CA000000 		.4byte	.LASF7
+ 390 005d 03       		.uleb128 0x3
+ 391 005e 04       		.byte	0x4
+ 392 005f 05       		.byte	0x5
+ 393 0060 696E7400 		.ascii	"int\000"
+ 394 0064 02       		.uleb128 0x2
+ 395 0065 04       		.byte	0x4
+ 396 0066 07       		.byte	0x7
+ 397 0067 BD000000 		.4byte	.LASF8
+ 398 006b 02       		.uleb128 0x2
+ 399 006c 04       		.byte	0x4
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 9
+
+
+ 400 006d 04       		.byte	0x4
+ 401 006e 63000000 		.4byte	.LASF9
+ 402 0072 02       		.uleb128 0x2
+ 403 0073 08       		.byte	0x8
+ 404 0074 04       		.byte	0x4
+ 405 0075 B6000000 		.4byte	.LASF10
+ 406 0079 02       		.uleb128 0x2
+ 407 007a 01       		.byte	0x1
+ 408 007b 08       		.byte	0x8
+ 409 007c A9010000 		.4byte	.LASF11
+ 410 0080 04       		.uleb128 0x4
+ 411 0081 04       		.byte	0x4
+ 412 0082 86000000 		.4byte	0x86
+ 413 0086 05       		.uleb128 0x5
+ 414 0087 02       		.uleb128 0x2
+ 415 0088 08       		.byte	0x8
+ 416 0089 04       		.byte	0x4
+ 417 008a C1010000 		.4byte	.LASF12
+ 418 008e 02       		.uleb128 0x2
+ 419 008f 04       		.byte	0x4
+ 420 0090 07       		.byte	0x7
+ 421 0091 92010000 		.4byte	.LASF13
+ 422 0095 06       		.uleb128 0x6
+ 423 0096 0C000000 		.4byte	.LASF14
+ 424 009a 01       		.byte	0x1
+ 425 009b 03       		.byte	0x3
+ 426 009c 00000000 		.4byte	.LFB34
+ 427 00a0 1C000000 		.4byte	.LFE34-.LFB34
+ 428 00a4 01       		.uleb128 0x1
+ 429 00a5 9C       		.byte	0x9c
+ 430 00a6 F3000000 		.4byte	0xf3
+ 431 00aa 07       		.uleb128 0x7
+ 432 00ab 08000000 		.4byte	.LVL0
+ 433 00af A6030000 		.4byte	0x3a6
+ 434 00b3 BD000000 		.4byte	0xbd
+ 435 00b7 08       		.uleb128 0x8
+ 436 00b8 01       		.uleb128 0x1
+ 437 00b9 50       		.byte	0x50
+ 438 00ba 01       		.uleb128 0x1
+ 439 00bb 31       		.byte	0x31
+ 440 00bc 00       		.byte	0
+ 441 00bd 07       		.uleb128 0x7
+ 442 00be 0E000000 		.4byte	.LVL1
+ 443 00c2 B1030000 		.4byte	0x3b1
+ 444 00c6 D0000000 		.4byte	0xd0
+ 445 00ca 08       		.uleb128 0x8
+ 446 00cb 01       		.uleb128 0x1
+ 447 00cc 50       		.byte	0x50
+ 448 00cd 01       		.uleb128 0x1
+ 449 00ce 31       		.byte	0x31
+ 450 00cf 00       		.byte	0
+ 451 00d0 07       		.uleb128 0x7
+ 452 00d1 14000000 		.4byte	.LVL2
+ 453 00d5 BC030000 		.4byte	0x3bc
+ 454 00d9 E3000000 		.4byte	0xe3
+ 455 00dd 08       		.uleb128 0x8
+ 456 00de 01       		.uleb128 0x1
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 10
+
+
+ 457 00df 50       		.byte	0x50
+ 458 00e0 01       		.uleb128 0x1
+ 459 00e1 30       		.byte	0x30
+ 460 00e2 00       		.byte	0
+ 461 00e3 09       		.uleb128 0x9
+ 462 00e4 1A000000 		.4byte	.LVL3
+ 463 00e8 C7030000 		.4byte	0x3c7
+ 464 00ec 08       		.uleb128 0x8
+ 465 00ed 01       		.uleb128 0x1
+ 466 00ee 50       		.byte	0x50
+ 467 00ef 01       		.uleb128 0x1
+ 468 00f0 30       		.byte	0x30
+ 469 00f1 00       		.byte	0
+ 470 00f2 00       		.byte	0
+ 471 00f3 06       		.uleb128 0x6
+ 472 00f4 14000000 		.4byte	.LASF15
+ 473 00f8 01       		.byte	0x1
+ 474 00f9 0A       		.byte	0xa
+ 475 00fa 00000000 		.4byte	.LFB35
+ 476 00fe 1C000000 		.4byte	.LFE35-.LFB35
+ 477 0102 01       		.uleb128 0x1
+ 478 0103 9C       		.byte	0x9c
+ 479 0104 51010000 		.4byte	0x151
+ 480 0108 07       		.uleb128 0x7
+ 481 0109 08000000 		.4byte	.LVL4
+ 482 010d A6030000 		.4byte	0x3a6
+ 483 0111 1B010000 		.4byte	0x11b
+ 484 0115 08       		.uleb128 0x8
+ 485 0116 01       		.uleb128 0x1
+ 486 0117 50       		.byte	0x50
+ 487 0118 01       		.uleb128 0x1
+ 488 0119 30       		.byte	0x30
+ 489 011a 00       		.byte	0
+ 490 011b 07       		.uleb128 0x7
+ 491 011c 0E000000 		.4byte	.LVL5
+ 492 0120 B1030000 		.4byte	0x3b1
+ 493 0124 2E010000 		.4byte	0x12e
+ 494 0128 08       		.uleb128 0x8
+ 495 0129 01       		.uleb128 0x1
+ 496 012a 50       		.byte	0x50
+ 497 012b 01       		.uleb128 0x1
+ 498 012c 31       		.byte	0x31
+ 499 012d 00       		.byte	0
+ 500 012e 07       		.uleb128 0x7
+ 501 012f 14000000 		.4byte	.LVL6
+ 502 0133 BC030000 		.4byte	0x3bc
+ 503 0137 41010000 		.4byte	0x141
+ 504 013b 08       		.uleb128 0x8
+ 505 013c 01       		.uleb128 0x1
+ 506 013d 50       		.byte	0x50
+ 507 013e 01       		.uleb128 0x1
+ 508 013f 30       		.byte	0x30
+ 509 0140 00       		.byte	0
+ 510 0141 09       		.uleb128 0x9
+ 511 0142 1A000000 		.4byte	.LVL7
+ 512 0146 C7030000 		.4byte	0x3c7
+ 513 014a 08       		.uleb128 0x8
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 11
+
+
+ 514 014b 01       		.uleb128 0x1
+ 515 014c 50       		.byte	0x50
+ 516 014d 01       		.uleb128 0x1
+ 517 014e 30       		.byte	0x30
+ 518 014f 00       		.byte	0
+ 519 0150 00       		.byte	0
+ 520 0151 06       		.uleb128 0x6
+ 521 0152 1C000000 		.4byte	.LASF16
+ 522 0156 01       		.byte	0x1
+ 523 0157 11       		.byte	0x11
+ 524 0158 00000000 		.4byte	.LFB36
+ 525 015c 1C000000 		.4byte	.LFE36-.LFB36
+ 526 0160 01       		.uleb128 0x1
+ 527 0161 9C       		.byte	0x9c
+ 528 0162 AF010000 		.4byte	0x1af
+ 529 0166 07       		.uleb128 0x7
+ 530 0167 08000000 		.4byte	.LVL8
+ 531 016b A6030000 		.4byte	0x3a6
+ 532 016f 79010000 		.4byte	0x179
+ 533 0173 08       		.uleb128 0x8
+ 534 0174 01       		.uleb128 0x1
+ 535 0175 50       		.byte	0x50
+ 536 0176 01       		.uleb128 0x1
+ 537 0177 30       		.byte	0x30
+ 538 0178 00       		.byte	0
+ 539 0179 07       		.uleb128 0x7
+ 540 017a 0E000000 		.4byte	.LVL9
+ 541 017e B1030000 		.4byte	0x3b1
+ 542 0182 8C010000 		.4byte	0x18c
+ 543 0186 08       		.uleb128 0x8
+ 544 0187 01       		.uleb128 0x1
+ 545 0188 50       		.byte	0x50
+ 546 0189 01       		.uleb128 0x1
+ 547 018a 31       		.byte	0x31
+ 548 018b 00       		.byte	0
+ 549 018c 07       		.uleb128 0x7
+ 550 018d 14000000 		.4byte	.LVL10
+ 551 0191 BC030000 		.4byte	0x3bc
+ 552 0195 9F010000 		.4byte	0x19f
+ 553 0199 08       		.uleb128 0x8
+ 554 019a 01       		.uleb128 0x1
+ 555 019b 50       		.byte	0x50
+ 556 019c 01       		.uleb128 0x1
+ 557 019d 31       		.byte	0x31
+ 558 019e 00       		.byte	0
+ 559 019f 09       		.uleb128 0x9
+ 560 01a0 1A000000 		.4byte	.LVL11
+ 561 01a4 C7030000 		.4byte	0x3c7
+ 562 01a8 08       		.uleb128 0x8
+ 563 01a9 01       		.uleb128 0x1
+ 564 01aa 50       		.byte	0x50
+ 565 01ab 01       		.uleb128 0x1
+ 566 01ac 30       		.byte	0x30
+ 567 01ad 00       		.byte	0
+ 568 01ae 00       		.byte	0
+ 569 01af 06       		.uleb128 0x6
+ 570 01b0 24000000 		.4byte	.LASF17
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 12
+
+
+ 571 01b4 01       		.byte	0x1
+ 572 01b5 18       		.byte	0x18
+ 573 01b6 00000000 		.4byte	.LFB37
+ 574 01ba 1C000000 		.4byte	.LFE37-.LFB37
+ 575 01be 01       		.uleb128 0x1
+ 576 01bf 9C       		.byte	0x9c
+ 577 01c0 0D020000 		.4byte	0x20d
+ 578 01c4 07       		.uleb128 0x7
+ 579 01c5 08000000 		.4byte	.LVL12
+ 580 01c9 A6030000 		.4byte	0x3a6
+ 581 01cd D7010000 		.4byte	0x1d7
+ 582 01d1 08       		.uleb128 0x8
+ 583 01d2 01       		.uleb128 0x1
+ 584 01d3 50       		.byte	0x50
+ 585 01d4 01       		.uleb128 0x1
+ 586 01d5 30       		.byte	0x30
+ 587 01d6 00       		.byte	0
+ 588 01d7 07       		.uleb128 0x7
+ 589 01d8 0E000000 		.4byte	.LVL13
+ 590 01dc B1030000 		.4byte	0x3b1
+ 591 01e0 EA010000 		.4byte	0x1ea
+ 592 01e4 08       		.uleb128 0x8
+ 593 01e5 01       		.uleb128 0x1
+ 594 01e6 50       		.byte	0x50
+ 595 01e7 01       		.uleb128 0x1
+ 596 01e8 30       		.byte	0x30
+ 597 01e9 00       		.byte	0
+ 598 01ea 07       		.uleb128 0x7
+ 599 01eb 14000000 		.4byte	.LVL14
+ 600 01ef BC030000 		.4byte	0x3bc
+ 601 01f3 FD010000 		.4byte	0x1fd
+ 602 01f7 08       		.uleb128 0x8
+ 603 01f8 01       		.uleb128 0x1
+ 604 01f9 50       		.byte	0x50
+ 605 01fa 01       		.uleb128 0x1
+ 606 01fb 31       		.byte	0x31
+ 607 01fc 00       		.byte	0
+ 608 01fd 09       		.uleb128 0x9
+ 609 01fe 1A000000 		.4byte	.LVL15
+ 610 0202 C7030000 		.4byte	0x3c7
+ 611 0206 08       		.uleb128 0x8
+ 612 0207 01       		.uleb128 0x1
+ 613 0208 50       		.byte	0x50
+ 614 0209 01       		.uleb128 0x1
+ 615 020a 30       		.byte	0x30
+ 616 020b 00       		.byte	0
+ 617 020c 00       		.byte	0
+ 618 020d 06       		.uleb128 0x6
+ 619 020e 2C000000 		.4byte	.LASF18
+ 620 0212 01       		.byte	0x1
+ 621 0213 1F       		.byte	0x1f
+ 622 0214 00000000 		.4byte	.LFB38
+ 623 0218 1C000000 		.4byte	.LFE38-.LFB38
+ 624 021c 01       		.uleb128 0x1
+ 625 021d 9C       		.byte	0x9c
+ 626 021e 6B020000 		.4byte	0x26b
+ 627 0222 07       		.uleb128 0x7
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 13
+
+
+ 628 0223 08000000 		.4byte	.LVL16
+ 629 0227 A6030000 		.4byte	0x3a6
+ 630 022b 35020000 		.4byte	0x235
+ 631 022f 08       		.uleb128 0x8
+ 632 0230 01       		.uleb128 0x1
+ 633 0231 50       		.byte	0x50
+ 634 0232 01       		.uleb128 0x1
+ 635 0233 30       		.byte	0x30
+ 636 0234 00       		.byte	0
+ 637 0235 07       		.uleb128 0x7
+ 638 0236 0E000000 		.4byte	.LVL17
+ 639 023a B1030000 		.4byte	0x3b1
+ 640 023e 48020000 		.4byte	0x248
+ 641 0242 08       		.uleb128 0x8
+ 642 0243 01       		.uleb128 0x1
+ 643 0244 50       		.byte	0x50
+ 644 0245 01       		.uleb128 0x1
+ 645 0246 30       		.byte	0x30
+ 646 0247 00       		.byte	0
+ 647 0248 07       		.uleb128 0x7
+ 648 0249 14000000 		.4byte	.LVL18
+ 649 024d BC030000 		.4byte	0x3bc
+ 650 0251 5B020000 		.4byte	0x25b
+ 651 0255 08       		.uleb128 0x8
+ 652 0256 01       		.uleb128 0x1
+ 653 0257 50       		.byte	0x50
+ 654 0258 01       		.uleb128 0x1
+ 655 0259 31       		.byte	0x31
+ 656 025a 00       		.byte	0
+ 657 025b 09       		.uleb128 0x9
+ 658 025c 1A000000 		.4byte	.LVL19
+ 659 0260 C7030000 		.4byte	0x3c7
+ 660 0264 08       		.uleb128 0x8
+ 661 0265 01       		.uleb128 0x1
+ 662 0266 50       		.byte	0x50
+ 663 0267 01       		.uleb128 0x1
+ 664 0268 31       		.byte	0x31
+ 665 0269 00       		.byte	0
+ 666 026a 00       		.byte	0
+ 667 026b 06       		.uleb128 0x6
+ 668 026c 34000000 		.4byte	.LASF19
+ 669 0270 01       		.byte	0x1
+ 670 0271 26       		.byte	0x26
+ 671 0272 00000000 		.4byte	.LFB39
+ 672 0276 1C000000 		.4byte	.LFE39-.LFB39
+ 673 027a 01       		.uleb128 0x1
+ 674 027b 9C       		.byte	0x9c
+ 675 027c C9020000 		.4byte	0x2c9
+ 676 0280 07       		.uleb128 0x7
+ 677 0281 08000000 		.4byte	.LVL20
+ 678 0285 A6030000 		.4byte	0x3a6
+ 679 0289 93020000 		.4byte	0x293
+ 680 028d 08       		.uleb128 0x8
+ 681 028e 01       		.uleb128 0x1
+ 682 028f 50       		.byte	0x50
+ 683 0290 01       		.uleb128 0x1
+ 684 0291 30       		.byte	0x30
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 14
+
+
+ 685 0292 00       		.byte	0
+ 686 0293 07       		.uleb128 0x7
+ 687 0294 0E000000 		.4byte	.LVL21
+ 688 0298 B1030000 		.4byte	0x3b1
+ 689 029c A6020000 		.4byte	0x2a6
+ 690 02a0 08       		.uleb128 0x8
+ 691 02a1 01       		.uleb128 0x1
+ 692 02a2 50       		.byte	0x50
+ 693 02a3 01       		.uleb128 0x1
+ 694 02a4 30       		.byte	0x30
+ 695 02a5 00       		.byte	0
+ 696 02a6 07       		.uleb128 0x7
+ 697 02a7 14000000 		.4byte	.LVL22
+ 698 02ab BC030000 		.4byte	0x3bc
+ 699 02af B9020000 		.4byte	0x2b9
+ 700 02b3 08       		.uleb128 0x8
+ 701 02b4 01       		.uleb128 0x1
+ 702 02b5 50       		.byte	0x50
+ 703 02b6 01       		.uleb128 0x1
+ 704 02b7 30       		.byte	0x30
+ 705 02b8 00       		.byte	0
+ 706 02b9 09       		.uleb128 0x9
+ 707 02ba 1A000000 		.4byte	.LVL23
+ 708 02be C7030000 		.4byte	0x3c7
+ 709 02c2 08       		.uleb128 0x8
+ 710 02c3 01       		.uleb128 0x1
+ 711 02c4 50       		.byte	0x50
+ 712 02c5 01       		.uleb128 0x1
+ 713 02c6 31       		.byte	0x31
+ 714 02c7 00       		.byte	0
+ 715 02c8 00       		.byte	0
+ 716 02c9 06       		.uleb128 0x6
+ 717 02ca 3C000000 		.4byte	.LASF20
+ 718 02ce 01       		.byte	0x1
+ 719 02cf 2D       		.byte	0x2d
+ 720 02d0 00000000 		.4byte	.LFB40
+ 721 02d4 1C000000 		.4byte	.LFE40-.LFB40
+ 722 02d8 01       		.uleb128 0x1
+ 723 02d9 9C       		.byte	0x9c
+ 724 02da 27030000 		.4byte	0x327
+ 725 02de 07       		.uleb128 0x7
+ 726 02df 08000000 		.4byte	.LVL24
+ 727 02e3 A6030000 		.4byte	0x3a6
+ 728 02e7 F1020000 		.4byte	0x2f1
+ 729 02eb 08       		.uleb128 0x8
+ 730 02ec 01       		.uleb128 0x1
+ 731 02ed 50       		.byte	0x50
+ 732 02ee 01       		.uleb128 0x1
+ 733 02ef 31       		.byte	0x31
+ 734 02f0 00       		.byte	0
+ 735 02f1 07       		.uleb128 0x7
+ 736 02f2 0E000000 		.4byte	.LVL25
+ 737 02f6 B1030000 		.4byte	0x3b1
+ 738 02fa 04030000 		.4byte	0x304
+ 739 02fe 08       		.uleb128 0x8
+ 740 02ff 01       		.uleb128 0x1
+ 741 0300 50       		.byte	0x50
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 15
+
+
+ 742 0301 01       		.uleb128 0x1
+ 743 0302 30       		.byte	0x30
+ 744 0303 00       		.byte	0
+ 745 0304 07       		.uleb128 0x7
+ 746 0305 14000000 		.4byte	.LVL26
+ 747 0309 BC030000 		.4byte	0x3bc
+ 748 030d 17030000 		.4byte	0x317
+ 749 0311 08       		.uleb128 0x8
+ 750 0312 01       		.uleb128 0x1
+ 751 0313 50       		.byte	0x50
+ 752 0314 01       		.uleb128 0x1
+ 753 0315 30       		.byte	0x30
+ 754 0316 00       		.byte	0
+ 755 0317 09       		.uleb128 0x9
+ 756 0318 1A000000 		.4byte	.LVL27
+ 757 031c C7030000 		.4byte	0x3c7
+ 758 0320 08       		.uleb128 0x8
+ 759 0321 01       		.uleb128 0x1
+ 760 0322 50       		.byte	0x50
+ 761 0323 01       		.uleb128 0x1
+ 762 0324 31       		.byte	0x31
+ 763 0325 00       		.byte	0
+ 764 0326 00       		.byte	0
+ 765 0327 06       		.uleb128 0x6
+ 766 0328 44000000 		.4byte	.LASF21
+ 767 032c 01       		.byte	0x1
+ 768 032d 34       		.byte	0x34
+ 769 032e 00000000 		.4byte	.LFB41
+ 770 0332 1C000000 		.4byte	.LFE41-.LFB41
+ 771 0336 01       		.uleb128 0x1
+ 772 0337 9C       		.byte	0x9c
+ 773 0338 85030000 		.4byte	0x385
+ 774 033c 07       		.uleb128 0x7
+ 775 033d 08000000 		.4byte	.LVL28
+ 776 0341 A6030000 		.4byte	0x3a6
+ 777 0345 4F030000 		.4byte	0x34f
+ 778 0349 08       		.uleb128 0x8
+ 779 034a 01       		.uleb128 0x1
+ 780 034b 50       		.byte	0x50
+ 781 034c 01       		.uleb128 0x1
+ 782 034d 31       		.byte	0x31
+ 783 034e 00       		.byte	0
+ 784 034f 07       		.uleb128 0x7
+ 785 0350 0E000000 		.4byte	.LVL29
+ 786 0354 B1030000 		.4byte	0x3b1
+ 787 0358 62030000 		.4byte	0x362
+ 788 035c 08       		.uleb128 0x8
+ 789 035d 01       		.uleb128 0x1
+ 790 035e 50       		.byte	0x50
+ 791 035f 01       		.uleb128 0x1
+ 792 0360 30       		.byte	0x30
+ 793 0361 00       		.byte	0
+ 794 0362 07       		.uleb128 0x7
+ 795 0363 14000000 		.4byte	.LVL30
+ 796 0367 BC030000 		.4byte	0x3bc
+ 797 036b 75030000 		.4byte	0x375
+ 798 036f 08       		.uleb128 0x8
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 16
+
+
+ 799 0370 01       		.uleb128 0x1
+ 800 0371 50       		.byte	0x50
+ 801 0372 01       		.uleb128 0x1
+ 802 0373 30       		.byte	0x30
+ 803 0374 00       		.byte	0
+ 804 0375 09       		.uleb128 0x9
+ 805 0376 1A000000 		.4byte	.LVL31
+ 806 037a C7030000 		.4byte	0x3c7
+ 807 037e 08       		.uleb128 0x8
+ 808 037f 01       		.uleb128 0x1
+ 809 0380 50       		.byte	0x50
+ 810 0381 01       		.uleb128 0x1
+ 811 0382 30       		.byte	0x30
+ 812 0383 00       		.byte	0
+ 813 0384 00       		.byte	0
+ 814 0385 0A       		.uleb128 0xa
+ 815 0386 80000000 		.4byte	0x80
+ 816 038a 95030000 		.4byte	0x395
+ 817 038e 0B       		.uleb128 0xb
+ 818 038f 8E000000 		.4byte	0x8e
+ 819 0393 07       		.byte	0x7
+ 820 0394 00       		.byte	0
+ 821 0395 0C       		.uleb128 0xc
+ 822 0396 4C000000 		.4byte	.LASF29
+ 823 039a 01       		.byte	0x1
+ 824 039b 3B       		.byte	0x3b
+ 825 039c 85030000 		.4byte	0x385
+ 826 03a0 05       		.uleb128 0x5
+ 827 03a1 03       		.byte	0x3
+ 828 03a2 00000000 		.4byte	stage_list
+ 829 03a6 0D       		.uleb128 0xd
+ 830 03a7 D9010000 		.4byte	.LASF22
+ 831 03ab D9010000 		.4byte	.LASF22
+ 832 03af 02       		.byte	0x2
+ 833 03b0 33       		.byte	0x33
+ 834 03b1 0D       		.uleb128 0xd
+ 835 03b2 00000000 		.4byte	.LASF23
+ 836 03b6 00000000 		.4byte	.LASF23
+ 837 03ba 03       		.byte	0x3
+ 838 03bb 33       		.byte	0x33
+ 839 03bc 0D       		.uleb128 0xd
+ 840 03bd 9C000000 		.4byte	.LASF24
+ 841 03c1 9C000000 		.4byte	.LASF24
+ 842 03c5 04       		.byte	0x4
+ 843 03c6 33       		.byte	0x33
+ 844 03c7 0D       		.uleb128 0xd
+ 845 03c8 57000000 		.4byte	.LASF25
+ 846 03cc 57000000 		.4byte	.LASF25
+ 847 03d0 05       		.byte	0x5
+ 848 03d1 33       		.byte	0x33
+ 849 03d2 00       		.byte	0
+ 850              		.section	.debug_abbrev,"",%progbits
+ 851              	.Ldebug_abbrev0:
+ 852 0000 01       		.uleb128 0x1
+ 853 0001 11       		.uleb128 0x11
+ 854 0002 01       		.byte	0x1
+ 855 0003 25       		.uleb128 0x25
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 17
+
+
+ 856 0004 0E       		.uleb128 0xe
+ 857 0005 13       		.uleb128 0x13
+ 858 0006 0B       		.uleb128 0xb
+ 859 0007 03       		.uleb128 0x3
+ 860 0008 0E       		.uleb128 0xe
+ 861 0009 1B       		.uleb128 0x1b
+ 862 000a 0E       		.uleb128 0xe
+ 863 000b 55       		.uleb128 0x55
+ 864 000c 17       		.uleb128 0x17
+ 865 000d 11       		.uleb128 0x11
+ 866 000e 01       		.uleb128 0x1
+ 867 000f 10       		.uleb128 0x10
+ 868 0010 17       		.uleb128 0x17
+ 869 0011 00       		.byte	0
+ 870 0012 00       		.byte	0
+ 871 0013 02       		.uleb128 0x2
+ 872 0014 24       		.uleb128 0x24
+ 873 0015 00       		.byte	0
+ 874 0016 0B       		.uleb128 0xb
+ 875 0017 0B       		.uleb128 0xb
+ 876 0018 3E       		.uleb128 0x3e
+ 877 0019 0B       		.uleb128 0xb
+ 878 001a 03       		.uleb128 0x3
+ 879 001b 0E       		.uleb128 0xe
+ 880 001c 00       		.byte	0
+ 881 001d 00       		.byte	0
+ 882 001e 03       		.uleb128 0x3
+ 883 001f 24       		.uleb128 0x24
+ 884 0020 00       		.byte	0
+ 885 0021 0B       		.uleb128 0xb
+ 886 0022 0B       		.uleb128 0xb
+ 887 0023 3E       		.uleb128 0x3e
+ 888 0024 0B       		.uleb128 0xb
+ 889 0025 03       		.uleb128 0x3
+ 890 0026 08       		.uleb128 0x8
+ 891 0027 00       		.byte	0
+ 892 0028 00       		.byte	0
+ 893 0029 04       		.uleb128 0x4
+ 894 002a 0F       		.uleb128 0xf
+ 895 002b 00       		.byte	0
+ 896 002c 0B       		.uleb128 0xb
+ 897 002d 0B       		.uleb128 0xb
+ 898 002e 49       		.uleb128 0x49
+ 899 002f 13       		.uleb128 0x13
+ 900 0030 00       		.byte	0
+ 901 0031 00       		.byte	0
+ 902 0032 05       		.uleb128 0x5
+ 903 0033 15       		.uleb128 0x15
+ 904 0034 00       		.byte	0
+ 905 0035 27       		.uleb128 0x27
+ 906 0036 19       		.uleb128 0x19
+ 907 0037 00       		.byte	0
+ 908 0038 00       		.byte	0
+ 909 0039 06       		.uleb128 0x6
+ 910 003a 2E       		.uleb128 0x2e
+ 911 003b 01       		.byte	0x1
+ 912 003c 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 18
+
+
+ 913 003d 19       		.uleb128 0x19
+ 914 003e 03       		.uleb128 0x3
+ 915 003f 0E       		.uleb128 0xe
+ 916 0040 3A       		.uleb128 0x3a
+ 917 0041 0B       		.uleb128 0xb
+ 918 0042 3B       		.uleb128 0x3b
+ 919 0043 0B       		.uleb128 0xb
+ 920 0044 27       		.uleb128 0x27
+ 921 0045 19       		.uleb128 0x19
+ 922 0046 11       		.uleb128 0x11
+ 923 0047 01       		.uleb128 0x1
+ 924 0048 12       		.uleb128 0x12
+ 925 0049 06       		.uleb128 0x6
+ 926 004a 40       		.uleb128 0x40
+ 927 004b 18       		.uleb128 0x18
+ 928 004c 9742     		.uleb128 0x2117
+ 929 004e 19       		.uleb128 0x19
+ 930 004f 01       		.uleb128 0x1
+ 931 0050 13       		.uleb128 0x13
+ 932 0051 00       		.byte	0
+ 933 0052 00       		.byte	0
+ 934 0053 07       		.uleb128 0x7
+ 935 0054 898201   		.uleb128 0x4109
+ 936 0057 01       		.byte	0x1
+ 937 0058 11       		.uleb128 0x11
+ 938 0059 01       		.uleb128 0x1
+ 939 005a 31       		.uleb128 0x31
+ 940 005b 13       		.uleb128 0x13
+ 941 005c 01       		.uleb128 0x1
+ 942 005d 13       		.uleb128 0x13
+ 943 005e 00       		.byte	0
+ 944 005f 00       		.byte	0
+ 945 0060 08       		.uleb128 0x8
+ 946 0061 8A8201   		.uleb128 0x410a
+ 947 0064 00       		.byte	0
+ 948 0065 02       		.uleb128 0x2
+ 949 0066 18       		.uleb128 0x18
+ 950 0067 9142     		.uleb128 0x2111
+ 951 0069 18       		.uleb128 0x18
+ 952 006a 00       		.byte	0
+ 953 006b 00       		.byte	0
+ 954 006c 09       		.uleb128 0x9
+ 955 006d 898201   		.uleb128 0x4109
+ 956 0070 01       		.byte	0x1
+ 957 0071 11       		.uleb128 0x11
+ 958 0072 01       		.uleb128 0x1
+ 959 0073 31       		.uleb128 0x31
+ 960 0074 13       		.uleb128 0x13
+ 961 0075 00       		.byte	0
+ 962 0076 00       		.byte	0
+ 963 0077 0A       		.uleb128 0xa
+ 964 0078 01       		.uleb128 0x1
+ 965 0079 01       		.byte	0x1
+ 966 007a 49       		.uleb128 0x49
+ 967 007b 13       		.uleb128 0x13
+ 968 007c 01       		.uleb128 0x1
+ 969 007d 13       		.uleb128 0x13
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 19
+
+
+ 970 007e 00       		.byte	0
+ 971 007f 00       		.byte	0
+ 972 0080 0B       		.uleb128 0xb
+ 973 0081 21       		.uleb128 0x21
+ 974 0082 00       		.byte	0
+ 975 0083 49       		.uleb128 0x49
+ 976 0084 13       		.uleb128 0x13
+ 977 0085 2F       		.uleb128 0x2f
+ 978 0086 0B       		.uleb128 0xb
+ 979 0087 00       		.byte	0
+ 980 0088 00       		.byte	0
+ 981 0089 0C       		.uleb128 0xc
+ 982 008a 34       		.uleb128 0x34
+ 983 008b 00       		.byte	0
+ 984 008c 03       		.uleb128 0x3
+ 985 008d 0E       		.uleb128 0xe
+ 986 008e 3A       		.uleb128 0x3a
+ 987 008f 0B       		.uleb128 0xb
+ 988 0090 3B       		.uleb128 0x3b
+ 989 0091 0B       		.uleb128 0xb
+ 990 0092 49       		.uleb128 0x49
+ 991 0093 13       		.uleb128 0x13
+ 992 0094 3F       		.uleb128 0x3f
+ 993 0095 19       		.uleb128 0x19
+ 994 0096 02       		.uleb128 0x2
+ 995 0097 18       		.uleb128 0x18
+ 996 0098 00       		.byte	0
+ 997 0099 00       		.byte	0
+ 998 009a 0D       		.uleb128 0xd
+ 999 009b 2E       		.uleb128 0x2e
+ 1000 009c 00       		.byte	0
+ 1001 009d 3F       		.uleb128 0x3f
+ 1002 009e 19       		.uleb128 0x19
+ 1003 009f 3C       		.uleb128 0x3c
+ 1004 00a0 19       		.uleb128 0x19
+ 1005 00a1 6E       		.uleb128 0x6e
+ 1006 00a2 0E       		.uleb128 0xe
+ 1007 00a3 03       		.uleb128 0x3
+ 1008 00a4 0E       		.uleb128 0xe
+ 1009 00a5 3A       		.uleb128 0x3a
+ 1010 00a6 0B       		.uleb128 0xb
+ 1011 00a7 3B       		.uleb128 0x3b
+ 1012 00a8 0B       		.uleb128 0xb
+ 1013 00a9 00       		.byte	0
+ 1014 00aa 00       		.byte	0
+ 1015 00ab 00       		.byte	0
+ 1016              		.section	.debug_aranges,"",%progbits
+ 1017 0000 54000000 		.4byte	0x54
+ 1018 0004 0200     		.2byte	0x2
+ 1019 0006 00000000 		.4byte	.Ldebug_info0
+ 1020 000a 04       		.byte	0x4
+ 1021 000b 00       		.byte	0
+ 1022 000c 0000     		.2byte	0
+ 1023 000e 0000     		.2byte	0
+ 1024 0010 00000000 		.4byte	.LFB34
+ 1025 0014 1C000000 		.4byte	.LFE34-.LFB34
+ 1026 0018 00000000 		.4byte	.LFB35
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 20
+
+
+ 1027 001c 1C000000 		.4byte	.LFE35-.LFB35
+ 1028 0020 00000000 		.4byte	.LFB36
+ 1029 0024 1C000000 		.4byte	.LFE36-.LFB36
+ 1030 0028 00000000 		.4byte	.LFB37
+ 1031 002c 1C000000 		.4byte	.LFE37-.LFB37
+ 1032 0030 00000000 		.4byte	.LFB38
+ 1033 0034 1C000000 		.4byte	.LFE38-.LFB38
+ 1034 0038 00000000 		.4byte	.LFB39
+ 1035 003c 1C000000 		.4byte	.LFE39-.LFB39
+ 1036 0040 00000000 		.4byte	.LFB40
+ 1037 0044 1C000000 		.4byte	.LFE40-.LFB40
+ 1038 0048 00000000 		.4byte	.LFB41
+ 1039 004c 1C000000 		.4byte	.LFE41-.LFB41
+ 1040 0050 00000000 		.4byte	0
+ 1041 0054 00000000 		.4byte	0
+ 1042              		.section	.debug_ranges,"",%progbits
+ 1043              	.Ldebug_ranges0:
+ 1044 0000 00000000 		.4byte	.LFB34
+ 1045 0004 1C000000 		.4byte	.LFE34
+ 1046 0008 00000000 		.4byte	.LFB35
+ 1047 000c 1C000000 		.4byte	.LFE35
+ 1048 0010 00000000 		.4byte	.LFB36
+ 1049 0014 1C000000 		.4byte	.LFE36
+ 1050 0018 00000000 		.4byte	.LFB37
+ 1051 001c 1C000000 		.4byte	.LFE37
+ 1052 0020 00000000 		.4byte	.LFB38
+ 1053 0024 1C000000 		.4byte	.LFE38
+ 1054 0028 00000000 		.4byte	.LFB39
+ 1055 002c 1C000000 		.4byte	.LFE39
+ 1056 0030 00000000 		.4byte	.LFB40
+ 1057 0034 1C000000 		.4byte	.LFE40
+ 1058 0038 00000000 		.4byte	.LFB41
+ 1059 003c 1C000000 		.4byte	.LFE41
+ 1060 0040 00000000 		.4byte	0
+ 1061 0044 00000000 		.4byte	0
+ 1062              		.section	.debug_line,"",%progbits
+ 1063              	.Ldebug_line0:
+ 1064 0000 0B010000 		.section	.debug_str,"MS",%progbits,1
+ 1064      02006700 
+ 1064      00000201 
+ 1064      FB0E0D00 
+ 1064      01010101 
+ 1065              	.LASF23:
+ 1066 0000 50696E5F 		.ascii	"Pin_2_Write\000"
+ 1066      325F5772 
+ 1066      69746500 
+ 1067              	.LASF14:
+ 1068 000c 73746167 		.ascii	"stage_1\000"
+ 1068      655F3100 
+ 1069              	.LASF15:
+ 1070 0014 73746167 		.ascii	"stage_2\000"
+ 1070      655F3200 
+ 1071              	.LASF16:
+ 1072 001c 73746167 		.ascii	"stage_3\000"
+ 1072      655F3300 
+ 1073              	.LASF17:
+ 1074 0024 73746167 		.ascii	"stage_4\000"
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 21
+
+
+ 1074      655F3400 
+ 1075              	.LASF18:
+ 1076 002c 73746167 		.ascii	"stage_5\000"
+ 1076      655F3500 
+ 1077              	.LASF19:
+ 1078 0034 73746167 		.ascii	"stage_6\000"
+ 1078      655F3600 
+ 1079              	.LASF20:
+ 1080 003c 73746167 		.ascii	"stage_7\000"
+ 1080      655F3700 
+ 1081              	.LASF21:
+ 1082 0044 73746167 		.ascii	"stage_8\000"
+ 1082      655F3800 
+ 1083              	.LASF29:
+ 1084 004c 73746167 		.ascii	"stage_list\000"
+ 1084      655F6C69 
+ 1084      737400
+ 1085              	.LASF25:
+ 1086 0057 50696E5F 		.ascii	"Pin_4_Write\000"
+ 1086      345F5772 
+ 1086      69746500 
+ 1087              	.LASF9:
+ 1088 0063 666C6F61 		.ascii	"float\000"
+ 1088      7400
+ 1089              	.LASF1:
+ 1090 0069 756E7369 		.ascii	"unsigned char\000"
+ 1090      676E6564 
+ 1090      20636861 
+ 1090      7200
+ 1091              	.LASF5:
+ 1092 0077 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1092      20756E73 
+ 1092      69676E65 
+ 1092      6420696E 
+ 1092      7400
+ 1093              	.LASF3:
+ 1094 0089 73686F72 		.ascii	"short unsigned int\000"
+ 1094      7420756E 
+ 1094      7369676E 
+ 1094      65642069 
+ 1094      6E7400
+ 1095              	.LASF24:
+ 1096 009c 50696E5F 		.ascii	"Pin_3_Write\000"
+ 1096      335F5772 
+ 1096      69746500 
+ 1097              	.LASF27:
+ 1098 00a8 73746167 		.ascii	"stage_rotor.c\000"
+ 1098      655F726F 
+ 1098      746F722E 
+ 1098      6300
+ 1099              	.LASF10:
+ 1100 00b6 646F7562 		.ascii	"double\000"
+ 1100      6C6500
+ 1101              	.LASF8:
+ 1102 00bd 756E7369 		.ascii	"unsigned int\000"
+ 1102      676E6564 
+ 1102      20696E74 
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 22
+
+
+ 1102      00
+ 1103              	.LASF7:
+ 1104 00ca 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1104      206C6F6E 
+ 1104      6720756E 
+ 1104      7369676E 
+ 1104      65642069 
+ 1105              	.LASF26:
+ 1106 00e1 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1106      43313120 
+ 1106      352E342E 
+ 1106      31203230 
+ 1106      31363036 
+ 1107 0114 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1107      20726576 
+ 1107      6973696F 
+ 1107      6E203233 
+ 1107      37373135 
+ 1108 0147 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1108      66756E63 
+ 1108      74696F6E 
+ 1108      2D736563 
+ 1108      74696F6E 
+ 1109              	.LASF28:
+ 1110 016f 443A5C50 		.ascii	"D:\\Programming\\PSoC\\Lab\\Lab5.cydsn\000"
+ 1110      726F6772 
+ 1110      616D6D69 
+ 1110      6E675C50 
+ 1110      536F435C 
+ 1111              	.LASF13:
+ 1112 0192 73697A65 		.ascii	"sizetype\000"
+ 1112      74797065 
+ 1112      00
+ 1113              	.LASF6:
+ 1114 019b 6C6F6E67 		.ascii	"long long int\000"
+ 1114      206C6F6E 
+ 1114      6720696E 
+ 1114      7400
+ 1115              	.LASF11:
+ 1116 01a9 63686172 		.ascii	"char\000"
+ 1116      00
+ 1117              	.LASF2:
+ 1118 01ae 73686F72 		.ascii	"short int\000"
+ 1118      7420696E 
+ 1118      7400
+ 1119              	.LASF4:
+ 1120 01b8 6C6F6E67 		.ascii	"long int\000"
+ 1120      20696E74 
+ 1120      00
+ 1121              	.LASF12:
+ 1122 01c1 6C6F6E67 		.ascii	"long double\000"
+ 1122      20646F75 
+ 1122      626C6500 
+ 1123              	.LASF0:
+ 1124 01cd 7369676E 		.ascii	"signed char\000"
+ 1124      65642063 
+ 1124      68617200 
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccVifziV.s 			page 23
+
+
+ 1125              	.LASF22:
+ 1126 01d9 50696E5F 		.ascii	"Pin_1_Write\000"
+ 1126      315F5772 
+ 1126      69746500 
+ 1127              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,2429 @@
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"lcd_traffic_light.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Enc_Sw_Handler,"ax",%progbits
+  20              		.align	2
+  21              		.global	Enc_Sw_Handler
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	Enc_Sw_Handler, %function
+  25              	Enc_Sw_Handler:
+  26              	.LFB35:
+  27              		.file 1 "lcd_traffic_light.c"
+   1:lcd_traffic_light.c **** #include "lab.h"
+   2:lcd_traffic_light.c **** #include "stdio.h"
+   3:lcd_traffic_light.c **** 
+   4:lcd_traffic_light.c **** extern uint8 sum_time1;
+   5:lcd_traffic_light.c **** extern uint8 sum_time2;
+   6:lcd_traffic_light.c **** 
+   7:lcd_traffic_light.c **** static char buf1[17];
+   8:lcd_traffic_light.c **** static char buf2[17];
+   9:lcd_traffic_light.c **** 
+  10:lcd_traffic_light.c **** extern volatile uint8 time;
+  11:lcd_traffic_light.c **** extern volatile uint8 number_algorithm;
+  12:lcd_traffic_light.c **** volatile uint8 status_set_color = 0; 
+  13:lcd_traffic_light.c **** 
+  14:lcd_traffic_light.c **** uint8 time_red = 0;
+  15:lcd_traffic_light.c **** uint8 time_yellow = 0;
+  16:lcd_traffic_light.c **** uint8 time_green = 0;
+  17:lcd_traffic_light.c **** 
+  18:lcd_traffic_light.c **** void lcd_time_color(void);
+  19:lcd_traffic_light.c **** void lcd_set_red(void);
+  20:lcd_traffic_light.c **** void lcd_set_yellow(void);
+  21:lcd_traffic_light.c **** void lcd_set_green(void);
+  22:lcd_traffic_light.c **** uint8 set_time(void);
+  23:lcd_traffic_light.c **** 
+  24:lcd_traffic_light.c **** CY_ISR(Enc_Sw_Handler){
+  28              		.loc 1 24 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 2
+
+
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  25:lcd_traffic_light.c ****     status_set_color++;
+  36              		.loc 1 25 0
+  37 0002 044A     		ldr	r2, .L2
+  38 0004 1378     		ldrb	r3, [r2]
+  39 0006 0133     		adds	r3, r3, #1
+  40 0008 DBB2     		uxtb	r3, r3
+  41 000a 1370     		strb	r3, [r2]
+  26:lcd_traffic_light.c ****     Enc_Sw_ClearInterrupt();
+  42              		.loc 1 26 0
+  43 000c FFF7FEFF 		bl	Enc_Sw_ClearInterrupt
+  44              	.LVL0:
+  27:lcd_traffic_light.c **** }
+  45              		.loc 1 27 0
+  46              		@ sp needed
+  47 0010 10BD     		pop	{r4, pc}
+  48              	.L3:
+  49 0012 C046     		.align	2
+  50              	.L2:
+  51 0014 00000000 		.word	.LANCHOR0
+  52              		.cfi_endproc
+  53              	.LFE35:
+  54              		.size	Enc_Sw_Handler, .-Enc_Sw_Handler
+  55              		.section	.text.lcd_init,"ax",%progbits
+  56              		.align	2
+  57              		.global	lcd_init
+  58              		.code	16
+  59              		.thumb_func
+  60              		.type	lcd_init, %function
+  61              	lcd_init:
+  62              	.LFB36:
+  28:lcd_traffic_light.c **** 
+  29:lcd_traffic_light.c **** void lcd_init(void){
+  63              		.loc 1 29 0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67 0000 10B5     		push	{r4, lr}
+  68              		.cfi_def_cfa_offset 8
+  69              		.cfi_offset 4, -8
+  70              		.cfi_offset 14, -4
+  30:lcd_traffic_light.c ****     LCD_Start();
+  71              		.loc 1 30 0
+  72 0002 FFF7FEFF 		bl	LCD_Start
+  73              	.LVL1:
+  31:lcd_traffic_light.c ****     LCD_ClearDisplay();
+  74              		.loc 1 31 0
+  75 0006 0120     		movs	r0, #1
+  76 0008 FFF7FEFF 		bl	LCD_WriteControl
+  77              	.LVL2:
+  32:lcd_traffic_light.c ****     sprintf(buf1,"Author");
+  78              		.loc 1 32 0
+  79 000c 094A     		ldr	r2, .L5
+  80 000e 141D     		adds	r4, r2, #4
+  81 0010 094B     		ldr	r3, .L5+4
+  82 0012 1968     		ldr	r1, [r3]
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 3
+
+
+  83 0014 5160     		str	r1, [r2, #4]
+  84 0016 9A88     		ldrh	r2, [r3, #4]
+  85 0018 A280     		strh	r2, [r4, #4]
+  86 001a 9B79     		ldrb	r3, [r3, #6]
+  87 001c A371     		strb	r3, [r4, #6]
+  33:lcd_traffic_light.c ****     LCD_Position(0, 0);
+  88              		.loc 1 33 0
+  89 001e 0021     		movs	r1, #0
+  90 0020 0020     		movs	r0, #0
+  91 0022 FFF7FEFF 		bl	LCD_Position
+  92              	.LVL3:
+  34:lcd_traffic_light.c ****     LCD_PrintString(buf1);
+  93              		.loc 1 34 0
+  94 0026 2000     		movs	r0, r4
+  95 0028 FFF7FEFF 		bl	LCD_PrintString
+  96              	.LVL4:
+  35:lcd_traffic_light.c ****     CyDelay(6000);
+  97              		.loc 1 35 0
+  98 002c 0348     		ldr	r0, .L5+8
+  99 002e FFF7FEFF 		bl	CyDelay
+ 100              	.LVL5:
+  36:lcd_traffic_light.c **** }
+ 101              		.loc 1 36 0
+ 102              		@ sp needed
+ 103 0032 10BD     		pop	{r4, pc}
+ 104              	.L6:
+ 105              		.align	2
+ 106              	.L5:
+ 107 0034 00000000 		.word	.LANCHOR0
+ 108 0038 00000000 		.word	.LC2
+ 109 003c 70170000 		.word	6000
+ 110              		.cfi_endproc
+ 111              	.LFE36:
+ 112              		.size	lcd_init, .-lcd_init
+ 113              		.section	.text.enc_init,"ax",%progbits
+ 114              		.align	2
+ 115              		.global	enc_init
+ 116              		.code	16
+ 117              		.thumb_func
+ 118              		.type	enc_init, %function
+ 119              	enc_init:
+ 120              	.LFB37:
+  37:lcd_traffic_light.c **** 
+  38:lcd_traffic_light.c **** void enc_init(void){
+ 121              		.loc 1 38 0
+ 122              		.cfi_startproc
+ 123              		@ args = 0, pretend = 0, frame = 0
+ 124              		@ frame_needed = 0, uses_anonymous_args = 0
+ 125 0000 10B5     		push	{r4, lr}
+ 126              		.cfi_def_cfa_offset 8
+ 127              		.cfi_offset 4, -8
+ 128              		.cfi_offset 14, -4
+  39:lcd_traffic_light.c ****     QuadDec_Start();
+ 129              		.loc 1 39 0
+ 130 0002 FFF7FEFF 		bl	QuadDec_Start
+ 131              	.LVL6:
+  40:lcd_traffic_light.c ****     QuadDec_WriteCounter(0);  
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 4
+
+
+ 132              		.loc 1 40 0
+ 133 0006 0020     		movs	r0, #0
+ 134 0008 FFF7FEFF 		bl	QuadDec_WriteCounter
+ 135              	.LVL7:
+  41:lcd_traffic_light.c ****     Enc_Sw_Int_StartEx(Enc_Sw_Handler);
+ 136              		.loc 1 41 0
+ 137 000c 0148     		ldr	r0, .L8
+ 138 000e FFF7FEFF 		bl	Enc_Sw_Int_StartEx
+ 139              	.LVL8:
+  42:lcd_traffic_light.c **** }
+ 140              		.loc 1 42 0
+ 141              		@ sp needed
+ 142 0012 10BD     		pop	{r4, pc}
+ 143              	.L9:
+ 144              		.align	2
+ 145              	.L8:
+ 146 0014 00000000 		.word	Enc_Sw_Handler
+ 147              		.cfi_endproc
+ 148              	.LFE37:
+ 149              		.size	enc_init, .-enc_init
+ 150              		.section	.text.lcd_time_color,"ax",%progbits
+ 151              		.align	2
+ 152              		.global	lcd_time_color
+ 153              		.code	16
+ 154              		.thumb_func
+ 155              		.type	lcd_time_color, %function
+ 156              	lcd_time_color:
+ 157              	.LFB38:
+  43:lcd_traffic_light.c **** 
+  44:lcd_traffic_light.c **** void lcd_time_color(void){
+ 158              		.loc 1 44 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162 0000 70B5     		push	{r4, r5, r6, lr}
+ 163              		.cfi_def_cfa_offset 16
+ 164              		.cfi_offset 4, -16
+ 165              		.cfi_offset 5, -12
+ 166              		.cfi_offset 6, -8
+ 167              		.cfi_offset 14, -4
+  45:lcd_traffic_light.c ****     LCD_ClearDisplay();
+ 168              		.loc 1 45 0
+ 169 0002 0120     		movs	r0, #1
+ 170 0004 FFF7FEFF 		bl	LCD_WriteControl
+ 171              	.LVL9:
+  46:lcd_traffic_light.c ****     sprintf(buf1,"Red Yellow Green");
+ 172              		.loc 1 46 0
+ 173 0008 344C     		ldr	r4, .L14
+ 174 000a 354A     		ldr	r2, .L14+4
+ 175 000c 231D     		adds	r3, r4, #4
+ 176 000e 23CA     		ldmia	r2!, {r0, r1, r5}
+ 177 0010 23C3     		stmia	r3!, {r0, r1, r5}
+ 178 0012 1100     		movs	r1, r2
+ 179 0014 1268     		ldr	r2, [r2]
+ 180 0016 1A60     		str	r2, [r3]
+ 181 0018 0A79     		ldrb	r2, [r1, #4]
+ 182 001a 1A71     		strb	r2, [r3, #4]
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 5
+
+
+  47:lcd_traffic_light.c ****     LCD_Position(0, 0);
+ 183              		.loc 1 47 0
+ 184 001c 0021     		movs	r1, #0
+ 185 001e 0020     		movs	r0, #0
+ 186 0020 FFF7FEFF 		bl	LCD_Position
+ 187              	.LVL10:
+  48:lcd_traffic_light.c ****     LCD_PrintString(buf1);
+ 188              		.loc 1 48 0
+ 189 0024 201D     		adds	r0, r4, #4
+ 190 0026 FFF7FEFF 		bl	LCD_PrintString
+ 191              	.LVL11:
+  49:lcd_traffic_light.c ****     if(0 == number_algorithm){  
+ 192              		.loc 1 49 0
+ 193 002a 2E4B     		ldr	r3, .L14+8
+ 194 002c 1B78     		ldrb	r3, [r3]
+ 195 002e 002B     		cmp	r3, #0
+ 196 0030 52D1     		bne	.L10
+  50:lcd_traffic_light.c ****         if(time < time_red){
+ 197              		.loc 1 50 0
+ 198 0032 2D4B     		ldr	r3, .L14+12
+ 199 0034 1B78     		ldrb	r3, [r3]
+ 200 0036 DBB2     		uxtb	r3, r3
+ 201 0038 284A     		ldr	r2, .L14
+ 202 003a 527D     		ldrb	r2, [r2, #21]
+ 203 003c 9342     		cmp	r3, r2
+ 204 003e 10D2     		bcs	.L12
+  51:lcd_traffic_light.c ****             sprintf(buf2,"%2d",time_red-time);
+ 205              		.loc 1 51 0
+ 206 0040 294B     		ldr	r3, .L14+12
+ 207 0042 1B78     		ldrb	r3, [r3]
+ 208 0044 D21A     		subs	r2, r2, r3
+ 209 0046 254C     		ldr	r4, .L14
+ 210 0048 1834     		adds	r4, r4, #24
+ 211 004a 2849     		ldr	r1, .L14+16
+ 212 004c 2000     		movs	r0, r4
+ 213 004e FFF7FEFF 		bl	sprintf
+ 214              	.LVL12:
+  52:lcd_traffic_light.c ****             LCD_Position(1, 0);
+ 215              		.loc 1 52 0
+ 216 0052 0021     		movs	r1, #0
+ 217 0054 0120     		movs	r0, #1
+ 218 0056 FFF7FEFF 		bl	LCD_Position
+ 219              	.LVL13:
+  53:lcd_traffic_light.c ****             LCD_PrintString(buf2);
+ 220              		.loc 1 53 0
+ 221 005a 2000     		movs	r0, r4
+ 222 005c FFF7FEFF 		bl	LCD_PrintString
+ 223              	.LVL14:
+ 224 0060 3AE0     		b	.L10
+ 225              	.L12:
+  54:lcd_traffic_light.c ****         }else if(time_red <= time && time < sum_time1) {
+ 226              		.loc 1 54 0
+ 227 0062 214B     		ldr	r3, .L14+12
+ 228 0064 1B78     		ldrb	r3, [r3]
+ 229 0066 DBB2     		uxtb	r3, r3
+ 230 0068 9A42     		cmp	r2, r3
+ 231 006a 17D8     		bhi	.L13
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 6
+
+
+ 232              		.loc 1 54 0 is_stmt 0 discriminator 1
+ 233 006c 1E4B     		ldr	r3, .L14+12
+ 234 006e 1B78     		ldrb	r3, [r3]
+ 235 0070 DBB2     		uxtb	r3, r3
+ 236 0072 1F4A     		ldr	r2, .L14+20
+ 237 0074 1278     		ldrb	r2, [r2]
+ 238 0076 9342     		cmp	r3, r2
+ 239 0078 10D2     		bcs	.L13
+  55:lcd_traffic_light.c ****             sprintf(buf2,"%6d",sum_time1-time);
+ 240              		.loc 1 55 0 is_stmt 1
+ 241 007a 1B4B     		ldr	r3, .L14+12
+ 242 007c 1B78     		ldrb	r3, [r3]
+ 243 007e D21A     		subs	r2, r2, r3
+ 244 0080 164C     		ldr	r4, .L14
+ 245 0082 1834     		adds	r4, r4, #24
+ 246 0084 1B49     		ldr	r1, .L14+24
+ 247 0086 2000     		movs	r0, r4
+ 248 0088 FFF7FEFF 		bl	sprintf
+ 249              	.LVL15:
+  56:lcd_traffic_light.c ****             LCD_Position(1, 0);
+ 250              		.loc 1 56 0
+ 251 008c 0021     		movs	r1, #0
+ 252 008e 0120     		movs	r0, #1
+ 253 0090 FFF7FEFF 		bl	LCD_Position
+ 254              	.LVL16:
+  57:lcd_traffic_light.c ****             LCD_PrintString(buf2);
+ 255              		.loc 1 57 0
+ 256 0094 2000     		movs	r0, r4
+ 257 0096 FFF7FEFF 		bl	LCD_PrintString
+ 258              	.LVL17:
+ 259 009a 1DE0     		b	.L10
+ 260              	.L13:
+  58:lcd_traffic_light.c ****         }else if(sum_time1 <= time && time < sum_time2) {
+ 261              		.loc 1 58 0
+ 262 009c 144B     		ldr	r3, .L14+20
+ 263 009e 1A78     		ldrb	r2, [r3]
+ 264 00a0 114B     		ldr	r3, .L14+12
+ 265 00a2 1B78     		ldrb	r3, [r3]
+ 266 00a4 DBB2     		uxtb	r3, r3
+ 267 00a6 9A42     		cmp	r2, r3
+ 268 00a8 16D8     		bhi	.L10
+ 269              		.loc 1 58 0 is_stmt 0 discriminator 1
+ 270 00aa 0F4B     		ldr	r3, .L14+12
+ 271 00ac 1B78     		ldrb	r3, [r3]
+ 272 00ae DBB2     		uxtb	r3, r3
+ 273 00b0 114A     		ldr	r2, .L14+28
+ 274 00b2 1278     		ldrb	r2, [r2]
+ 275 00b4 9342     		cmp	r3, r2
+ 276 00b6 0FD2     		bcs	.L10
+  59:lcd_traffic_light.c ****             sprintf(buf2,"%13d",sum_time2-time);
+ 277              		.loc 1 59 0 is_stmt 1
+ 278 00b8 0B4B     		ldr	r3, .L14+12
+ 279 00ba 1B78     		ldrb	r3, [r3]
+ 280 00bc D21A     		subs	r2, r2, r3
+ 281 00be 074C     		ldr	r4, .L14
+ 282 00c0 1834     		adds	r4, r4, #24
+ 283 00c2 0E49     		ldr	r1, .L14+32
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 7
+
+
+ 284 00c4 2000     		movs	r0, r4
+ 285 00c6 FFF7FEFF 		bl	sprintf
+ 286              	.LVL18:
+  60:lcd_traffic_light.c ****             LCD_Position(1, 0);
+ 287              		.loc 1 60 0
+ 288 00ca 0021     		movs	r1, #0
+ 289 00cc 0120     		movs	r0, #1
+ 290 00ce FFF7FEFF 		bl	LCD_Position
+ 291              	.LVL19:
+  61:lcd_traffic_light.c ****             LCD_PrintString(buf2);
+ 292              		.loc 1 61 0
+ 293 00d2 2000     		movs	r0, r4
+ 294 00d4 FFF7FEFF 		bl	LCD_PrintString
+ 295              	.LVL20:
+ 296              	.L10:
+  62:lcd_traffic_light.c ****         }
+  63:lcd_traffic_light.c ****     }
+  64:lcd_traffic_light.c **** }
+ 297              		.loc 1 64 0
+ 298              		@ sp needed
+ 299 00d8 70BD     		pop	{r4, r5, r6, pc}
+ 300              	.L15:
+ 301 00da C046     		.align	2
+ 302              	.L14:
+ 303 00dc 00000000 		.word	.LANCHOR0
+ 304 00e0 18000000 		.word	.LC7
+ 305 00e4 00000000 		.word	number_algorithm
+ 306 00e8 00000000 		.word	time
+ 307 00ec 08000000 		.word	.LC11
+ 308 00f0 00000000 		.word	sum_time1
+ 309 00f4 0C000000 		.word	.LC14
+ 310 00f8 00000000 		.word	sum_time2
+ 311 00fc 10000000 		.word	.LC17
+ 312              		.cfi_endproc
+ 313              	.LFE38:
+ 314              		.size	lcd_time_color, .-lcd_time_color
+ 315              		.section	.text.lcd_set_red,"ax",%progbits
+ 316              		.align	2
+ 317              		.global	lcd_set_red
+ 318              		.code	16
+ 319              		.thumb_func
+ 320              		.type	lcd_set_red, %function
+ 321              	lcd_set_red:
+ 322              	.LFB39:
+  65:lcd_traffic_light.c **** 
+  66:lcd_traffic_light.c **** void lcd_set_red(void){
+ 323              		.loc 1 66 0
+ 324              		.cfi_startproc
+ 325              		@ args = 0, pretend = 0, frame = 0
+ 326              		@ frame_needed = 0, uses_anonymous_args = 0
+ 327 0000 70B5     		push	{r4, r5, r6, lr}
+ 328              		.cfi_def_cfa_offset 16
+ 329              		.cfi_offset 4, -16
+ 330              		.cfi_offset 5, -12
+ 331              		.cfi_offset 6, -8
+ 332              		.cfi_offset 14, -4
+  67:lcd_traffic_light.c ****     LCD_ClearDisplay();
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 8
+
+
+ 333              		.loc 1 67 0
+ 334 0002 0120     		movs	r0, #1
+ 335 0004 FFF7FEFF 		bl	LCD_WriteControl
+ 336              	.LVL21:
+  68:lcd_traffic_light.c ****     sprintf(buf1,"Set red time");
+ 337              		.loc 1 68 0
+ 338 0008 0E4C     		ldr	r4, .L17
+ 339 000a 251D     		adds	r5, r4, #4
+ 340 000c 0E4B     		ldr	r3, .L17+4
+ 341 000e 2A00     		movs	r2, r5
+ 342 0010 43CB     		ldmia	r3!, {r0, r1, r6}
+ 343 0012 43C2     		stmia	r2!, {r0, r1, r6}
+ 344 0014 1B78     		ldrb	r3, [r3]
+ 345 0016 1370     		strb	r3, [r2]
+  69:lcd_traffic_light.c ****     LCD_Position(0, 0);
+ 346              		.loc 1 69 0
+ 347 0018 0021     		movs	r1, #0
+ 348 001a 0020     		movs	r0, #0
+ 349 001c FFF7FEFF 		bl	LCD_Position
+ 350              	.LVL22:
+  70:lcd_traffic_light.c ****     LCD_PrintString(buf1);
+ 351              		.loc 1 70 0
+ 352 0020 2800     		movs	r0, r5
+ 353 0022 FFF7FEFF 		bl	LCD_PrintString
+ 354              	.LVL23:
+  71:lcd_traffic_light.c ****     sprintf(buf2,"Time = %d",time_red);
+ 355              		.loc 1 71 0
+ 356 0026 627D     		ldrb	r2, [r4, #21]
+ 357 0028 1834     		adds	r4, r4, #24
+ 358 002a 0849     		ldr	r1, .L17+8
+ 359 002c 2000     		movs	r0, r4
+ 360 002e FFF7FEFF 		bl	sprintf
+ 361              	.LVL24:
+  72:lcd_traffic_light.c ****     LCD_Position(1, 0);
+ 362              		.loc 1 72 0
+ 363 0032 0021     		movs	r1, #0
+ 364 0034 0120     		movs	r0, #1
+ 365 0036 FFF7FEFF 		bl	LCD_Position
+ 366              	.LVL25:
+  73:lcd_traffic_light.c ****     LCD_PrintString(buf2);
+ 367              		.loc 1 73 0
+ 368 003a 2000     		movs	r0, r4
+ 369 003c FFF7FEFF 		bl	LCD_PrintString
+ 370              	.LVL26:
+  74:lcd_traffic_light.c **** }
+ 371              		.loc 1 74 0
+ 372              		@ sp needed
+ 373 0040 70BD     		pop	{r4, r5, r6, pc}
+ 374              	.L18:
+ 375 0042 C046     		.align	2
+ 376              	.L17:
+ 377 0044 00000000 		.word	.LANCHOR0
+ 378 0048 2C000000 		.word	.LC22
+ 379 004c 3C000000 		.word	.LC24
+ 380              		.cfi_endproc
+ 381              	.LFE39:
+ 382              		.size	lcd_set_red, .-lcd_set_red
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 9
+
+
+ 383              		.section	.text.lcd_set_green,"ax",%progbits
+ 384              		.align	2
+ 385              		.global	lcd_set_green
+ 386              		.code	16
+ 387              		.thumb_func
+ 388              		.type	lcd_set_green, %function
+ 389              	lcd_set_green:
+ 390              	.LFB40:
+  75:lcd_traffic_light.c **** 
+  76:lcd_traffic_light.c **** void lcd_set_green(void){
+ 391              		.loc 1 76 0
+ 392              		.cfi_startproc
+ 393              		@ args = 0, pretend = 0, frame = 0
+ 394              		@ frame_needed = 0, uses_anonymous_args = 0
+ 395 0000 70B5     		push	{r4, r5, r6, lr}
+ 396              		.cfi_def_cfa_offset 16
+ 397              		.cfi_offset 4, -16
+ 398              		.cfi_offset 5, -12
+ 399              		.cfi_offset 6, -8
+ 400              		.cfi_offset 14, -4
+  77:lcd_traffic_light.c ****     LCD_ClearDisplay();
+ 401              		.loc 1 77 0
+ 402 0002 0120     		movs	r0, #1
+ 403 0004 FFF7FEFF 		bl	LCD_WriteControl
+ 404              	.LVL27:
+  78:lcd_traffic_light.c ****     sprintf(buf1,"Set green time:");
+ 405              		.loc 1 78 0
+ 406 0008 0E4C     		ldr	r4, .L20
+ 407 000a 251D     		adds	r5, r4, #4
+ 408 000c 0E4B     		ldr	r3, .L20+4
+ 409 000e 2A00     		movs	r2, r5
+ 410 0010 43CB     		ldmia	r3!, {r0, r1, r6}
+ 411 0012 43C2     		stmia	r2!, {r0, r1, r6}
+ 412 0014 1B68     		ldr	r3, [r3]
+ 413 0016 1360     		str	r3, [r2]
+  79:lcd_traffic_light.c ****     LCD_Position(0, 0);
+ 414              		.loc 1 79 0
+ 415 0018 0021     		movs	r1, #0
+ 416 001a 0020     		movs	r0, #0
+ 417 001c FFF7FEFF 		bl	LCD_Position
+ 418              	.LVL28:
+  80:lcd_traffic_light.c ****     LCD_PrintString(buf1);
+ 419              		.loc 1 80 0
+ 420 0020 2800     		movs	r0, r5
+ 421 0022 FFF7FEFF 		bl	LCD_PrintString
+ 422              	.LVL29:
+  81:lcd_traffic_light.c ****     sprintf(buf2,"Time = %d",time_green);
+ 423              		.loc 1 81 0
+ 424 0026 2923     		movs	r3, #41
+ 425 0028 E25C     		ldrb	r2, [r4, r3]
+ 426 002a 1834     		adds	r4, r4, #24
+ 427 002c 0749     		ldr	r1, .L20+8
+ 428 002e 2000     		movs	r0, r4
+ 429 0030 FFF7FEFF 		bl	sprintf
+ 430              	.LVL30:
+  82:lcd_traffic_light.c ****     LCD_Position(1, 0);
+ 431              		.loc 1 82 0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 10
+
+
+ 432 0034 0021     		movs	r1, #0
+ 433 0036 0120     		movs	r0, #1
+ 434 0038 FFF7FEFF 		bl	LCD_Position
+ 435              	.LVL31:
+  83:lcd_traffic_light.c ****     LCD_PrintString(buf2);
+ 436              		.loc 1 83 0
+ 437 003c 2000     		movs	r0, r4
+ 438 003e FFF7FEFF 		bl	LCD_PrintString
+ 439              	.LVL32:
+  84:lcd_traffic_light.c **** }
+ 440              		.loc 1 84 0
+ 441              		@ sp needed
+ 442 0042 70BD     		pop	{r4, r5, r6, pc}
+ 443              	.L21:
+ 444              		.align	2
+ 445              	.L20:
+ 446 0044 00000000 		.word	.LANCHOR0
+ 447 0048 48000000 		.word	.LC29
+ 448 004c 3C000000 		.word	.LC24
+ 449              		.cfi_endproc
+ 450              	.LFE40:
+ 451              		.size	lcd_set_green, .-lcd_set_green
+ 452              		.section	.text.lcd_set_yellow,"ax",%progbits
+ 453              		.align	2
+ 454              		.global	lcd_set_yellow
+ 455              		.code	16
+ 456              		.thumb_func
+ 457              		.type	lcd_set_yellow, %function
+ 458              	lcd_set_yellow:
+ 459              	.LFB41:
+  85:lcd_traffic_light.c **** 
+  86:lcd_traffic_light.c **** void lcd_set_yellow(void){
+ 460              		.loc 1 86 0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 0
+ 463              		@ frame_needed = 0, uses_anonymous_args = 0
+ 464 0000 70B5     		push	{r4, r5, r6, lr}
+ 465              		.cfi_def_cfa_offset 16
+ 466              		.cfi_offset 4, -16
+ 467              		.cfi_offset 5, -12
+ 468              		.cfi_offset 6, -8
+ 469              		.cfi_offset 14, -4
+  87:lcd_traffic_light.c ****     LCD_ClearDisplay();
+ 470              		.loc 1 87 0
+ 471 0002 0120     		movs	r0, #1
+ 472 0004 FFF7FEFF 		bl	LCD_WriteControl
+ 473              	.LVL33:
+  88:lcd_traffic_light.c ****     sprintf(buf1,"Set yellow time:");
+ 474              		.loc 1 88 0
+ 475 0008 0F4C     		ldr	r4, .L23
+ 476 000a 104A     		ldr	r2, .L23+4
+ 477 000c 231D     		adds	r3, r4, #4
+ 478 000e 23CA     		ldmia	r2!, {r0, r1, r5}
+ 479 0010 23C3     		stmia	r3!, {r0, r1, r5}
+ 480 0012 1100     		movs	r1, r2
+ 481 0014 1268     		ldr	r2, [r2]
+ 482 0016 1A60     		str	r2, [r3]
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 11
+
+
+ 483 0018 0A79     		ldrb	r2, [r1, #4]
+ 484 001a 1A71     		strb	r2, [r3, #4]
+  89:lcd_traffic_light.c ****     LCD_Position(0, 0);
+ 485              		.loc 1 89 0
+ 486 001c 0021     		movs	r1, #0
+ 487 001e 0020     		movs	r0, #0
+ 488 0020 FFF7FEFF 		bl	LCD_Position
+ 489              	.LVL34:
+  90:lcd_traffic_light.c ****     LCD_PrintString(buf1);
+ 490              		.loc 1 90 0
+ 491 0024 201D     		adds	r0, r4, #4
+ 492 0026 FFF7FEFF 		bl	LCD_PrintString
+ 493              	.LVL35:
+  91:lcd_traffic_light.c ****     sprintf(buf2,"Time = %d",time_yellow);   
+ 494              		.loc 1 91 0
+ 495 002a 2A23     		movs	r3, #42
+ 496 002c E25C     		ldrb	r2, [r4, r3]
+ 497 002e 1834     		adds	r4, r4, #24
+ 498 0030 0749     		ldr	r1, .L23+8
+ 499 0032 2000     		movs	r0, r4
+ 500 0034 FFF7FEFF 		bl	sprintf
+ 501              	.LVL36:
+  92:lcd_traffic_light.c ****     LCD_Position(1, 0);
+ 502              		.loc 1 92 0
+ 503 0038 0021     		movs	r1, #0
+ 504 003a 0120     		movs	r0, #1
+ 505 003c FFF7FEFF 		bl	LCD_Position
+ 506              	.LVL37:
+  93:lcd_traffic_light.c ****     LCD_PrintString(buf2);
+ 507              		.loc 1 93 0
+ 508 0040 2000     		movs	r0, r4
+ 509 0042 FFF7FEFF 		bl	LCD_PrintString
+ 510              	.LVL38:
+  94:lcd_traffic_light.c **** }
+ 511              		.loc 1 94 0
+ 512              		@ sp needed
+ 513 0046 70BD     		pop	{r4, r5, r6, pc}
+ 514              	.L24:
+ 515              		.align	2
+ 516              	.L23:
+ 517 0048 00000000 		.word	.LANCHOR0
+ 518 004c 58000000 		.word	.LC35
+ 519 0050 3C000000 		.word	.LC24
+ 520              		.cfi_endproc
+ 521              	.LFE41:
+ 522              		.size	lcd_set_yellow, .-lcd_set_yellow
+ 523              		.section	.text.set_time,"ax",%progbits
+ 524              		.align	2
+ 525              		.global	set_time
+ 526              		.code	16
+ 527              		.thumb_func
+ 528              		.type	set_time, %function
+ 529              	set_time:
+ 530              	.LFB42:
+  95:lcd_traffic_light.c **** 
+  96:lcd_traffic_light.c **** uint8 set_time(void){
+ 531              		.loc 1 96 0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 12
+
+
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 0
+ 534              		@ frame_needed = 0, uses_anonymous_args = 0
+ 535 0000 10B5     		push	{r4, lr}
+ 536              		.cfi_def_cfa_offset 8
+ 537              		.cfi_offset 4, -8
+ 538              		.cfi_offset 14, -4
+ 539              	.LVL39:
+  97:lcd_traffic_light.c ****     uint8 value_encoder = 0;
+  98:lcd_traffic_light.c ****     value_encoder = QuadDec_ReadCounter();
+ 540              		.loc 1 98 0
+ 541 0002 FFF7FEFF 		bl	QuadDec_ReadCounter
+ 542              	.LVL40:
+ 543 0006 C0B2     		uxtb	r0, r0
+ 544              	.LVL41:
+  99:lcd_traffic_light.c ****     if(20 < value_encoder && 100 > value_encoder){
+ 545              		.loc 1 99 0
+ 546 0008 0300     		movs	r3, r0
+ 547 000a 153B     		subs	r3, r3, #21
+ 548 000c DBB2     		uxtb	r3, r3
+ 549 000e 4E2B     		cmp	r3, #78
+ 550 0010 03D8     		bhi	.L26
+ 551              	.LVL42:
+ 100:lcd_traffic_light.c ****         value_encoder = 20;
+ 101:lcd_traffic_light.c ****         QuadDec_WriteCounter(20);
+ 552              		.loc 1 101 0
+ 553 0012 1420     		movs	r0, #20
+ 554 0014 FFF7FEFF 		bl	QuadDec_WriteCounter
+ 555              	.LVL43:
+ 100:lcd_traffic_light.c ****         value_encoder = 20;
+ 556              		.loc 1 100 0
+ 557 0018 1420     		movs	r0, #20
+ 558              	.LVL44:
+ 559              	.L26:
+ 102:lcd_traffic_light.c ****     }
+ 103:lcd_traffic_light.c ****     if(100 < value_encoder){
+ 560              		.loc 1 103 0
+ 561 001a 6428     		cmp	r0, #100
+ 562 001c 03D9     		bls	.L27
+ 563              	.LVL45:
+ 104:lcd_traffic_light.c ****         value_encoder = 0;
+ 105:lcd_traffic_light.c ****         QuadDec_WriteCounter(0); 
+ 564              		.loc 1 105 0
+ 565 001e 0020     		movs	r0, #0
+ 566 0020 FFF7FEFF 		bl	QuadDec_WriteCounter
+ 567              	.LVL46:
+ 104:lcd_traffic_light.c ****         value_encoder = 0;
+ 568              		.loc 1 104 0
+ 569 0024 0020     		movs	r0, #0
+ 570              	.LVL47:
+ 571              	.L27:
+ 106:lcd_traffic_light.c ****     }    
+ 107:lcd_traffic_light.c ****     return value_encoder;
+ 108:lcd_traffic_light.c **** }
+ 572              		.loc 1 108 0
+ 573              		@ sp needed
+ 574 0026 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 13
+
+
+ 575              		.cfi_endproc
+ 576              	.LFE42:
+ 577              		.size	set_time, .-set_time
+ 578              		.section	.text.definition_set_color,"ax",%progbits
+ 579              		.align	2
+ 580              		.global	definition_set_color
+ 581              		.code	16
+ 582              		.thumb_func
+ 583              		.type	definition_set_color, %function
+ 584              	definition_set_color:
+ 585              	.LFB43:
+ 109:lcd_traffic_light.c **** 
+ 110:lcd_traffic_light.c **** void definition_set_color(void){
+ 586              		.loc 1 110 0
+ 587              		.cfi_startproc
+ 588              		@ args = 0, pretend = 0, frame = 0
+ 589              		@ frame_needed = 0, uses_anonymous_args = 0
+ 590 0000 10B5     		push	{r4, lr}
+ 591              		.cfi_def_cfa_offset 8
+ 592              		.cfi_offset 4, -8
+ 593              		.cfi_offset 14, -4
+ 111:lcd_traffic_light.c ****     if(0 == status_set_color){
+ 594              		.loc 1 111 0
+ 595 0002 174B     		ldr	r3, .L34
+ 596 0004 1B78     		ldrb	r3, [r3]
+ 597 0006 002B     		cmp	r3, #0
+ 598 0008 02D1     		bne	.L29
+ 112:lcd_traffic_light.c ****         lcd_time_color();
+ 599              		.loc 1 112 0
+ 600 000a FFF7FEFF 		bl	lcd_time_color
+ 601              	.LVL48:
+ 602 000e 25E0     		b	.L28
+ 603              	.L29:
+ 113:lcd_traffic_light.c ****     }else if(1 == status_set_color){
+ 604              		.loc 1 113 0
+ 605 0010 134B     		ldr	r3, .L34
+ 606 0012 1B78     		ldrb	r3, [r3]
+ 607 0014 012B     		cmp	r3, #1
+ 608 0016 06D1     		bne	.L31
+ 114:lcd_traffic_light.c ****         time_red = set_time();
+ 609              		.loc 1 114 0
+ 610 0018 FFF7FEFF 		bl	set_time
+ 611              	.LVL49:
+ 612 001c 104B     		ldr	r3, .L34
+ 613 001e 5875     		strb	r0, [r3, #21]
+ 115:lcd_traffic_light.c ****         lcd_set_red();
+ 614              		.loc 1 115 0
+ 615 0020 FFF7FEFF 		bl	lcd_set_red
+ 616              	.LVL50:
+ 617 0024 1AE0     		b	.L28
+ 618              	.L31:
+ 116:lcd_traffic_light.c ****     }else if(2 == status_set_color){
+ 619              		.loc 1 116 0
+ 620 0026 0E4B     		ldr	r3, .L34
+ 621 0028 1B78     		ldrb	r3, [r3]
+ 622 002a 022B     		cmp	r3, #2
+ 623 002c 07D1     		bne	.L32
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 14
+
+
+ 117:lcd_traffic_light.c ****         time_yellow = set_time();
+ 624              		.loc 1 117 0
+ 625 002e FFF7FEFF 		bl	set_time
+ 626              	.LVL51:
+ 627 0032 2A23     		movs	r3, #42
+ 628 0034 0A4A     		ldr	r2, .L34
+ 629 0036 D054     		strb	r0, [r2, r3]
+ 118:lcd_traffic_light.c ****         lcd_set_yellow();
+ 630              		.loc 1 118 0
+ 631 0038 FFF7FEFF 		bl	lcd_set_yellow
+ 632              	.LVL52:
+ 633 003c 0EE0     		b	.L28
+ 634              	.L32:
+ 119:lcd_traffic_light.c ****     }else if(3 == status_set_color){
+ 635              		.loc 1 119 0
+ 636 003e 084B     		ldr	r3, .L34
+ 637 0040 1B78     		ldrb	r3, [r3]
+ 638 0042 032B     		cmp	r3, #3
+ 639 0044 07D1     		bne	.L33
+ 120:lcd_traffic_light.c ****         time_green = set_time();
+ 640              		.loc 1 120 0
+ 641 0046 FFF7FEFF 		bl	set_time
+ 642              	.LVL53:
+ 643 004a 2923     		movs	r3, #41
+ 644 004c 044A     		ldr	r2, .L34
+ 645 004e D054     		strb	r0, [r2, r3]
+ 121:lcd_traffic_light.c ****         lcd_set_green();
+ 646              		.loc 1 121 0
+ 647 0050 FFF7FEFF 		bl	lcd_set_green
+ 648              	.LVL54:
+ 649 0054 02E0     		b	.L28
+ 650              	.L33:
+ 122:lcd_traffic_light.c ****     }else{
+ 123:lcd_traffic_light.c ****         status_set_color = 0;
+ 651              		.loc 1 123 0
+ 652 0056 0022     		movs	r2, #0
+ 653 0058 014B     		ldr	r3, .L34
+ 654 005a 1A70     		strb	r2, [r3]
+ 655              	.L28:
+ 124:lcd_traffic_light.c ****     } 
+ 125:lcd_traffic_light.c **** }...
+ 656              		.loc 1 125 0
+ 657              		@ sp needed
+ 658 005c 10BD     		pop	{r4, pc}
+ 659              	.L35:
+ 660 005e C046     		.align	2
+ 661              	.L34:
+ 662 0060 00000000 		.word	.LANCHOR0
+ 663              		.cfi_endproc
+ 664              	.LFE43:
+ 665              		.size	definition_set_color, .-definition_set_color
+ 666              		.global	time_green
+ 667              		.global	time_yellow
+ 668              		.global	time_red
+ 669              		.global	status_set_color
+ 670              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 671              		.align	2
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 15
+
+
+ 672              	.LC2:
+ 673 0000 41757468 		.ascii	"Author\000"
+ 673      6F7200
+ 674 0007 00       		.space	1
+ 675              	.LC11:
+ 676 0008 25326400 		.ascii	"%2d\000"
+ 677              	.LC14:
+ 678 000c 25366400 		.ascii	"%6d\000"
+ 679              	.LC17:
+ 680 0010 25313364 		.ascii	"%13d\000"
+ 680      00
+ 681 0015 000000   		.space	3
+ 682              	.LC7:
+ 683 0018 52656420 		.ascii	"Red Yellow Green\000"
+ 683      59656C6C 
+ 683      6F772047 
+ 683      7265656E 
+ 683      00
+ 684 0029 000000   		.space	3
+ 685              	.LC22:
+ 686 002c 53657420 		.ascii	"Set red time\000"
+ 686      72656420 
+ 686      74696D65 
+ 686      00
+ 687 0039 000000   		.space	3
+ 688              	.LC24:
+ 689 003c 54696D65 		.ascii	"Time = %d\000"
+ 689      203D2025 
+ 689      6400
+ 690 0046 0000     		.space	2
+ 691              	.LC29:
+ 692 0048 53657420 		.ascii	"Set green time:\000"
+ 692      67726565 
+ 692      6E207469 
+ 692      6D653A00 
+ 693              	.LC35:
+ 694 0058 53657420 		.ascii	"Set yellow time:\000"
+ 694      79656C6C 
+ 694      6F772074 
+ 694      696D653A 
+ 694      00
+ 695              		.bss
+ 696              		.align	2
+ 697              		.set	.LANCHOR0,. + 0
+ 698              		.type	status_set_color, %object
+ 699              		.size	status_set_color, 1
+ 700              	status_set_color:
+ 701 0000 00       		.space	1
+ 702 0001 000000   		.space	3
+ 703              		.type	buf1, %object
+ 704              		.size	buf1, 17
+ 705              	buf1:
+ 706 0004 00000000 		.space	17
+ 706      00000000 
+ 706      00000000 
+ 706      00000000 
+ 706      00
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 16
+
+
+ 707              		.type	time_red, %object
+ 708              		.size	time_red, 1
+ 709              	time_red:
+ 710 0015 00       		.space	1
+ 711 0016 0000     		.space	2
+ 712              		.type	buf2, %object
+ 713              		.size	buf2, 17
+ 714              	buf2:
+ 715 0018 00000000 		.space	17
+ 715      00000000 
+ 715      00000000 
+ 715      00000000 
+ 715      00
+ 716              		.type	time_green, %object
+ 717              		.size	time_green, 1
+ 718              	time_green:
+ 719 0029 00       		.space	1
+ 720              		.type	time_yellow, %object
+ 721              		.size	time_yellow, 1
+ 722              	time_yellow:
+ 723 002a 00       		.space	1
+ 724              		.text
+ 725              	.Letext0:
+ 726              		.file 2 "Generated_Source\\PSoC4/Enc_Sw.h"
+ 727              		.file 3 "Generated_Source\\PSoC4/LCD.h"
+ 728              		.file 4 "Generated_Source\\PSoC4/CyLib.h"
+ 729              		.file 5 "Generated_Source\\PSoC4/QuadDec.h"
+ 730              		.file 6 "Generated_Source\\PSoC4/Enc_Sw_Int.h"
+ 731              		.file 7 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 732              		.file 8 "Generated_Source\\PSoC4/cytypes.h"
+ 733              		.section	.debug_info,"",%progbits
+ 734              	.Ldebug_info0:
+ 735 0000 30060000 		.4byte	0x630
+ 736 0004 0400     		.2byte	0x4
+ 737 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 738 000a 04       		.byte	0x4
+ 739 000b 01       		.uleb128 0x1
+ 740 000c A2010000 		.4byte	.LASF44
+ 741 0010 0C       		.byte	0xc
+ 742 0011 8F000000 		.4byte	.LASF45
+ 743 0015 17010000 		.4byte	.LASF46
+ 744 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 745 001d 00000000 		.4byte	0
+ 746 0021 00000000 		.4byte	.Ldebug_line0
+ 747 0025 02       		.uleb128 0x2
+ 748 0026 01       		.byte	0x1
+ 749 0027 06       		.byte	0x6
+ 750 0028 C7020000 		.4byte	.LASF0
+ 751 002c 02       		.uleb128 0x2
+ 752 002d 01       		.byte	0x1
+ 753 002e 08       		.byte	0x8
+ 754 002f 81000000 		.4byte	.LASF1
+ 755 0033 02       		.uleb128 0x2
+ 756 0034 02       		.byte	0x2
+ 757 0035 05       		.byte	0x5
+ 758 0036 5D020000 		.4byte	.LASF2
+ 759 003a 02       		.uleb128 0x2
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 17
+
+
+ 760 003b 02       		.byte	0x2
+ 761 003c 07       		.byte	0x7
+ 762 003d BE000000 		.4byte	.LASF3
+ 763 0041 02       		.uleb128 0x2
+ 764 0042 04       		.byte	0x4
+ 765 0043 05       		.byte	0x5
+ 766 0044 A8020000 		.4byte	.LASF4
+ 767 0048 02       		.uleb128 0x2
+ 768 0049 04       		.byte	0x4
+ 769 004a 07       		.byte	0x7
+ 770 004b A3000000 		.4byte	.LASF5
+ 771 004f 02       		.uleb128 0x2
+ 772 0050 08       		.byte	0x8
+ 773 0051 05       		.byte	0x5
+ 774 0052 4A020000 		.4byte	.LASF6
+ 775 0056 02       		.uleb128 0x2
+ 776 0057 08       		.byte	0x8
+ 777 0058 07       		.byte	0x7
+ 778 0059 57010000 		.4byte	.LASF7
+ 779 005d 03       		.uleb128 0x3
+ 780 005e 04       		.byte	0x4
+ 781 005f 05       		.byte	0x5
+ 782 0060 696E7400 		.ascii	"int\000"
+ 783 0064 02       		.uleb128 0x2
+ 784 0065 04       		.byte	0x4
+ 785 0066 07       		.byte	0x7
+ 786 0067 4A010000 		.4byte	.LASF8
+ 787 006b 04       		.uleb128 0x4
+ 788 006c 7B000000 		.4byte	.LASF47
+ 789 0070 08       		.byte	0x8
+ 790 0071 E401     		.2byte	0x1e4
+ 791 0073 2C000000 		.4byte	0x2c
+ 792 0077 02       		.uleb128 0x2
+ 793 0078 04       		.byte	0x4
+ 794 0079 04       		.byte	0x4
+ 795 007a 6B000000 		.4byte	.LASF9
+ 796 007e 02       		.uleb128 0x2
+ 797 007f 08       		.byte	0x8
+ 798 0080 04       		.byte	0x4
+ 799 0081 01010000 		.4byte	.LASF10
+ 800 0085 02       		.uleb128 0x2
+ 801 0086 01       		.byte	0x1
+ 802 0087 08       		.byte	0x8
+ 803 0088 58020000 		.4byte	.LASF11
+ 804 008c 05       		.uleb128 0x5
+ 805 008d 6B000000 		.4byte	0x6b
+ 806 0091 02       		.uleb128 0x2
+ 807 0092 08       		.byte	0x8
+ 808 0093 04       		.byte	0x4
+ 809 0094 BB020000 		.4byte	.LASF12
+ 810 0098 02       		.uleb128 0x2
+ 811 0099 04       		.byte	0x4
+ 812 009a 07       		.byte	0x7
+ 813 009b 41020000 		.4byte	.LASF13
+ 814 009f 06       		.uleb128 0x6
+ 815 00a0 08010000 		.4byte	.LASF14
+ 816 00a4 01       		.byte	0x1
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 18
+
+
+ 817 00a5 18       		.byte	0x18
+ 818 00a6 00000000 		.4byte	.LFB35
+ 819 00aa 18000000 		.4byte	.LFE35-.LFB35
+ 820 00ae 01       		.uleb128 0x1
+ 821 00af 9C       		.byte	0x9c
+ 822 00b0 BE000000 		.4byte	0xbe
+ 823 00b4 07       		.uleb128 0x7
+ 824 00b5 10000000 		.4byte	.LVL0
+ 825 00b9 B7050000 		.4byte	0x5b7
+ 826 00bd 00       		.byte	0
+ 827 00be 06       		.uleb128 0x6
+ 828 00bf B5000000 		.4byte	.LASF15
+ 829 00c3 01       		.byte	0x1
+ 830 00c4 1D       		.byte	0x1d
+ 831 00c5 00000000 		.4byte	.LFB36
+ 832 00c9 40000000 		.4byte	.LFE36-.LFB36
+ 833 00cd 01       		.uleb128 0x1
+ 834 00ce 9C       		.byte	0x9c
+ 835 00cf 2D010000 		.4byte	0x12d
+ 836 00d3 07       		.uleb128 0x7
+ 837 00d4 06000000 		.4byte	.LVL1
+ 838 00d8 C2050000 		.4byte	0x5c2
+ 839 00dc 08       		.uleb128 0x8
+ 840 00dd 0C000000 		.4byte	.LVL2
+ 841 00e1 CD050000 		.4byte	0x5cd
+ 842 00e5 EF000000 		.4byte	0xef
+ 843 00e9 09       		.uleb128 0x9
+ 844 00ea 01       		.uleb128 0x1
+ 845 00eb 50       		.byte	0x50
+ 846 00ec 01       		.uleb128 0x1
+ 847 00ed 31       		.byte	0x31
+ 848 00ee 00       		.byte	0
+ 849 00ef 08       		.uleb128 0x8
+ 850 00f0 26000000 		.4byte	.LVL3
+ 851 00f4 D8050000 		.4byte	0x5d8
+ 852 00f8 07010000 		.4byte	0x107
+ 853 00fc 09       		.uleb128 0x9
+ 854 00fd 01       		.uleb128 0x1
+ 855 00fe 50       		.byte	0x50
+ 856 00ff 01       		.uleb128 0x1
+ 857 0100 30       		.byte	0x30
+ 858 0101 09       		.uleb128 0x9
+ 859 0102 01       		.uleb128 0x1
+ 860 0103 51       		.byte	0x51
+ 861 0104 01       		.uleb128 0x1
+ 862 0105 30       		.byte	0x30
+ 863 0106 00       		.byte	0
+ 864 0107 08       		.uleb128 0x8
+ 865 0108 2C000000 		.4byte	.LVL4
+ 866 010c E3050000 		.4byte	0x5e3
+ 867 0110 1B010000 		.4byte	0x11b
+ 868 0114 09       		.uleb128 0x9
+ 869 0115 01       		.uleb128 0x1
+ 870 0116 50       		.byte	0x50
+ 871 0117 02       		.uleb128 0x2
+ 872 0118 74       		.byte	0x74
+ 873 0119 00       		.sleb128 0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 19
+
+
+ 874 011a 00       		.byte	0
+ 875 011b 0A       		.uleb128 0xa
+ 876 011c 32000000 		.4byte	.LVL5
+ 877 0120 EE050000 		.4byte	0x5ee
+ 878 0124 09       		.uleb128 0x9
+ 879 0125 01       		.uleb128 0x1
+ 880 0126 50       		.byte	0x50
+ 881 0127 03       		.uleb128 0x3
+ 882 0128 0A       		.byte	0xa
+ 883 0129 7017     		.2byte	0x1770
+ 884 012b 00       		.byte	0
+ 885 012c 00       		.byte	0
+ 886 012d 06       		.uleb128 0x6
+ 887 012e D1000000 		.4byte	.LASF16
+ 888 0132 01       		.byte	0x1
+ 889 0133 26       		.byte	0x26
+ 890 0134 00000000 		.4byte	.LFB37
+ 891 0138 18000000 		.4byte	.LFE37-.LFB37
+ 892 013c 01       		.uleb128 0x1
+ 893 013d 9C       		.byte	0x9c
+ 894 013e 72010000 		.4byte	0x172
+ 895 0142 07       		.uleb128 0x7
+ 896 0143 06000000 		.4byte	.LVL6
+ 897 0147 F9050000 		.4byte	0x5f9
+ 898 014b 08       		.uleb128 0x8
+ 899 014c 0C000000 		.4byte	.LVL7
+ 900 0150 05060000 		.4byte	0x605
+ 901 0154 5E010000 		.4byte	0x15e
+ 902 0158 09       		.uleb128 0x9
+ 903 0159 01       		.uleb128 0x1
+ 904 015a 50       		.byte	0x50
+ 905 015b 01       		.uleb128 0x1
+ 906 015c 30       		.byte	0x30
+ 907 015d 00       		.byte	0
+ 908 015e 0A       		.uleb128 0xa
+ 909 015f 12000000 		.4byte	.LVL8
+ 910 0163 11060000 		.4byte	0x611
+ 911 0167 09       		.uleb128 0x9
+ 912 0168 01       		.uleb128 0x1
+ 913 0169 50       		.byte	0x50
+ 914 016a 05       		.uleb128 0x5
+ 915 016b 03       		.byte	0x3
+ 916 016c 00000000 		.4byte	Enc_Sw_Handler
+ 917 0170 00       		.byte	0
+ 918 0171 00       		.byte	0
+ 919 0172 06       		.uleb128 0x6
+ 920 0173 6E010000 		.4byte	.LASF17
+ 921 0177 01       		.byte	0x1
+ 922 0178 2C       		.byte	0x2c
+ 923 0179 00000000 		.4byte	.LFB38
+ 924 017d 00010000 		.4byte	.LFE38-.LFB38
+ 925 0181 01       		.uleb128 0x1
+ 926 0182 9C       		.byte	0x9c
+ 927 0183 9E020000 		.4byte	0x29e
+ 928 0187 08       		.uleb128 0x8
+ 929 0188 08000000 		.4byte	.LVL9
+ 930 018c CD050000 		.4byte	0x5cd
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 20
+
+
+ 931 0190 9A010000 		.4byte	0x19a
+ 932 0194 09       		.uleb128 0x9
+ 933 0195 01       		.uleb128 0x1
+ 934 0196 50       		.byte	0x50
+ 935 0197 01       		.uleb128 0x1
+ 936 0198 31       		.byte	0x31
+ 937 0199 00       		.byte	0
+ 938 019a 08       		.uleb128 0x8
+ 939 019b 24000000 		.4byte	.LVL10
+ 940 019f D8050000 		.4byte	0x5d8
+ 941 01a3 B2010000 		.4byte	0x1b2
+ 942 01a7 09       		.uleb128 0x9
+ 943 01a8 01       		.uleb128 0x1
+ 944 01a9 50       		.byte	0x50
+ 945 01aa 01       		.uleb128 0x1
+ 946 01ab 30       		.byte	0x30
+ 947 01ac 09       		.uleb128 0x9
+ 948 01ad 01       		.uleb128 0x1
+ 949 01ae 51       		.byte	0x51
+ 950 01af 01       		.uleb128 0x1
+ 951 01b0 30       		.byte	0x30
+ 952 01b1 00       		.byte	0
+ 953 01b2 08       		.uleb128 0x8
+ 954 01b3 2A000000 		.4byte	.LVL11
+ 955 01b7 E3050000 		.4byte	0x5e3
+ 956 01bb C6010000 		.4byte	0x1c6
+ 957 01bf 09       		.uleb128 0x9
+ 958 01c0 01       		.uleb128 0x1
+ 959 01c1 50       		.byte	0x50
+ 960 01c2 02       		.uleb128 0x2
+ 961 01c3 74       		.byte	0x74
+ 962 01c4 04       		.sleb128 4
+ 963 01c5 00       		.byte	0
+ 964 01c6 08       		.uleb128 0x8
+ 965 01c7 52000000 		.4byte	.LVL12
+ 966 01cb 1C060000 		.4byte	0x61c
+ 967 01cf E3010000 		.4byte	0x1e3
+ 968 01d3 09       		.uleb128 0x9
+ 969 01d4 01       		.uleb128 0x1
+ 970 01d5 50       		.byte	0x50
+ 971 01d6 02       		.uleb128 0x2
+ 972 01d7 74       		.byte	0x74
+ 973 01d8 00       		.sleb128 0
+ 974 01d9 09       		.uleb128 0x9
+ 975 01da 01       		.uleb128 0x1
+ 976 01db 51       		.byte	0x51
+ 977 01dc 05       		.uleb128 0x5
+ 978 01dd 03       		.byte	0x3
+ 979 01de 08000000 		.4byte	.LC11
+ 980 01e2 00       		.byte	0
+ 981 01e3 08       		.uleb128 0x8
+ 982 01e4 5A000000 		.4byte	.LVL13
+ 983 01e8 D8050000 		.4byte	0x5d8
+ 984 01ec FB010000 		.4byte	0x1fb
+ 985 01f0 09       		.uleb128 0x9
+ 986 01f1 01       		.uleb128 0x1
+ 987 01f2 50       		.byte	0x50
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 21
+
+
+ 988 01f3 01       		.uleb128 0x1
+ 989 01f4 31       		.byte	0x31
+ 990 01f5 09       		.uleb128 0x9
+ 991 01f6 01       		.uleb128 0x1
+ 992 01f7 51       		.byte	0x51
+ 993 01f8 01       		.uleb128 0x1
+ 994 01f9 30       		.byte	0x30
+ 995 01fa 00       		.byte	0
+ 996 01fb 08       		.uleb128 0x8
+ 997 01fc 60000000 		.4byte	.LVL14
+ 998 0200 E3050000 		.4byte	0x5e3
+ 999 0204 0F020000 		.4byte	0x20f
+ 1000 0208 09       		.uleb128 0x9
+ 1001 0209 01       		.uleb128 0x1
+ 1002 020a 50       		.byte	0x50
+ 1003 020b 02       		.uleb128 0x2
+ 1004 020c 74       		.byte	0x74
+ 1005 020d 00       		.sleb128 0
+ 1006 020e 00       		.byte	0
+ 1007 020f 08       		.uleb128 0x8
+ 1008 0210 8C000000 		.4byte	.LVL15
+ 1009 0214 1C060000 		.4byte	0x61c
+ 1010 0218 2C020000 		.4byte	0x22c
+ 1011 021c 09       		.uleb128 0x9
+ 1012 021d 01       		.uleb128 0x1
+ 1013 021e 50       		.byte	0x50
+ 1014 021f 02       		.uleb128 0x2
+ 1015 0220 74       		.byte	0x74
+ 1016 0221 00       		.sleb128 0
+ 1017 0222 09       		.uleb128 0x9
+ 1018 0223 01       		.uleb128 0x1
+ 1019 0224 51       		.byte	0x51
+ 1020 0225 05       		.uleb128 0x5
+ 1021 0226 03       		.byte	0x3
+ 1022 0227 0C000000 		.4byte	.LC14
+ 1023 022b 00       		.byte	0
+ 1024 022c 08       		.uleb128 0x8
+ 1025 022d 94000000 		.4byte	.LVL16
+ 1026 0231 D8050000 		.4byte	0x5d8
+ 1027 0235 44020000 		.4byte	0x244
+ 1028 0239 09       		.uleb128 0x9
+ 1029 023a 01       		.uleb128 0x1
+ 1030 023b 50       		.byte	0x50
+ 1031 023c 01       		.uleb128 0x1
+ 1032 023d 31       		.byte	0x31
+ 1033 023e 09       		.uleb128 0x9
+ 1034 023f 01       		.uleb128 0x1
+ 1035 0240 51       		.byte	0x51
+ 1036 0241 01       		.uleb128 0x1
+ 1037 0242 30       		.byte	0x30
+ 1038 0243 00       		.byte	0
+ 1039 0244 08       		.uleb128 0x8
+ 1040 0245 9A000000 		.4byte	.LVL17
+ 1041 0249 E3050000 		.4byte	0x5e3
+ 1042 024d 58020000 		.4byte	0x258
+ 1043 0251 09       		.uleb128 0x9
+ 1044 0252 01       		.uleb128 0x1
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 22
+
+
+ 1045 0253 50       		.byte	0x50
+ 1046 0254 02       		.uleb128 0x2
+ 1047 0255 74       		.byte	0x74
+ 1048 0256 00       		.sleb128 0
+ 1049 0257 00       		.byte	0
+ 1050 0258 08       		.uleb128 0x8
+ 1051 0259 CA000000 		.4byte	.LVL18
+ 1052 025d 1C060000 		.4byte	0x61c
+ 1053 0261 75020000 		.4byte	0x275
+ 1054 0265 09       		.uleb128 0x9
+ 1055 0266 01       		.uleb128 0x1
+ 1056 0267 50       		.byte	0x50
+ 1057 0268 02       		.uleb128 0x2
+ 1058 0269 74       		.byte	0x74
+ 1059 026a 00       		.sleb128 0
+ 1060 026b 09       		.uleb128 0x9
+ 1061 026c 01       		.uleb128 0x1
+ 1062 026d 51       		.byte	0x51
+ 1063 026e 05       		.uleb128 0x5
+ 1064 026f 03       		.byte	0x3
+ 1065 0270 10000000 		.4byte	.LC17
+ 1066 0274 00       		.byte	0
+ 1067 0275 08       		.uleb128 0x8
+ 1068 0276 D2000000 		.4byte	.LVL19
+ 1069 027a D8050000 		.4byte	0x5d8
+ 1070 027e 8D020000 		.4byte	0x28d
+ 1071 0282 09       		.uleb128 0x9
+ 1072 0283 01       		.uleb128 0x1
+ 1073 0284 50       		.byte	0x50
+ 1074 0285 01       		.uleb128 0x1
+ 1075 0286 31       		.byte	0x31
+ 1076 0287 09       		.uleb128 0x9
+ 1077 0288 01       		.uleb128 0x1
+ 1078 0289 51       		.byte	0x51
+ 1079 028a 01       		.uleb128 0x1
+ 1080 028b 30       		.byte	0x30
+ 1081 028c 00       		.byte	0
+ 1082 028d 0A       		.uleb128 0xa
+ 1083 028e D8000000 		.4byte	.LVL20
+ 1084 0292 E3050000 		.4byte	0x5e3
+ 1085 0296 09       		.uleb128 0x9
+ 1086 0297 01       		.uleb128 0x1
+ 1087 0298 50       		.byte	0x50
+ 1088 0299 02       		.uleb128 0x2
+ 1089 029a 74       		.byte	0x74
+ 1090 029b 00       		.sleb128 0
+ 1091 029c 00       		.byte	0
+ 1092 029d 00       		.byte	0
+ 1093 029e 06       		.uleb128 0x6
+ 1094 029f 53000000 		.4byte	.LASF18
+ 1095 02a3 01       		.byte	0x1
+ 1096 02a4 42       		.byte	0x42
+ 1097 02a5 00000000 		.4byte	.LFB39
+ 1098 02a9 50000000 		.4byte	.LFE39-.LFB39
+ 1099 02ad 01       		.uleb128 0x1
+ 1100 02ae 9C       		.byte	0x9c
+ 1101 02af 38030000 		.4byte	0x338
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 23
+
+
+ 1102 02b3 08       		.uleb128 0x8
+ 1103 02b4 08000000 		.4byte	.LVL21
+ 1104 02b8 CD050000 		.4byte	0x5cd
+ 1105 02bc C6020000 		.4byte	0x2c6
+ 1106 02c0 09       		.uleb128 0x9
+ 1107 02c1 01       		.uleb128 0x1
+ 1108 02c2 50       		.byte	0x50
+ 1109 02c3 01       		.uleb128 0x1
+ 1110 02c4 31       		.byte	0x31
+ 1111 02c5 00       		.byte	0
+ 1112 02c6 08       		.uleb128 0x8
+ 1113 02c7 20000000 		.4byte	.LVL22
+ 1114 02cb D8050000 		.4byte	0x5d8
+ 1115 02cf DE020000 		.4byte	0x2de
+ 1116 02d3 09       		.uleb128 0x9
+ 1117 02d4 01       		.uleb128 0x1
+ 1118 02d5 50       		.byte	0x50
+ 1119 02d6 01       		.uleb128 0x1
+ 1120 02d7 30       		.byte	0x30
+ 1121 02d8 09       		.uleb128 0x9
+ 1122 02d9 01       		.uleb128 0x1
+ 1123 02da 51       		.byte	0x51
+ 1124 02db 01       		.uleb128 0x1
+ 1125 02dc 30       		.byte	0x30
+ 1126 02dd 00       		.byte	0
+ 1127 02de 08       		.uleb128 0x8
+ 1128 02df 26000000 		.4byte	.LVL23
+ 1129 02e3 E3050000 		.4byte	0x5e3
+ 1130 02e7 F2020000 		.4byte	0x2f2
+ 1131 02eb 09       		.uleb128 0x9
+ 1132 02ec 01       		.uleb128 0x1
+ 1133 02ed 50       		.byte	0x50
+ 1134 02ee 02       		.uleb128 0x2
+ 1135 02ef 75       		.byte	0x75
+ 1136 02f0 00       		.sleb128 0
+ 1137 02f1 00       		.byte	0
+ 1138 02f2 08       		.uleb128 0x8
+ 1139 02f3 32000000 		.4byte	.LVL24
+ 1140 02f7 1C060000 		.4byte	0x61c
+ 1141 02fb 0F030000 		.4byte	0x30f
+ 1142 02ff 09       		.uleb128 0x9
+ 1143 0300 01       		.uleb128 0x1
+ 1144 0301 50       		.byte	0x50
+ 1145 0302 02       		.uleb128 0x2
+ 1146 0303 74       		.byte	0x74
+ 1147 0304 00       		.sleb128 0
+ 1148 0305 09       		.uleb128 0x9
+ 1149 0306 01       		.uleb128 0x1
+ 1150 0307 51       		.byte	0x51
+ 1151 0308 05       		.uleb128 0x5
+ 1152 0309 03       		.byte	0x3
+ 1153 030a 3C000000 		.4byte	.LC24
+ 1154 030e 00       		.byte	0
+ 1155 030f 08       		.uleb128 0x8
+ 1156 0310 3A000000 		.4byte	.LVL25
+ 1157 0314 D8050000 		.4byte	0x5d8
+ 1158 0318 27030000 		.4byte	0x327
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 24
+
+
+ 1159 031c 09       		.uleb128 0x9
+ 1160 031d 01       		.uleb128 0x1
+ 1161 031e 50       		.byte	0x50
+ 1162 031f 01       		.uleb128 0x1
+ 1163 0320 31       		.byte	0x31
+ 1164 0321 09       		.uleb128 0x9
+ 1165 0322 01       		.uleb128 0x1
+ 1166 0323 51       		.byte	0x51
+ 1167 0324 01       		.uleb128 0x1
+ 1168 0325 30       		.byte	0x30
+ 1169 0326 00       		.byte	0
+ 1170 0327 0A       		.uleb128 0xa
+ 1171 0328 40000000 		.4byte	.LVL26
+ 1172 032c E3050000 		.4byte	0x5e3
+ 1173 0330 09       		.uleb128 0x9
+ 1174 0331 01       		.uleb128 0x1
+ 1175 0332 50       		.byte	0x50
+ 1176 0333 02       		.uleb128 0x2
+ 1177 0334 74       		.byte	0x74
+ 1178 0335 00       		.sleb128 0
+ 1179 0336 00       		.byte	0
+ 1180 0337 00       		.byte	0
+ 1181 0338 06       		.uleb128 0x6
+ 1182 0339 86020000 		.4byte	.LASF19
+ 1183 033d 01       		.byte	0x1
+ 1184 033e 4C       		.byte	0x4c
+ 1185 033f 00000000 		.4byte	.LFB40
+ 1186 0343 50000000 		.4byte	.LFE40-.LFB40
+ 1187 0347 01       		.uleb128 0x1
+ 1188 0348 9C       		.byte	0x9c
+ 1189 0349 D2030000 		.4byte	0x3d2
+ 1190 034d 08       		.uleb128 0x8
+ 1191 034e 08000000 		.4byte	.LVL27
+ 1192 0352 CD050000 		.4byte	0x5cd
+ 1193 0356 60030000 		.4byte	0x360
+ 1194 035a 09       		.uleb128 0x9
+ 1195 035b 01       		.uleb128 0x1
+ 1196 035c 50       		.byte	0x50
+ 1197 035d 01       		.uleb128 0x1
+ 1198 035e 31       		.byte	0x31
+ 1199 035f 00       		.byte	0
+ 1200 0360 08       		.uleb128 0x8
+ 1201 0361 20000000 		.4byte	.LVL28
+ 1202 0365 D8050000 		.4byte	0x5d8
+ 1203 0369 78030000 		.4byte	0x378
+ 1204 036d 09       		.uleb128 0x9
+ 1205 036e 01       		.uleb128 0x1
+ 1206 036f 50       		.byte	0x50
+ 1207 0370 01       		.uleb128 0x1
+ 1208 0371 30       		.byte	0x30
+ 1209 0372 09       		.uleb128 0x9
+ 1210 0373 01       		.uleb128 0x1
+ 1211 0374 51       		.byte	0x51
+ 1212 0375 01       		.uleb128 0x1
+ 1213 0376 30       		.byte	0x30
+ 1214 0377 00       		.byte	0
+ 1215 0378 08       		.uleb128 0x8
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 25
+
+
+ 1216 0379 26000000 		.4byte	.LVL29
+ 1217 037d E3050000 		.4byte	0x5e3
+ 1218 0381 8C030000 		.4byte	0x38c
+ 1219 0385 09       		.uleb128 0x9
+ 1220 0386 01       		.uleb128 0x1
+ 1221 0387 50       		.byte	0x50
+ 1222 0388 02       		.uleb128 0x2
+ 1223 0389 75       		.byte	0x75
+ 1224 038a 00       		.sleb128 0
+ 1225 038b 00       		.byte	0
+ 1226 038c 08       		.uleb128 0x8
+ 1227 038d 34000000 		.4byte	.LVL30
+ 1228 0391 1C060000 		.4byte	0x61c
+ 1229 0395 A9030000 		.4byte	0x3a9
+ 1230 0399 09       		.uleb128 0x9
+ 1231 039a 01       		.uleb128 0x1
+ 1232 039b 50       		.byte	0x50
+ 1233 039c 02       		.uleb128 0x2
+ 1234 039d 74       		.byte	0x74
+ 1235 039e 00       		.sleb128 0
+ 1236 039f 09       		.uleb128 0x9
+ 1237 03a0 01       		.uleb128 0x1
+ 1238 03a1 51       		.byte	0x51
+ 1239 03a2 05       		.uleb128 0x5
+ 1240 03a3 03       		.byte	0x3
+ 1241 03a4 3C000000 		.4byte	.LC24
+ 1242 03a8 00       		.byte	0
+ 1243 03a9 08       		.uleb128 0x8
+ 1244 03aa 3C000000 		.4byte	.LVL31
+ 1245 03ae D8050000 		.4byte	0x5d8
+ 1246 03b2 C1030000 		.4byte	0x3c1
+ 1247 03b6 09       		.uleb128 0x9
+ 1248 03b7 01       		.uleb128 0x1
+ 1249 03b8 50       		.byte	0x50
+ 1250 03b9 01       		.uleb128 0x1
+ 1251 03ba 31       		.byte	0x31
+ 1252 03bb 09       		.uleb128 0x9
+ 1253 03bc 01       		.uleb128 0x1
+ 1254 03bd 51       		.byte	0x51
+ 1255 03be 01       		.uleb128 0x1
+ 1256 03bf 30       		.byte	0x30
+ 1257 03c0 00       		.byte	0
+ 1258 03c1 0A       		.uleb128 0xa
+ 1259 03c2 42000000 		.4byte	.LVL32
+ 1260 03c6 E3050000 		.4byte	0x5e3
+ 1261 03ca 09       		.uleb128 0x9
+ 1262 03cb 01       		.uleb128 0x1
+ 1263 03cc 50       		.byte	0x50
+ 1264 03cd 02       		.uleb128 0x2
+ 1265 03ce 74       		.byte	0x74
+ 1266 03cf 00       		.sleb128 0
+ 1267 03d0 00       		.byte	0
+ 1268 03d1 00       		.byte	0
+ 1269 03d2 06       		.uleb128 0x6
+ 1270 03d3 DA000000 		.4byte	.LASF20
+ 1271 03d7 01       		.byte	0x1
+ 1272 03d8 56       		.byte	0x56
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 26
+
+
+ 1273 03d9 00000000 		.4byte	.LFB41
+ 1274 03dd 54000000 		.4byte	.LFE41-.LFB41
+ 1275 03e1 01       		.uleb128 0x1
+ 1276 03e2 9C       		.byte	0x9c
+ 1277 03e3 6C040000 		.4byte	0x46c
+ 1278 03e7 08       		.uleb128 0x8
+ 1279 03e8 08000000 		.4byte	.LVL33
+ 1280 03ec CD050000 		.4byte	0x5cd
+ 1281 03f0 FA030000 		.4byte	0x3fa
+ 1282 03f4 09       		.uleb128 0x9
+ 1283 03f5 01       		.uleb128 0x1
+ 1284 03f6 50       		.byte	0x50
+ 1285 03f7 01       		.uleb128 0x1
+ 1286 03f8 31       		.byte	0x31
+ 1287 03f9 00       		.byte	0
+ 1288 03fa 08       		.uleb128 0x8
+ 1289 03fb 24000000 		.4byte	.LVL34
+ 1290 03ff D8050000 		.4byte	0x5d8
+ 1291 0403 12040000 		.4byte	0x412
+ 1292 0407 09       		.uleb128 0x9
+ 1293 0408 01       		.uleb128 0x1
+ 1294 0409 50       		.byte	0x50
+ 1295 040a 01       		.uleb128 0x1
+ 1296 040b 30       		.byte	0x30
+ 1297 040c 09       		.uleb128 0x9
+ 1298 040d 01       		.uleb128 0x1
+ 1299 040e 51       		.byte	0x51
+ 1300 040f 01       		.uleb128 0x1
+ 1301 0410 30       		.byte	0x30
+ 1302 0411 00       		.byte	0
+ 1303 0412 08       		.uleb128 0x8
+ 1304 0413 2A000000 		.4byte	.LVL35
+ 1305 0417 E3050000 		.4byte	0x5e3
+ 1306 041b 26040000 		.4byte	0x426
+ 1307 041f 09       		.uleb128 0x9
+ 1308 0420 01       		.uleb128 0x1
+ 1309 0421 50       		.byte	0x50
+ 1310 0422 02       		.uleb128 0x2
+ 1311 0423 74       		.byte	0x74
+ 1312 0424 04       		.sleb128 4
+ 1313 0425 00       		.byte	0
+ 1314 0426 08       		.uleb128 0x8
+ 1315 0427 38000000 		.4byte	.LVL36
+ 1316 042b 1C060000 		.4byte	0x61c
+ 1317 042f 43040000 		.4byte	0x443
+ 1318 0433 09       		.uleb128 0x9
+ 1319 0434 01       		.uleb128 0x1
+ 1320 0435 50       		.byte	0x50
+ 1321 0436 02       		.uleb128 0x2
+ 1322 0437 74       		.byte	0x74
+ 1323 0438 00       		.sleb128 0
+ 1324 0439 09       		.uleb128 0x9
+ 1325 043a 01       		.uleb128 0x1
+ 1326 043b 51       		.byte	0x51
+ 1327 043c 05       		.uleb128 0x5
+ 1328 043d 03       		.byte	0x3
+ 1329 043e 3C000000 		.4byte	.LC24
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 27
+
+
+ 1330 0442 00       		.byte	0
+ 1331 0443 08       		.uleb128 0x8
+ 1332 0444 40000000 		.4byte	.LVL37
+ 1333 0448 D8050000 		.4byte	0x5d8
+ 1334 044c 5B040000 		.4byte	0x45b
+ 1335 0450 09       		.uleb128 0x9
+ 1336 0451 01       		.uleb128 0x1
+ 1337 0452 50       		.byte	0x50
+ 1338 0453 01       		.uleb128 0x1
+ 1339 0454 31       		.byte	0x31
+ 1340 0455 09       		.uleb128 0x9
+ 1341 0456 01       		.uleb128 0x1
+ 1342 0457 51       		.byte	0x51
+ 1343 0458 01       		.uleb128 0x1
+ 1344 0459 30       		.byte	0x30
+ 1345 045a 00       		.byte	0
+ 1346 045b 0A       		.uleb128 0xa
+ 1347 045c 46000000 		.4byte	.LVL38
+ 1348 0460 E3050000 		.4byte	0x5e3
+ 1349 0464 09       		.uleb128 0x9
+ 1350 0465 01       		.uleb128 0x1
+ 1351 0466 50       		.byte	0x50
+ 1352 0467 02       		.uleb128 0x2
+ 1353 0468 74       		.byte	0x74
+ 1354 0469 00       		.sleb128 0
+ 1355 046a 00       		.byte	0
+ 1356 046b 00       		.byte	0
+ 1357 046c 0B       		.uleb128 0xb
+ 1358 046d 7D020000 		.4byte	.LASF48
+ 1359 0471 01       		.byte	0x1
+ 1360 0472 60       		.byte	0x60
+ 1361 0473 6B000000 		.4byte	0x6b
+ 1362 0477 00000000 		.4byte	.LFB42
+ 1363 047b 28000000 		.4byte	.LFE42-.LFB42
+ 1364 047f 01       		.uleb128 0x1
+ 1365 0480 9C       		.byte	0x9c
+ 1366 0481 C0040000 		.4byte	0x4c0
+ 1367 0485 0C       		.uleb128 0xc
+ 1368 0486 E9000000 		.4byte	.LASF22
+ 1369 048a 01       		.byte	0x1
+ 1370 048b 61       		.byte	0x61
+ 1371 048c 6B000000 		.4byte	0x6b
+ 1372 0490 00000000 		.4byte	.LLST0
+ 1373 0494 07       		.uleb128 0x7
+ 1374 0495 06000000 		.4byte	.LVL40
+ 1375 0499 27060000 		.4byte	0x627
+ 1376 049d 08       		.uleb128 0x8
+ 1377 049e 18000000 		.4byte	.LVL43
+ 1378 04a2 05060000 		.4byte	0x605
+ 1379 04a6 B0040000 		.4byte	0x4b0
+ 1380 04aa 09       		.uleb128 0x9
+ 1381 04ab 01       		.uleb128 0x1
+ 1382 04ac 50       		.byte	0x50
+ 1383 04ad 01       		.uleb128 0x1
+ 1384 04ae 44       		.byte	0x44
+ 1385 04af 00       		.byte	0
+ 1386 04b0 0A       		.uleb128 0xa
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 28
+
+
+ 1387 04b1 24000000 		.4byte	.LVL46
+ 1388 04b5 05060000 		.4byte	0x605
+ 1389 04b9 09       		.uleb128 0x9
+ 1390 04ba 01       		.uleb128 0x1
+ 1391 04bb 50       		.byte	0x50
+ 1392 04bc 01       		.uleb128 0x1
+ 1393 04bd 30       		.byte	0x30
+ 1394 04be 00       		.byte	0
+ 1395 04bf 00       		.byte	0
+ 1396 04c0 06       		.uleb128 0x6
+ 1397 04c1 1F000000 		.4byte	.LASF21
+ 1398 04c5 01       		.byte	0x1
+ 1399 04c6 6E       		.byte	0x6e
+ 1400 04c7 00000000 		.4byte	.LFB43
+ 1401 04cb 64000000 		.4byte	.LFE43-.LFB43
+ 1402 04cf 01       		.uleb128 0x1
+ 1403 04d0 9C       		.byte	0x9c
+ 1404 04d1 15050000 		.4byte	0x515
+ 1405 04d5 07       		.uleb128 0x7
+ 1406 04d6 0E000000 		.4byte	.LVL48
+ 1407 04da 72010000 		.4byte	0x172
+ 1408 04de 07       		.uleb128 0x7
+ 1409 04df 1C000000 		.4byte	.LVL49
+ 1410 04e3 6C040000 		.4byte	0x46c
+ 1411 04e7 07       		.uleb128 0x7
+ 1412 04e8 24000000 		.4byte	.LVL50
+ 1413 04ec 9E020000 		.4byte	0x29e
+ 1414 04f0 07       		.uleb128 0x7
+ 1415 04f1 32000000 		.4byte	.LVL51
+ 1416 04f5 6C040000 		.4byte	0x46c
+ 1417 04f9 07       		.uleb128 0x7
+ 1418 04fa 3C000000 		.4byte	.LVL52
+ 1419 04fe D2030000 		.4byte	0x3d2
+ 1420 0502 07       		.uleb128 0x7
+ 1421 0503 4A000000 		.4byte	.LVL53
+ 1422 0507 6C040000 		.4byte	0x46c
+ 1423 050b 07       		.uleb128 0x7
+ 1424 050c 54000000 		.4byte	.LVL54
+ 1425 0510 38030000 		.4byte	0x338
+ 1426 0514 00       		.byte	0
+ 1427 0515 0D       		.uleb128 0xd
+ 1428 0516 85000000 		.4byte	0x85
+ 1429 051a 25050000 		.4byte	0x525
+ 1430 051e 0E       		.uleb128 0xe
+ 1431 051f 98000000 		.4byte	0x98
+ 1432 0523 10       		.byte	0x10
+ 1433 0524 00       		.byte	0
+ 1434 0525 0F       		.uleb128 0xf
+ 1435 0526 00000000 		.4byte	.LASF23
+ 1436 052a 01       		.byte	0x1
+ 1437 052b 07       		.byte	0x7
+ 1438 052c 15050000 		.4byte	0x515
+ 1439 0530 05       		.uleb128 0x5
+ 1440 0531 03       		.byte	0x3
+ 1441 0532 04000000 		.4byte	buf1
+ 1442 0536 0F       		.uleb128 0xf
+ 1443 0537 05000000 		.4byte	.LASF24
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 29
+
+
+ 1444 053b 01       		.byte	0x1
+ 1445 053c 08       		.byte	0x8
+ 1446 053d 15050000 		.4byte	0x515
+ 1447 0541 05       		.uleb128 0x5
+ 1448 0542 03       		.byte	0x3
+ 1449 0543 18000000 		.4byte	buf2
+ 1450 0547 10       		.uleb128 0x10
+ 1451 0548 B1020000 		.4byte	.LASF25
+ 1452 054c 01       		.byte	0x1
+ 1453 054d 04       		.byte	0x4
+ 1454 054e 6B000000 		.4byte	0x6b
+ 1455 0552 10       		.uleb128 0x10
+ 1456 0553 F7000000 		.4byte	.LASF26
+ 1457 0557 01       		.byte	0x1
+ 1458 0558 05       		.byte	0x5
+ 1459 0559 6B000000 		.4byte	0x6b
+ 1460 055d 10       		.uleb128 0x10
+ 1461 055e 9D010000 		.4byte	.LASF27
+ 1462 0562 01       		.byte	0x1
+ 1463 0563 0A       		.byte	0xa
+ 1464 0564 8C000000 		.4byte	0x8c
+ 1465 0568 10       		.uleb128 0x10
+ 1466 0569 DC020000 		.4byte	.LASF28
+ 1467 056d 01       		.byte	0x1
+ 1468 056e 0B       		.byte	0xb
+ 1469 056f 8C000000 		.4byte	0x8c
+ 1470 0573 11       		.uleb128 0x11
+ 1471 0574 30020000 		.4byte	.LASF29
+ 1472 0578 01       		.byte	0x1
+ 1473 0579 0C       		.byte	0xc
+ 1474 057a 8C000000 		.4byte	0x8c
+ 1475 057e 05       		.uleb128 0x5
+ 1476 057f 03       		.byte	0x3
+ 1477 0580 00000000 		.4byte	status_set_color
+ 1478 0584 11       		.uleb128 0x11
+ 1479 0585 D3020000 		.4byte	.LASF30
+ 1480 0589 01       		.byte	0x1
+ 1481 058a 0E       		.byte	0xe
+ 1482 058b 6B000000 		.4byte	0x6b
+ 1483 058f 05       		.uleb128 0x5
+ 1484 0590 03       		.byte	0x3
+ 1485 0591 00000000 		.4byte	time_red
+ 1486 0595 11       		.uleb128 0x11
+ 1487 0596 5F000000 		.4byte	.LASF31
+ 1488 059a 01       		.byte	0x1
+ 1489 059b 0F       		.byte	0xf
+ 1490 059c 6B000000 		.4byte	0x6b
+ 1491 05a0 05       		.uleb128 0x5
+ 1492 05a1 03       		.byte	0x3
+ 1493 05a2 00000000 		.4byte	time_yellow
+ 1494 05a6 11       		.uleb128 0x11
+ 1495 05a7 FD020000 		.4byte	.LASF32
+ 1496 05ab 01       		.byte	0x1
+ 1497 05ac 10       		.byte	0x10
+ 1498 05ad 6B000000 		.4byte	0x6b
+ 1499 05b1 05       		.uleb128 0x5
+ 1500 05b2 03       		.byte	0x3
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 30
+
+
+ 1501 05b3 00000000 		.4byte	time_green
+ 1502 05b7 12       		.uleb128 0x12
+ 1503 05b8 67020000 		.4byte	.LASF33
+ 1504 05bc 67020000 		.4byte	.LASF33
+ 1505 05c0 02       		.byte	0x2
+ 1506 05c1 39       		.byte	0x39
+ 1507 05c2 12       		.uleb128 0x12
+ 1508 05c3 71000000 		.4byte	.LASF34
+ 1509 05c7 71000000 		.4byte	.LASF34
+ 1510 05cb 03       		.byte	0x3
+ 1511 05cc 38       		.byte	0x38
+ 1512 05cd 12       		.uleb128 0x12
+ 1513 05ce 34000000 		.4byte	.LASF35
+ 1514 05d2 34000000 		.4byte	.LASF35
+ 1515 05d6 03       		.byte	0x3
+ 1516 05d7 3A       		.byte	0x3a
+ 1517 05d8 12       		.uleb128 0x12
+ 1518 05d9 7D010000 		.4byte	.LASF36
+ 1519 05dd 7D010000 		.4byte	.LASF36
+ 1520 05e1 03       		.byte	0x3
+ 1521 05e2 3D       		.byte	0x3d
+ 1522 05e3 12       		.uleb128 0x12
+ 1523 05e4 3A010000 		.4byte	.LASF37
+ 1524 05e8 3A010000 		.4byte	.LASF37
+ 1525 05ec 03       		.byte	0x3
+ 1526 05ed 3C       		.byte	0x3c
+ 1527 05ee 12       		.uleb128 0x12
+ 1528 05ef F5020000 		.4byte	.LASF38
+ 1529 05f3 F5020000 		.4byte	.LASF38
+ 1530 05f7 04       		.byte	0x4
+ 1531 05f8 D9       		.byte	0xd9
+ 1532 05f9 13       		.uleb128 0x13
+ 1533 05fa 45000000 		.4byte	.LASF39
+ 1534 05fe 45000000 		.4byte	.LASF39
+ 1535 0602 05       		.byte	0x5
+ 1536 0603 3201     		.2byte	0x132
+ 1537 0605 13       		.uleb128 0x13
+ 1538 0606 0A000000 		.4byte	.LASF40
+ 1539 060a 0A000000 		.4byte	.LASF40
+ 1540 060e 05       		.byte	0x5
+ 1541 060f 4A01     		.2byte	0x14a
+ 1542 0611 12       		.uleb128 0x12
+ 1543 0612 8A010000 		.4byte	.LASF41
+ 1544 0616 8A010000 		.4byte	.LASF41
+ 1545 061a 06       		.byte	0x6
+ 1546 061b 18       		.byte	0x18
+ 1547 061c 12       		.uleb128 0x12
+ 1548 061d ED020000 		.4byte	.LASF42
+ 1549 0621 ED020000 		.4byte	.LASF42
+ 1550 0625 07       		.byte	0x7
+ 1551 0626 E7       		.byte	0xe7
+ 1552 0627 13       		.uleb128 0x13
+ 1553 0628 94020000 		.4byte	.LASF43
+ 1554 062c 94020000 		.4byte	.LASF43
+ 1555 0630 05       		.byte	0x5
+ 1556 0631 4B01     		.2byte	0x14b
+ 1557 0633 00       		.byte	0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 31
+
+
+ 1558              		.section	.debug_abbrev,"",%progbits
+ 1559              	.Ldebug_abbrev0:
+ 1560 0000 01       		.uleb128 0x1
+ 1561 0001 11       		.uleb128 0x11
+ 1562 0002 01       		.byte	0x1
+ 1563 0003 25       		.uleb128 0x25
+ 1564 0004 0E       		.uleb128 0xe
+ 1565 0005 13       		.uleb128 0x13
+ 1566 0006 0B       		.uleb128 0xb
+ 1567 0007 03       		.uleb128 0x3
+ 1568 0008 0E       		.uleb128 0xe
+ 1569 0009 1B       		.uleb128 0x1b
+ 1570 000a 0E       		.uleb128 0xe
+ 1571 000b 55       		.uleb128 0x55
+ 1572 000c 17       		.uleb128 0x17
+ 1573 000d 11       		.uleb128 0x11
+ 1574 000e 01       		.uleb128 0x1
+ 1575 000f 10       		.uleb128 0x10
+ 1576 0010 17       		.uleb128 0x17
+ 1577 0011 00       		.byte	0
+ 1578 0012 00       		.byte	0
+ 1579 0013 02       		.uleb128 0x2
+ 1580 0014 24       		.uleb128 0x24
+ 1581 0015 00       		.byte	0
+ 1582 0016 0B       		.uleb128 0xb
+ 1583 0017 0B       		.uleb128 0xb
+ 1584 0018 3E       		.uleb128 0x3e
+ 1585 0019 0B       		.uleb128 0xb
+ 1586 001a 03       		.uleb128 0x3
+ 1587 001b 0E       		.uleb128 0xe
+ 1588 001c 00       		.byte	0
+ 1589 001d 00       		.byte	0
+ 1590 001e 03       		.uleb128 0x3
+ 1591 001f 24       		.uleb128 0x24
+ 1592 0020 00       		.byte	0
+ 1593 0021 0B       		.uleb128 0xb
+ 1594 0022 0B       		.uleb128 0xb
+ 1595 0023 3E       		.uleb128 0x3e
+ 1596 0024 0B       		.uleb128 0xb
+ 1597 0025 03       		.uleb128 0x3
+ 1598 0026 08       		.uleb128 0x8
+ 1599 0027 00       		.byte	0
+ 1600 0028 00       		.byte	0
+ 1601 0029 04       		.uleb128 0x4
+ 1602 002a 16       		.uleb128 0x16
+ 1603 002b 00       		.byte	0
+ 1604 002c 03       		.uleb128 0x3
+ 1605 002d 0E       		.uleb128 0xe
+ 1606 002e 3A       		.uleb128 0x3a
+ 1607 002f 0B       		.uleb128 0xb
+ 1608 0030 3B       		.uleb128 0x3b
+ 1609 0031 05       		.uleb128 0x5
+ 1610 0032 49       		.uleb128 0x49
+ 1611 0033 13       		.uleb128 0x13
+ 1612 0034 00       		.byte	0
+ 1613 0035 00       		.byte	0
+ 1614 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 32
+
+
+ 1615 0037 35       		.uleb128 0x35
+ 1616 0038 00       		.byte	0
+ 1617 0039 49       		.uleb128 0x49
+ 1618 003a 13       		.uleb128 0x13
+ 1619 003b 00       		.byte	0
+ 1620 003c 00       		.byte	0
+ 1621 003d 06       		.uleb128 0x6
+ 1622 003e 2E       		.uleb128 0x2e
+ 1623 003f 01       		.byte	0x1
+ 1624 0040 3F       		.uleb128 0x3f
+ 1625 0041 19       		.uleb128 0x19
+ 1626 0042 03       		.uleb128 0x3
+ 1627 0043 0E       		.uleb128 0xe
+ 1628 0044 3A       		.uleb128 0x3a
+ 1629 0045 0B       		.uleb128 0xb
+ 1630 0046 3B       		.uleb128 0x3b
+ 1631 0047 0B       		.uleb128 0xb
+ 1632 0048 27       		.uleb128 0x27
+ 1633 0049 19       		.uleb128 0x19
+ 1634 004a 11       		.uleb128 0x11
+ 1635 004b 01       		.uleb128 0x1
+ 1636 004c 12       		.uleb128 0x12
+ 1637 004d 06       		.uleb128 0x6
+ 1638 004e 40       		.uleb128 0x40
+ 1639 004f 18       		.uleb128 0x18
+ 1640 0050 9742     		.uleb128 0x2117
+ 1641 0052 19       		.uleb128 0x19
+ 1642 0053 01       		.uleb128 0x1
+ 1643 0054 13       		.uleb128 0x13
+ 1644 0055 00       		.byte	0
+ 1645 0056 00       		.byte	0
+ 1646 0057 07       		.uleb128 0x7
+ 1647 0058 898201   		.uleb128 0x4109
+ 1648 005b 00       		.byte	0
+ 1649 005c 11       		.uleb128 0x11
+ 1650 005d 01       		.uleb128 0x1
+ 1651 005e 31       		.uleb128 0x31
+ 1652 005f 13       		.uleb128 0x13
+ 1653 0060 00       		.byte	0
+ 1654 0061 00       		.byte	0
+ 1655 0062 08       		.uleb128 0x8
+ 1656 0063 898201   		.uleb128 0x4109
+ 1657 0066 01       		.byte	0x1
+ 1658 0067 11       		.uleb128 0x11
+ 1659 0068 01       		.uleb128 0x1
+ 1660 0069 31       		.uleb128 0x31
+ 1661 006a 13       		.uleb128 0x13
+ 1662 006b 01       		.uleb128 0x1
+ 1663 006c 13       		.uleb128 0x13
+ 1664 006d 00       		.byte	0
+ 1665 006e 00       		.byte	0
+ 1666 006f 09       		.uleb128 0x9
+ 1667 0070 8A8201   		.uleb128 0x410a
+ 1668 0073 00       		.byte	0
+ 1669 0074 02       		.uleb128 0x2
+ 1670 0075 18       		.uleb128 0x18
+ 1671 0076 9142     		.uleb128 0x2111
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 33
+
+
+ 1672 0078 18       		.uleb128 0x18
+ 1673 0079 00       		.byte	0
+ 1674 007a 00       		.byte	0
+ 1675 007b 0A       		.uleb128 0xa
+ 1676 007c 898201   		.uleb128 0x4109
+ 1677 007f 01       		.byte	0x1
+ 1678 0080 11       		.uleb128 0x11
+ 1679 0081 01       		.uleb128 0x1
+ 1680 0082 31       		.uleb128 0x31
+ 1681 0083 13       		.uleb128 0x13
+ 1682 0084 00       		.byte	0
+ 1683 0085 00       		.byte	0
+ 1684 0086 0B       		.uleb128 0xb
+ 1685 0087 2E       		.uleb128 0x2e
+ 1686 0088 01       		.byte	0x1
+ 1687 0089 3F       		.uleb128 0x3f
+ 1688 008a 19       		.uleb128 0x19
+ 1689 008b 03       		.uleb128 0x3
+ 1690 008c 0E       		.uleb128 0xe
+ 1691 008d 3A       		.uleb128 0x3a
+ 1692 008e 0B       		.uleb128 0xb
+ 1693 008f 3B       		.uleb128 0x3b
+ 1694 0090 0B       		.uleb128 0xb
+ 1695 0091 27       		.uleb128 0x27
+ 1696 0092 19       		.uleb128 0x19
+ 1697 0093 49       		.uleb128 0x49
+ 1698 0094 13       		.uleb128 0x13
+ 1699 0095 11       		.uleb128 0x11
+ 1700 0096 01       		.uleb128 0x1
+ 1701 0097 12       		.uleb128 0x12
+ 1702 0098 06       		.uleb128 0x6
+ 1703 0099 40       		.uleb128 0x40
+ 1704 009a 18       		.uleb128 0x18
+ 1705 009b 9742     		.uleb128 0x2117
+ 1706 009d 19       		.uleb128 0x19
+ 1707 009e 01       		.uleb128 0x1
+ 1708 009f 13       		.uleb128 0x13
+ 1709 00a0 00       		.byte	0
+ 1710 00a1 00       		.byte	0
+ 1711 00a2 0C       		.uleb128 0xc
+ 1712 00a3 34       		.uleb128 0x34
+ 1713 00a4 00       		.byte	0
+ 1714 00a5 03       		.uleb128 0x3
+ 1715 00a6 0E       		.uleb128 0xe
+ 1716 00a7 3A       		.uleb128 0x3a
+ 1717 00a8 0B       		.uleb128 0xb
+ 1718 00a9 3B       		.uleb128 0x3b
+ 1719 00aa 0B       		.uleb128 0xb
+ 1720 00ab 49       		.uleb128 0x49
+ 1721 00ac 13       		.uleb128 0x13
+ 1722 00ad 02       		.uleb128 0x2
+ 1723 00ae 17       		.uleb128 0x17
+ 1724 00af 00       		.byte	0
+ 1725 00b0 00       		.byte	0
+ 1726 00b1 0D       		.uleb128 0xd
+ 1727 00b2 01       		.uleb128 0x1
+ 1728 00b3 01       		.byte	0x1
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 34
+
+
+ 1729 00b4 49       		.uleb128 0x49
+ 1730 00b5 13       		.uleb128 0x13
+ 1731 00b6 01       		.uleb128 0x1
+ 1732 00b7 13       		.uleb128 0x13
+ 1733 00b8 00       		.byte	0
+ 1734 00b9 00       		.byte	0
+ 1735 00ba 0E       		.uleb128 0xe
+ 1736 00bb 21       		.uleb128 0x21
+ 1737 00bc 00       		.byte	0
+ 1738 00bd 49       		.uleb128 0x49
+ 1739 00be 13       		.uleb128 0x13
+ 1740 00bf 2F       		.uleb128 0x2f
+ 1741 00c0 0B       		.uleb128 0xb
+ 1742 00c1 00       		.byte	0
+ 1743 00c2 00       		.byte	0
+ 1744 00c3 0F       		.uleb128 0xf
+ 1745 00c4 34       		.uleb128 0x34
+ 1746 00c5 00       		.byte	0
+ 1747 00c6 03       		.uleb128 0x3
+ 1748 00c7 0E       		.uleb128 0xe
+ 1749 00c8 3A       		.uleb128 0x3a
+ 1750 00c9 0B       		.uleb128 0xb
+ 1751 00ca 3B       		.uleb128 0x3b
+ 1752 00cb 0B       		.uleb128 0xb
+ 1753 00cc 49       		.uleb128 0x49
+ 1754 00cd 13       		.uleb128 0x13
+ 1755 00ce 02       		.uleb128 0x2
+ 1756 00cf 18       		.uleb128 0x18
+ 1757 00d0 00       		.byte	0
+ 1758 00d1 00       		.byte	0
+ 1759 00d2 10       		.uleb128 0x10
+ 1760 00d3 34       		.uleb128 0x34
+ 1761 00d4 00       		.byte	0
+ 1762 00d5 03       		.uleb128 0x3
+ 1763 00d6 0E       		.uleb128 0xe
+ 1764 00d7 3A       		.uleb128 0x3a
+ 1765 00d8 0B       		.uleb128 0xb
+ 1766 00d9 3B       		.uleb128 0x3b
+ 1767 00da 0B       		.uleb128 0xb
+ 1768 00db 49       		.uleb128 0x49
+ 1769 00dc 13       		.uleb128 0x13
+ 1770 00dd 3F       		.uleb128 0x3f
+ 1771 00de 19       		.uleb128 0x19
+ 1772 00df 3C       		.uleb128 0x3c
+ 1773 00e0 19       		.uleb128 0x19
+ 1774 00e1 00       		.byte	0
+ 1775 00e2 00       		.byte	0
+ 1776 00e3 11       		.uleb128 0x11
+ 1777 00e4 34       		.uleb128 0x34
+ 1778 00e5 00       		.byte	0
+ 1779 00e6 03       		.uleb128 0x3
+ 1780 00e7 0E       		.uleb128 0xe
+ 1781 00e8 3A       		.uleb128 0x3a
+ 1782 00e9 0B       		.uleb128 0xb
+ 1783 00ea 3B       		.uleb128 0x3b
+ 1784 00eb 0B       		.uleb128 0xb
+ 1785 00ec 49       		.uleb128 0x49
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 35
+
+
+ 1786 00ed 13       		.uleb128 0x13
+ 1787 00ee 3F       		.uleb128 0x3f
+ 1788 00ef 19       		.uleb128 0x19
+ 1789 00f0 02       		.uleb128 0x2
+ 1790 00f1 18       		.uleb128 0x18
+ 1791 00f2 00       		.byte	0
+ 1792 00f3 00       		.byte	0
+ 1793 00f4 12       		.uleb128 0x12
+ 1794 00f5 2E       		.uleb128 0x2e
+ 1795 00f6 00       		.byte	0
+ 1796 00f7 3F       		.uleb128 0x3f
+ 1797 00f8 19       		.uleb128 0x19
+ 1798 00f9 3C       		.uleb128 0x3c
+ 1799 00fa 19       		.uleb128 0x19
+ 1800 00fb 6E       		.uleb128 0x6e
+ 1801 00fc 0E       		.uleb128 0xe
+ 1802 00fd 03       		.uleb128 0x3
+ 1803 00fe 0E       		.uleb128 0xe
+ 1804 00ff 3A       		.uleb128 0x3a
+ 1805 0100 0B       		.uleb128 0xb
+ 1806 0101 3B       		.uleb128 0x3b
+ 1807 0102 0B       		.uleb128 0xb
+ 1808 0103 00       		.byte	0
+ 1809 0104 00       		.byte	0
+ 1810 0105 13       		.uleb128 0x13
+ 1811 0106 2E       		.uleb128 0x2e
+ 1812 0107 00       		.byte	0
+ 1813 0108 3F       		.uleb128 0x3f
+ 1814 0109 19       		.uleb128 0x19
+ 1815 010a 3C       		.uleb128 0x3c
+ 1816 010b 19       		.uleb128 0x19
+ 1817 010c 6E       		.uleb128 0x6e
+ 1818 010d 0E       		.uleb128 0xe
+ 1819 010e 03       		.uleb128 0x3
+ 1820 010f 0E       		.uleb128 0xe
+ 1821 0110 3A       		.uleb128 0x3a
+ 1822 0111 0B       		.uleb128 0xb
+ 1823 0112 3B       		.uleb128 0x3b
+ 1824 0113 05       		.uleb128 0x5
+ 1825 0114 00       		.byte	0
+ 1826 0115 00       		.byte	0
+ 1827 0116 00       		.byte	0
+ 1828              		.section	.debug_loc,"",%progbits
+ 1829              	.Ldebug_loc0:
+ 1830              	.LLST0:
+ 1831 0000 02000000 		.4byte	.LVL39
+ 1832 0004 08000000 		.4byte	.LVL41
+ 1833 0008 0200     		.2byte	0x2
+ 1834 000a 30       		.byte	0x30
+ 1835 000b 9F       		.byte	0x9f
+ 1836 000c 08000000 		.4byte	.LVL41
+ 1837 0010 12000000 		.4byte	.LVL42
+ 1838 0014 0100     		.2byte	0x1
+ 1839 0016 50       		.byte	0x50
+ 1840 0017 12000000 		.4byte	.LVL42
+ 1841 001b 1A000000 		.4byte	.LVL44
+ 1842 001f 0200     		.2byte	0x2
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 36
+
+
+ 1843 0021 44       		.byte	0x44
+ 1844 0022 9F       		.byte	0x9f
+ 1845 0023 1A000000 		.4byte	.LVL44
+ 1846 0027 1E000000 		.4byte	.LVL45
+ 1847 002b 0100     		.2byte	0x1
+ 1848 002d 50       		.byte	0x50
+ 1849 002e 1E000000 		.4byte	.LVL45
+ 1850 0032 26000000 		.4byte	.LVL47
+ 1851 0036 0200     		.2byte	0x2
+ 1852 0038 30       		.byte	0x30
+ 1853 0039 9F       		.byte	0x9f
+ 1854 003a 26000000 		.4byte	.LVL47
+ 1855 003e 28000000 		.4byte	.LFE42
+ 1856 0042 0100     		.2byte	0x1
+ 1857 0044 50       		.byte	0x50
+ 1858 0045 00000000 		.4byte	0
+ 1859 0049 00000000 		.4byte	0
+ 1860              		.section	.debug_aranges,"",%progbits
+ 1861 0000 5C000000 		.4byte	0x5c
+ 1862 0004 0200     		.2byte	0x2
+ 1863 0006 00000000 		.4byte	.Ldebug_info0
+ 1864 000a 04       		.byte	0x4
+ 1865 000b 00       		.byte	0
+ 1866 000c 0000     		.2byte	0
+ 1867 000e 0000     		.2byte	0
+ 1868 0010 00000000 		.4byte	.LFB35
+ 1869 0014 18000000 		.4byte	.LFE35-.LFB35
+ 1870 0018 00000000 		.4byte	.LFB36
+ 1871 001c 40000000 		.4byte	.LFE36-.LFB36
+ 1872 0020 00000000 		.4byte	.LFB37
+ 1873 0024 18000000 		.4byte	.LFE37-.LFB37
+ 1874 0028 00000000 		.4byte	.LFB38
+ 1875 002c 00010000 		.4byte	.LFE38-.LFB38
+ 1876 0030 00000000 		.4byte	.LFB39
+ 1877 0034 50000000 		.4byte	.LFE39-.LFB39
+ 1878 0038 00000000 		.4byte	.LFB40
+ 1879 003c 50000000 		.4byte	.LFE40-.LFB40
+ 1880 0040 00000000 		.4byte	.LFB41
+ 1881 0044 54000000 		.4byte	.LFE41-.LFB41
+ 1882 0048 00000000 		.4byte	.LFB42
+ 1883 004c 28000000 		.4byte	.LFE42-.LFB42
+ 1884 0050 00000000 		.4byte	.LFB43
+ 1885 0054 64000000 		.4byte	.LFE43-.LFB43
+ 1886 0058 00000000 		.4byte	0
+ 1887 005c 00000000 		.4byte	0
+ 1888              		.section	.debug_ranges,"",%progbits
+ 1889              	.Ldebug_ranges0:
+ 1890 0000 00000000 		.4byte	.LFB35
+ 1891 0004 18000000 		.4byte	.LFE35
+ 1892 0008 00000000 		.4byte	.LFB36
+ 1893 000c 40000000 		.4byte	.LFE36
+ 1894 0010 00000000 		.4byte	.LFB37
+ 1895 0014 18000000 		.4byte	.LFE37
+ 1896 0018 00000000 		.4byte	.LFB38
+ 1897 001c 00010000 		.4byte	.LFE38
+ 1898 0020 00000000 		.4byte	.LFB39
+ 1899 0024 50000000 		.4byte	.LFE39
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 37
+
+
+ 1900 0028 00000000 		.4byte	.LFB40
+ 1901 002c 50000000 		.4byte	.LFE40
+ 1902 0030 00000000 		.4byte	.LFB41
+ 1903 0034 54000000 		.4byte	.LFE41
+ 1904 0038 00000000 		.4byte	.LFB42
+ 1905 003c 28000000 		.4byte	.LFE42
+ 1906 0040 00000000 		.4byte	.LFB43
+ 1907 0044 64000000 		.4byte	.LFE43
+ 1908 0048 00000000 		.4byte	0
+ 1909 004c 00000000 		.4byte	0
+ 1910              		.section	.debug_line,"",%progbits
+ 1911              	.Ldebug_line0:
+ 1912 0000 EB010000 		.section	.debug_str,"MS",%progbits,1
+ 1912      0200FE00 
+ 1912      00000201 
+ 1912      FB0E0D00 
+ 1912      01010101 
+ 1913              	.LASF23:
+ 1914 0000 62756631 		.ascii	"buf1\000"
+ 1914      00
+ 1915              	.LASF24:
+ 1916 0005 62756632 		.ascii	"buf2\000"
+ 1916      00
+ 1917              	.LASF40:
+ 1918 000a 51756164 		.ascii	"QuadDec_WriteCounter\000"
+ 1918      4465635F 
+ 1918      57726974 
+ 1918      65436F75 
+ 1918      6E746572 
+ 1919              	.LASF21:
+ 1920 001f 64656669 		.ascii	"definition_set_color\000"
+ 1920      6E697469 
+ 1920      6F6E5F73 
+ 1920      65745F63 
+ 1920      6F6C6F72 
+ 1921              	.LASF35:
+ 1922 0034 4C43445F 		.ascii	"LCD_WriteControl\000"
+ 1922      57726974 
+ 1922      65436F6E 
+ 1922      74726F6C 
+ 1922      00
+ 1923              	.LASF39:
+ 1924 0045 51756164 		.ascii	"QuadDec_Start\000"
+ 1924      4465635F 
+ 1924      53746172 
+ 1924      7400
+ 1925              	.LASF18:
+ 1926 0053 6C63645F 		.ascii	"lcd_set_red\000"
+ 1926      7365745F 
+ 1926      72656400 
+ 1927              	.LASF31:
+ 1928 005f 74696D65 		.ascii	"time_yellow\000"
+ 1928      5F79656C 
+ 1928      6C6F7700 
+ 1929              	.LASF9:
+ 1930 006b 666C6F61 		.ascii	"float\000"
+ 1930      7400
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 38
+
+
+ 1931              	.LASF34:
+ 1932 0071 4C43445F 		.ascii	"LCD_Start\000"
+ 1932      53746172 
+ 1932      7400
+ 1933              	.LASF47:
+ 1934 007b 75696E74 		.ascii	"uint8\000"
+ 1934      3800
+ 1935              	.LASF1:
+ 1936 0081 756E7369 		.ascii	"unsigned char\000"
+ 1936      676E6564 
+ 1936      20636861 
+ 1936      7200
+ 1937              	.LASF45:
+ 1938 008f 6C63645F 		.ascii	"lcd_traffic_light.c\000"
+ 1938      74726166 
+ 1938      6669635F 
+ 1938      6C696768 
+ 1938      742E6300 
+ 1939              	.LASF5:
+ 1940 00a3 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1940      20756E73 
+ 1940      69676E65 
+ 1940      6420696E 
+ 1940      7400
+ 1941              	.LASF15:
+ 1942 00b5 6C63645F 		.ascii	"lcd_init\000"
+ 1942      696E6974 
+ 1942      00
+ 1943              	.LASF3:
+ 1944 00be 73686F72 		.ascii	"short unsigned int\000"
+ 1944      7420756E 
+ 1944      7369676E 
+ 1944      65642069 
+ 1944      6E7400
+ 1945              	.LASF16:
+ 1946 00d1 656E635F 		.ascii	"enc_init\000"
+ 1946      696E6974 
+ 1946      00
+ 1947              	.LASF20:
+ 1948 00da 6C63645F 		.ascii	"lcd_set_yellow\000"
+ 1948      7365745F 
+ 1948      79656C6C 
+ 1948      6F7700
+ 1949              	.LASF22:
+ 1950 00e9 76616C75 		.ascii	"value_encoder\000"
+ 1950      655F656E 
+ 1950      636F6465 
+ 1950      7200
+ 1951              	.LASF26:
+ 1952 00f7 73756D5F 		.ascii	"sum_time2\000"
+ 1952      74696D65 
+ 1952      3200
+ 1953              	.LASF10:
+ 1954 0101 646F7562 		.ascii	"double\000"
+ 1954      6C6500
+ 1955              	.LASF14:
+ 1956 0108 456E635F 		.ascii	"Enc_Sw_Handler\000"
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 39
+
+
+ 1956      53775F48 
+ 1956      616E646C 
+ 1956      657200
+ 1957              	.LASF46:
+ 1958 0117 443A5C50 		.ascii	"D:\\Programming\\PSoC\\Lab\\Lab3.cydsn\000"
+ 1958      726F6772 
+ 1958      616D6D69 
+ 1958      6E675C50 
+ 1958      536F435C 
+ 1959              	.LASF37:
+ 1960 013a 4C43445F 		.ascii	"LCD_PrintString\000"
+ 1960      5072696E 
+ 1960      74537472 
+ 1960      696E6700 
+ 1961              	.LASF8:
+ 1962 014a 756E7369 		.ascii	"unsigned int\000"
+ 1962      676E6564 
+ 1962      20696E74 
+ 1962      00
+ 1963              	.LASF7:
+ 1964 0157 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1964      206C6F6E 
+ 1964      6720756E 
+ 1964      7369676E 
+ 1964      65642069 
+ 1965              	.LASF17:
+ 1966 016e 6C63645F 		.ascii	"lcd_time_color\000"
+ 1966      74696D65 
+ 1966      5F636F6C 
+ 1966      6F7200
+ 1967              	.LASF36:
+ 1968 017d 4C43445F 		.ascii	"LCD_Position\000"
+ 1968      506F7369 
+ 1968      74696F6E 
+ 1968      00
+ 1969              	.LASF41:
+ 1970 018a 456E635F 		.ascii	"Enc_Sw_Int_StartEx\000"
+ 1970      53775F49 
+ 1970      6E745F53 
+ 1970      74617274 
+ 1970      457800
+ 1971              	.LASF27:
+ 1972 019d 74696D65 		.ascii	"time\000"
+ 1972      00
+ 1973              	.LASF44:
+ 1974 01a2 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1974      43313120 
+ 1974      352E342E 
+ 1974      31203230 
+ 1974      31363036 
+ 1975 01d5 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1975      20726576 
+ 1975      6973696F 
+ 1975      6E203233 
+ 1975      37373135 
+ 1976 0208 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1976      66756E63 
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 40
+
+
+ 1976      74696F6E 
+ 1976      2D736563 
+ 1976      74696F6E 
+ 1977              	.LASF29:
+ 1978 0230 73746174 		.ascii	"status_set_color\000"
+ 1978      75735F73 
+ 1978      65745F63 
+ 1978      6F6C6F72 
+ 1978      00
+ 1979              	.LASF13:
+ 1980 0241 73697A65 		.ascii	"sizetype\000"
+ 1980      74797065 
+ 1980      00
+ 1981              	.LASF6:
+ 1982 024a 6C6F6E67 		.ascii	"long long int\000"
+ 1982      206C6F6E 
+ 1982      6720696E 
+ 1982      7400
+ 1983              	.LASF11:
+ 1984 0258 63686172 		.ascii	"char\000"
+ 1984      00
+ 1985              	.LASF2:
+ 1986 025d 73686F72 		.ascii	"short int\000"
+ 1986      7420696E 
+ 1986      7400
+ 1987              	.LASF33:
+ 1988 0267 456E635F 		.ascii	"Enc_Sw_ClearInterrupt\000"
+ 1988      53775F43 
+ 1988      6C656172 
+ 1988      496E7465 
+ 1988      72727570 
+ 1989              	.LASF48:
+ 1990 027d 7365745F 		.ascii	"set_time\000"
+ 1990      74696D65 
+ 1990      00
+ 1991              	.LASF19:
+ 1992 0286 6C63645F 		.ascii	"lcd_set_green\000"
+ 1992      7365745F 
+ 1992      67726565 
+ 1992      6E00
+ 1993              	.LASF43:
+ 1994 0294 51756164 		.ascii	"QuadDec_ReadCounter\000"
+ 1994      4465635F 
+ 1994      52656164 
+ 1994      436F756E 
+ 1994      74657200 
+ 1995              	.LASF4:
+ 1996 02a8 6C6F6E67 		.ascii	"long int\000"
+ 1996      20696E74 
+ 1996      00
+ 1997              	.LASF25:
+ 1998 02b1 73756D5F 		.ascii	"sum_time1\000"
+ 1998      74696D65 
+ 1998      3100
+ 1999              	.LASF12:
+ 2000 02bb 6C6F6E67 		.ascii	"long double\000"
+ 2000      20646F75 
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccpY695C.s 			page 41
+
+
+ 2000      626C6500 
+ 2001              	.LASF0:
+ 2002 02c7 7369676E 		.ascii	"signed char\000"
+ 2002      65642063 
+ 2002      68617200 
+ 2003              	.LASF30:
+ 2004 02d3 74696D65 		.ascii	"time_red\000"
+ 2004      5F726564 
+ 2004      00
+ 2005              	.LASF28:
+ 2006 02dc 6E756D62 		.ascii	"number_algorithm\000"
+ 2006      65725F61 
+ 2006      6C676F72 
+ 2006      6974686D 
+ 2006      00
+ 2007              	.LASF42:
+ 2008 02ed 73707269 		.ascii	"sprintf\000"
+ 2008      6E746600 
+ 2009              	.LASF38:
+ 2010 02f5 43794465 		.ascii	"CyDelay\000"
+ 2010      6C617900 
+ 2011              	.LASF32:
+ 2012 02fd 74696D65 		.ascii	"time_green\000"
+ 2012      5F677265 
+ 2012      656E00
+ 2013              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

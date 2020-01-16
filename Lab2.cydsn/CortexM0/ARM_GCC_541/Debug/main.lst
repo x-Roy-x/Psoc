@@ -1,0 +1,1450 @@
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Timer_Handler,"ax",%progbits
+  20              		.align	2
+  21              		.global	Timer_Handler
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	Timer_Handler, %function
+  25              	Timer_Handler:
+  26              	.LFB34:
+  27              		.file 1 "main.c"
+   1:main.c        **** #include "project.h"
+   2:main.c        **** 
+   3:main.c        **** void algorithm_1(void);
+   4:main.c        **** void algorithm_2(void);
+   5:main.c        **** 
+   6:main.c        **** volatile int time = 0;
+   7:main.c        **** volatile int number_algorithm = 1;
+   8:main.c        **** 
+   9:main.c        **** CY_ISR(Timer_Handler){
+  28              		.loc 1 9 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  10:main.c        ****     time++;
+  36              		.loc 1 10 0
+  37 0002 044A     		ldr	r2, .L2
+  38 0004 1368     		ldr	r3, [r2]
+  39 0006 0133     		adds	r3, r3, #1
+  40 0008 1360     		str	r3, [r2]
+  11:main.c        ****     Timer_ClearInterrupt(Timer_INTR_MASK_TC);
+  41              		.loc 1 11 0
+  42 000a 0120     		movs	r0, #1
+  43 000c FFF7FEFF 		bl	Timer_ClearInterrupt
+  44              	.LVL0:
+  12:main.c        **** }
+  45              		.loc 1 12 0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 2
+
+
+  46              		@ sp needed
+  47 0010 10BD     		pop	{r4, pc}
+  48              	.L3:
+  49 0012 C046     		.align	2
+  50              	.L2:
+  51 0014 00000000 		.word	.LANCHOR0
+  52              		.cfi_endproc
+  53              	.LFE34:
+  54              		.size	Timer_Handler, .-Timer_Handler
+  55              		.section	.text.SW_Handler,"ax",%progbits
+  56              		.align	2
+  57              		.global	SW_Handler
+  58              		.code	16
+  59              		.thumb_func
+  60              		.type	SW_Handler, %function
+  61              	SW_Handler:
+  62              	.LFB35:
+  13:main.c        **** 
+  14:main.c        **** CY_ISR(SW_Handler){
+  63              		.loc 1 14 0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67 0000 10B5     		push	{r4, lr}
+  68              		.cfi_def_cfa_offset 8
+  69              		.cfi_offset 4, -8
+  70              		.cfi_offset 14, -4
+  15:main.c        ****     number_algorithm = !number_algorithm;
+  71              		.loc 1 15 0
+  72 0002 044A     		ldr	r2, .L5
+  73 0004 1368     		ldr	r3, [r2]
+  74 0006 5942     		rsbs	r1, r3, #0
+  75 0008 4B41     		adcs	r3, r3, r1
+  76 000a 1360     		str	r3, [r2]
+  16:main.c        ****     SW_ClearInterrupt();
+  77              		.loc 1 16 0
+  78 000c FFF7FEFF 		bl	SW_ClearInterrupt
+  79              	.LVL1:
+  17:main.c        **** }
+  80              		.loc 1 17 0
+  81              		@ sp needed
+  82 0010 10BD     		pop	{r4, pc}
+  83              	.L6:
+  84 0012 C046     		.align	2
+  85              	.L5:
+  86 0014 00000000 		.word	.LANCHOR1
+  87              		.cfi_endproc
+  88              	.LFE35:
+  89              		.size	SW_Handler, .-SW_Handler
+  90              		.section	.text.algorithm_1,"ax",%progbits
+  91              		.align	2
+  92              		.global	algorithm_1
+  93              		.code	16
+  94              		.thumb_func
+  95              		.type	algorithm_1, %function
+  96              	algorithm_1:
+  97              	.LFB37:
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 3
+
+
+  18:main.c        **** 
+  19:main.c        **** int main(void)
+  20:main.c        **** {
+  21:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  22:main.c        ****     
+  23:main.c        ****     Timer_Start();
+  24:main.c        ****     Timer_Int_StartEx(Timer_Handler);
+  25:main.c        ****     SW_Int_StartEx(SW_Handler);
+  26:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  27:main.c        **** 
+  28:main.c        ****     for(;;)
+  29:main.c        ****     {   
+  30:main.c        ****         if(20 == time){
+  31:main.c        ****             time = 0;
+  32:main.c        ****         }else{
+  33:main.c        ****             if(1 == number_algorithm){
+  34:main.c        ****                 algorithm_1();
+  35:main.c        ****             }else if(0 == number_algorithm){
+  36:main.c        ****                 algorithm_2();
+  37:main.c        ****             }    
+  38:main.c        ****         }        
+  39:main.c        ****     }
+  40:main.c        **** }
+  41:main.c        **** 
+  42:main.c        **** void algorithm_1(){
+  98              		.loc 1 42 0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102 0000 10B5     		push	{r4, lr}
+ 103              		.cfi_def_cfa_offset 8
+ 104              		.cfi_offset 4, -8
+ 105              		.cfi_offset 14, -4
+  43:main.c        ****     Pin_Green_Write(0);
+ 106              		.loc 1 43 0
+ 107 0002 0020     		movs	r0, #0
+ 108 0004 FFF7FEFF 		bl	Pin_Green_Write
+ 109              	.LVL2:
+  44:main.c        ****     Pin_Yellow_Write(0);
+ 110              		.loc 1 44 0
+ 111 0008 0020     		movs	r0, #0
+ 112 000a FFF7FEFF 		bl	Pin_Yellow_Write
+ 113              	.LVL3:
+  45:main.c        ****     Pin_Red_Write(0);
+ 114              		.loc 1 45 0
+ 115 000e 0020     		movs	r0, #0
+ 116 0010 FFF7FEFF 		bl	Pin_Red_Write
+ 117              	.LVL4:
+  46:main.c        ****     if(6 == time || 8 == time){
+ 118              		.loc 1 46 0
+ 119 0014 1C4B     		ldr	r3, .L15
+ 120 0016 1B68     		ldr	r3, [r3]
+ 121 0018 062B     		cmp	r3, #6
+ 122 001a 03D0     		beq	.L8
+ 123              		.loc 1 46 0 is_stmt 0 discriminator 1
+ 124 001c 1A4B     		ldr	r3, .L15
+ 125 001e 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 4
+
+
+ 126 0020 082B     		cmp	r3, #8
+ 127 0022 06D1     		bne	.L9
+ 128              	.L8:
+  47:main.c        ****         Pin_Yellow_Write(1);
+ 129              		.loc 1 47 0 is_stmt 1
+ 130 0024 0120     		movs	r0, #1
+ 131 0026 FFF7FEFF 		bl	Pin_Yellow_Write
+ 132              	.LVL5:
+  48:main.c        ****         Pin_Red_Write(1);
+ 133              		.loc 1 48 0
+ 134 002a 0120     		movs	r0, #1
+ 135 002c FFF7FEFF 		bl	Pin_Red_Write
+ 136              	.LVL6:
+ 137 0030 28E0     		b	.L7
+ 138              	.L9:
+  49:main.c        ****     }else if(time < 8) {
+ 139              		.loc 1 49 0
+ 140 0032 154B     		ldr	r3, .L15
+ 141 0034 1B68     		ldr	r3, [r3]
+ 142 0036 072B     		cmp	r3, #7
+ 143 0038 03DC     		bgt	.L11
+  50:main.c        ****         Pin_Red_Write(1);
+ 144              		.loc 1 50 0
+ 145 003a 0120     		movs	r0, #1
+ 146 003c FFF7FEFF 		bl	Pin_Red_Write
+ 147              	.LVL7:
+ 148 0040 20E0     		b	.L7
+ 149              	.L11:
+  51:main.c        ****     }else if(8 < time && time < 16) {
+ 150              		.loc 1 51 0
+ 151 0042 114B     		ldr	r3, .L15
+ 152 0044 1B68     		ldr	r3, [r3]
+ 153 0046 082B     		cmp	r3, #8
+ 154 0048 07DD     		ble	.L12
+ 155              		.loc 1 51 0 is_stmt 0 discriminator 1
+ 156 004a 0F4B     		ldr	r3, .L15
+ 157 004c 1B68     		ldr	r3, [r3]
+ 158 004e 0F2B     		cmp	r3, #15
+ 159 0050 03DC     		bgt	.L12
+  52:main.c        ****         Pin_Green_Write(1);
+ 160              		.loc 1 52 0 is_stmt 1
+ 161 0052 0120     		movs	r0, #1
+ 162 0054 FFF7FEFF 		bl	Pin_Green_Write
+ 163              	.LVL8:
+ 164 0058 14E0     		b	.L7
+ 165              	.L12:
+  53:main.c        ****     }else if(16 == time || 18 == time) {
+ 166              		.loc 1 53 0
+ 167 005a 0B4B     		ldr	r3, .L15
+ 168 005c 1B68     		ldr	r3, [r3]
+ 169 005e 102B     		cmp	r3, #16
+ 170 0060 03D0     		beq	.L13
+ 171              		.loc 1 53 0 is_stmt 0 discriminator 1
+ 172 0062 094B     		ldr	r3, .L15
+ 173 0064 1B68     		ldr	r3, [r3]
+ 174 0066 122B     		cmp	r3, #18
+ 175 0068 03D1     		bne	.L14
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 5
+
+
+ 176              	.L13:
+  54:main.c        ****         Pin_Yellow_Write(1);
+ 177              		.loc 1 54 0 is_stmt 1
+ 178 006a 0120     		movs	r0, #1
+ 179 006c FFF7FEFF 		bl	Pin_Yellow_Write
+ 180              	.LVL9:
+ 181 0070 08E0     		b	.L7
+ 182              	.L14:
+  55:main.c        ****     }else{
+  56:main.c        ****         Pin_Green_Write(0);
+ 183              		.loc 1 56 0
+ 184 0072 0020     		movs	r0, #0
+ 185 0074 FFF7FEFF 		bl	Pin_Green_Write
+ 186              	.LVL10:
+  57:main.c        ****         Pin_Yellow_Write(0);
+ 187              		.loc 1 57 0
+ 188 0078 0020     		movs	r0, #0
+ 189 007a FFF7FEFF 		bl	Pin_Yellow_Write
+ 190              	.LVL11:
+  58:main.c        ****         Pin_Red_Write(0);
+ 191              		.loc 1 58 0
+ 192 007e 0020     		movs	r0, #0
+ 193 0080 FFF7FEFF 		bl	Pin_Red_Write
+ 194              	.LVL12:
+ 195              	.L7:
+  59:main.c        ****     }
+  60:main.c        **** }
+ 196              		.loc 1 60 0
+ 197              		@ sp needed
+ 198 0084 10BD     		pop	{r4, pc}
+ 199              	.L16:
+ 200 0086 C046     		.align	2
+ 201              	.L15:
+ 202 0088 00000000 		.word	.LANCHOR0
+ 203              		.cfi_endproc
+ 204              	.LFE37:
+ 205              		.size	algorithm_1, .-algorithm_1
+ 206              		.section	.text.algorithm_2,"ax",%progbits
+ 207              		.align	2
+ 208              		.global	algorithm_2
+ 209              		.code	16
+ 210              		.thumb_func
+ 211              		.type	algorithm_2, %function
+ 212              	algorithm_2:
+ 213              	.LFB38:
+  61:main.c        **** 
+  62:main.c        **** void algorithm_2(){
+ 214              		.loc 1 62 0
+ 215              		.cfi_startproc
+ 216              		@ args = 0, pretend = 0, frame = 0
+ 217              		@ frame_needed = 0, uses_anonymous_args = 0
+ 218 0000 10B5     		push	{r4, lr}
+ 219              		.cfi_def_cfa_offset 8
+ 220              		.cfi_offset 4, -8
+ 221              		.cfi_offset 14, -4
+  63:main.c        ****     Pin_Green_Write(0);
+ 222              		.loc 1 63 0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 6
+
+
+ 223 0002 0020     		movs	r0, #0
+ 224 0004 FFF7FEFF 		bl	Pin_Green_Write
+ 225              	.LVL13:
+  64:main.c        ****     Pin_Yellow_Write(0);
+ 226              		.loc 1 64 0
+ 227 0008 0020     		movs	r0, #0
+ 228 000a FFF7FEFF 		bl	Pin_Yellow_Write
+ 229              	.LVL14:
+  65:main.c        ****     Pin_Red_Write(0);
+ 230              		.loc 1 65 0
+ 231 000e 0020     		movs	r0, #0
+ 232 0010 FFF7FEFF 		bl	Pin_Red_Write
+ 233              	.LVL15:
+  66:main.c        ****     if(6 == time || 8 == time){
+ 234              		.loc 1 66 0
+ 235 0014 1C4B     		ldr	r3, .L25
+ 236 0016 1B68     		ldr	r3, [r3]
+ 237 0018 062B     		cmp	r3, #6
+ 238 001a 03D0     		beq	.L18
+ 239              		.loc 1 66 0 is_stmt 0 discriminator 1
+ 240 001c 1A4B     		ldr	r3, .L25
+ 241 001e 1B68     		ldr	r3, [r3]
+ 242 0020 082B     		cmp	r3, #8
+ 243 0022 06D1     		bne	.L19
+ 244              	.L18:
+  67:main.c        ****         Pin_Yellow_Write(1);
+ 245              		.loc 1 67 0 is_stmt 1
+ 246 0024 0120     		movs	r0, #1
+ 247 0026 FFF7FEFF 		bl	Pin_Yellow_Write
+ 248              	.LVL16:
+  68:main.c        ****         Pin_Green_Write(1);
+ 249              		.loc 1 68 0
+ 250 002a 0120     		movs	r0, #1
+ 251 002c FFF7FEFF 		bl	Pin_Green_Write
+ 252              	.LVL17:
+ 253 0030 28E0     		b	.L17
+ 254              	.L19:
+  69:main.c        ****     }else if(time < 8) {
+ 255              		.loc 1 69 0
+ 256 0032 154B     		ldr	r3, .L25
+ 257 0034 1B68     		ldr	r3, [r3]
+ 258 0036 072B     		cmp	r3, #7
+ 259 0038 03DC     		bgt	.L21
+  70:main.c        ****         Pin_Green_Write(1);
+ 260              		.loc 1 70 0
+ 261 003a 0120     		movs	r0, #1
+ 262 003c FFF7FEFF 		bl	Pin_Green_Write
+ 263              	.LVL18:
+ 264 0040 20E0     		b	.L17
+ 265              	.L21:
+  71:main.c        ****     }else if(8 < time && time < 16) {
+ 266              		.loc 1 71 0
+ 267 0042 114B     		ldr	r3, .L25
+ 268 0044 1B68     		ldr	r3, [r3]
+ 269 0046 082B     		cmp	r3, #8
+ 270 0048 07DD     		ble	.L22
+ 271              		.loc 1 71 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 7
+
+
+ 272 004a 0F4B     		ldr	r3, .L25
+ 273 004c 1B68     		ldr	r3, [r3]
+ 274 004e 0F2B     		cmp	r3, #15
+ 275 0050 03DC     		bgt	.L22
+  72:main.c        ****         Pin_Red_Write(1);
+ 276              		.loc 1 72 0 is_stmt 1
+ 277 0052 0120     		movs	r0, #1
+ 278 0054 FFF7FEFF 		bl	Pin_Red_Write
+ 279              	.LVL19:
+ 280 0058 14E0     		b	.L17
+ 281              	.L22:
+  73:main.c        ****     }else if(16 == time || 18 == time) {
+ 282              		.loc 1 73 0
+ 283 005a 0B4B     		ldr	r3, .L25
+ 284 005c 1B68     		ldr	r3, [r3]
+ 285 005e 102B     		cmp	r3, #16
+ 286 0060 03D0     		beq	.L23
+ 287              		.loc 1 73 0 is_stmt 0 discriminator 1
+ 288 0062 094B     		ldr	r3, .L25
+ 289 0064 1B68     		ldr	r3, [r3]
+ 290 0066 122B     		cmp	r3, #18
+ 291 0068 03D1     		bne	.L24
+ 292              	.L23:
+  74:main.c        ****         Pin_Yellow_Write(1);
+ 293              		.loc 1 74 0 is_stmt 1
+ 294 006a 0120     		movs	r0, #1
+ 295 006c FFF7FEFF 		bl	Pin_Yellow_Write
+ 296              	.LVL20:
+ 297 0070 08E0     		b	.L17
+ 298              	.L24:
+  75:main.c        ****     }else{
+  76:main.c        ****         Pin_Green_Write(0);
+ 299              		.loc 1 76 0
+ 300 0072 0020     		movs	r0, #0
+ 301 0074 FFF7FEFF 		bl	Pin_Green_Write
+ 302              	.LVL21:
+  77:main.c        ****         Pin_Yellow_Write(0);
+ 303              		.loc 1 77 0
+ 304 0078 0020     		movs	r0, #0
+ 305 007a FFF7FEFF 		bl	Pin_Yellow_Write
+ 306              	.LVL22:
+  78:main.c        ****         Pin_Red_Write(0);
+ 307              		.loc 1 78 0
+ 308 007e 0020     		movs	r0, #0
+ 309 0080 FFF7FEFF 		bl	Pin_Red_Write
+ 310              	.LVL23:
+ 311              	.L17:
+  79:main.c        ****     }
+  80:main.c        **** }...
+ 312              		.loc 1 80 0
+ 313              		@ sp needed
+ 314 0084 10BD     		pop	{r4, pc}
+ 315              	.L26:
+ 316 0086 C046     		.align	2
+ 317              	.L25:
+ 318 0088 00000000 		.word	.LANCHOR0
+ 319              		.cfi_endproc
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 8
+
+
+ 320              	.LFE38:
+ 321              		.size	algorithm_2, .-algorithm_2
+ 322              		.section	.text.main,"ax",%progbits
+ 323              		.align	2
+ 324              		.global	main
+ 325              		.code	16
+ 326              		.thumb_func
+ 327              		.type	main, %function
+ 328              	main:
+ 329              	.LFB36:
+  20:main.c        **** {
+ 330              		.loc 1 20 0
+ 331              		.cfi_startproc
+ 332              		@ Volatile: function does not return.
+ 333              		@ args = 0, pretend = 0, frame = 0
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+ 335 0000 10B5     		push	{r4, lr}
+ 336              		.cfi_def_cfa_offset 8
+ 337              		.cfi_offset 4, -8
+ 338              		.cfi_offset 14, -4
+  21:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 339              		.loc 1 21 0
+ 340              		.syntax divided
+ 341              	@ 21 "main.c" 1
+ 342 0002 62B6     		CPSIE   i
+ 343              	@ 0 "" 2
+  23:main.c        ****     Timer_Start();
+ 344              		.loc 1 23 0
+ 345              		.thumb
+ 346              		.syntax unified
+ 347 0004 FFF7FEFF 		bl	Timer_Start
+ 348              	.LVL24:
+  24:main.c        ****     Timer_Int_StartEx(Timer_Handler);
+ 349              		.loc 1 24 0
+ 350 0008 0D48     		ldr	r0, .L32
+ 351 000a FFF7FEFF 		bl	Timer_Int_StartEx
+ 352              	.LVL25:
+  25:main.c        ****     SW_Int_StartEx(SW_Handler);
+ 353              		.loc 1 25 0
+ 354 000e 0D48     		ldr	r0, .L32+4
+ 355 0010 FFF7FEFF 		bl	SW_Int_StartEx
+ 356              	.LVL26:
+ 357              	.L28:
+  30:main.c        ****         if(20 == time){
+ 358              		.loc 1 30 0
+ 359 0014 0C4B     		ldr	r3, .L32+8
+ 360 0016 1B68     		ldr	r3, [r3]
+ 361 0018 142B     		cmp	r3, #20
+ 362 001a 03D1     		bne	.L29
+  31:main.c        ****             time = 0;
+ 363              		.loc 1 31 0
+ 364 001c 0022     		movs	r2, #0
+ 365 001e 0A4B     		ldr	r3, .L32+8
+ 366 0020 1A60     		str	r2, [r3]
+ 367 0022 F7E7     		b	.L28
+ 368              	.L29:
+  33:main.c        ****             if(1 == number_algorithm){
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 9
+
+
+ 369              		.loc 1 33 0
+ 370 0024 094B     		ldr	r3, .L32+12
+ 371 0026 1B68     		ldr	r3, [r3]
+ 372 0028 012B     		cmp	r3, #1
+ 373 002a 02D1     		bne	.L31
+  34:main.c        ****                 algorithm_1();
+ 374              		.loc 1 34 0
+ 375 002c FFF7FEFF 		bl	algorithm_1
+ 376              	.LVL27:
+ 377 0030 F0E7     		b	.L28
+ 378              	.L31:
+  35:main.c        ****             }else if(0 == number_algorithm){
+ 379              		.loc 1 35 0
+ 380 0032 064B     		ldr	r3, .L32+12
+ 381 0034 1B68     		ldr	r3, [r3]
+ 382 0036 002B     		cmp	r3, #0
+ 383 0038 ECD1     		bne	.L28
+  36:main.c        ****                 algorithm_2();
+ 384              		.loc 1 36 0
+ 385 003a FFF7FEFF 		bl	algorithm_2
+ 386              	.LVL28:
+ 387 003e E9E7     		b	.L28
+ 388              	.L33:
+ 389              		.align	2
+ 390              	.L32:
+ 391 0040 00000000 		.word	Timer_Handler
+ 392 0044 00000000 		.word	SW_Handler
+ 393 0048 00000000 		.word	.LANCHOR0
+ 394 004c 00000000 		.word	.LANCHOR1
+ 395              		.cfi_endproc
+ 396              	.LFE36:
+ 397              		.size	main, .-main
+ 398              		.global	number_algorithm
+ 399              		.global	time
+ 400              		.data
+ 401              		.align	2
+ 402              		.set	.LANCHOR1,. + 0
+ 403              		.type	number_algorithm, %object
+ 404              		.size	number_algorithm, 4
+ 405              	number_algorithm:
+ 406 0000 01000000 		.word	1
+ 407              		.bss
+ 408              		.align	2
+ 409              		.set	.LANCHOR0,. + 0
+ 410              		.type	time, %object
+ 411              		.size	time, 4
+ 412              	time:
+ 413 0000 00000000 		.space	4
+ 414              		.text
+ 415              	.Letext0:
+ 416              		.file 2 "Generated_Source\\PSoC4/Timer.h"
+ 417              		.file 3 "Generated_Source\\PSoC4/SW.h"
+ 418              		.file 4 "Generated_Source\\PSoC4/Pin_Green.h"
+ 419              		.file 5 "Generated_Source\\PSoC4/Pin_Yellow.h"
+ 420              		.file 6 "Generated_Source\\PSoC4/Pin_Red.h"
+ 421              		.file 7 "Generated_Source\\PSoC4/Timer_Int.h"
+ 422              		.file 8 "Generated_Source\\PSoC4/SW_Int.h"
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 10
+
+
+ 423              		.file 9 "Generated_Source\\PSoC4/cytypes.h"
+ 424              		.section	.debug_info,"",%progbits
+ 425              	.Ldebug_info0:
+ 426 0000 85030000 		.4byte	0x385
+ 427 0004 0400     		.2byte	0x4
+ 428 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 429 000a 04       		.byte	0x4
+ 430 000b 01       		.uleb128 0x1
+ 431 000c 4C010000 		.4byte	.LASF28
+ 432 0010 0C       		.byte	0xc
+ 433 0011 F1010000 		.4byte	.LASF29
+ 434 0015 CA000000 		.4byte	.LASF30
+ 435 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 436 001d 00000000 		.4byte	0
+ 437 0021 00000000 		.4byte	.Ldebug_line0
+ 438 0025 02       		.uleb128 0x2
+ 439 0026 01       		.byte	0x1
+ 440 0027 06       		.byte	0x6
+ 441 0028 1C020000 		.4byte	.LASF0
+ 442 002c 02       		.uleb128 0x2
+ 443 002d 01       		.byte	0x1
+ 444 002e 08       		.byte	0x8
+ 445 002f AA000000 		.4byte	.LASF1
+ 446 0033 02       		.uleb128 0x2
+ 447 0034 02       		.byte	0x2
+ 448 0035 05       		.byte	0x5
+ 449 0036 FD010000 		.4byte	.LASF2
+ 450 003a 02       		.uleb128 0x2
+ 451 003b 02       		.byte	0x2
+ 452 003c 07       		.byte	0x7
+ 453 003d 82000000 		.4byte	.LASF3
+ 454 0041 02       		.uleb128 0x2
+ 455 0042 04       		.byte	0x4
+ 456 0043 05       		.byte	0x5
+ 457 0044 07020000 		.4byte	.LASF4
+ 458 0048 02       		.uleb128 0x2
+ 459 0049 04       		.byte	0x4
+ 460 004a 07       		.byte	0x7
+ 461 004b 70000000 		.4byte	.LASF5
+ 462 004f 02       		.uleb128 0x2
+ 463 0050 08       		.byte	0x8
+ 464 0051 05       		.byte	0x5
+ 465 0052 E3010000 		.4byte	.LASF6
+ 466 0056 02       		.uleb128 0x2
+ 467 0057 08       		.byte	0x8
+ 468 0058 07       		.byte	0x7
+ 469 0059 12010000 		.4byte	.LASF7
+ 470 005d 03       		.uleb128 0x3
+ 471 005e 04       		.byte	0x4
+ 472 005f 05       		.byte	0x5
+ 473 0060 696E7400 		.ascii	"int\000"
+ 474 0064 02       		.uleb128 0x2
+ 475 0065 04       		.byte	0x4
+ 476 0066 07       		.byte	0x7
+ 477 0067 05010000 		.4byte	.LASF8
+ 478 006b 04       		.uleb128 0x4
+ 479 006c ED000000 		.4byte	.LASF31
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 11
+
+
+ 480 0070 09       		.byte	0x9
+ 481 0071 E601     		.2byte	0x1e6
+ 482 0073 48000000 		.4byte	0x48
+ 483 0077 02       		.uleb128 0x2
+ 484 0078 04       		.byte	0x4
+ 485 0079 04       		.byte	0x4
+ 486 007a 4A000000 		.4byte	.LASF9
+ 487 007e 02       		.uleb128 0x2
+ 488 007f 08       		.byte	0x8
+ 489 0080 04       		.byte	0x4
+ 490 0081 B8000000 		.4byte	.LASF10
+ 491 0085 02       		.uleb128 0x2
+ 492 0086 01       		.byte	0x1
+ 493 0087 08       		.byte	0x8
+ 494 0088 F8010000 		.4byte	.LASF11
+ 495 008c 02       		.uleb128 0x2
+ 496 008d 08       		.byte	0x8
+ 497 008e 04       		.byte	0x4
+ 498 008f 10020000 		.4byte	.LASF12
+ 499 0093 02       		.uleb128 0x2
+ 500 0094 04       		.byte	0x4
+ 501 0095 07       		.byte	0x7
+ 502 0096 DA010000 		.4byte	.LASF13
+ 503 009a 05       		.uleb128 0x5
+ 504 009b 62000000 		.4byte	.LASF14
+ 505 009f 01       		.byte	0x1
+ 506 00a0 09       		.byte	0x9
+ 507 00a1 00000000 		.4byte	.LFB34
+ 508 00a5 18000000 		.4byte	.LFE34-.LFB34
+ 509 00a9 01       		.uleb128 0x1
+ 510 00aa 9C       		.byte	0x9c
+ 511 00ab BF000000 		.4byte	0xbf
+ 512 00af 06       		.uleb128 0x6
+ 513 00b0 10000000 		.4byte	.LVL0
+ 514 00b4 2E030000 		.4byte	0x32e
+ 515 00b8 07       		.uleb128 0x7
+ 516 00b9 01       		.uleb128 0x1
+ 517 00ba 50       		.byte	0x50
+ 518 00bb 01       		.uleb128 0x1
+ 519 00bc 31       		.byte	0x31
+ 520 00bd 00       		.byte	0
+ 521 00be 00       		.byte	0
+ 522 00bf 05       		.uleb128 0x5
+ 523 00c0 BF000000 		.4byte	.LASF15
+ 524 00c4 01       		.byte	0x1
+ 525 00c5 0E       		.byte	0xe
+ 526 00c6 00000000 		.4byte	.LFB35
+ 527 00ca 18000000 		.4byte	.LFE35-.LFB35
+ 528 00ce 01       		.uleb128 0x1
+ 529 00cf 9C       		.byte	0x9c
+ 530 00d0 DE000000 		.4byte	0xde
+ 531 00d4 08       		.uleb128 0x8
+ 532 00d5 10000000 		.4byte	.LVL1
+ 533 00d9 3A030000 		.4byte	0x33a
+ 534 00dd 00       		.byte	0
+ 535 00de 05       		.uleb128 0x5
+ 536 00df 32000000 		.4byte	.LASF16
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 12
+
+
+ 537 00e3 01       		.byte	0x1
+ 538 00e4 2A       		.byte	0x2a
+ 539 00e5 00000000 		.4byte	.LFB37
+ 540 00e9 8C000000 		.4byte	.LFE37-.LFB37
+ 541 00ed 01       		.uleb128 0x1
+ 542 00ee 9C       		.byte	0x9c
+ 543 00ef C1010000 		.4byte	0x1c1
+ 544 00f3 09       		.uleb128 0x9
+ 545 00f4 08000000 		.4byte	.LVL2
+ 546 00f8 45030000 		.4byte	0x345
+ 547 00fc 06010000 		.4byte	0x106
+ 548 0100 07       		.uleb128 0x7
+ 549 0101 01       		.uleb128 0x1
+ 550 0102 50       		.byte	0x50
+ 551 0103 01       		.uleb128 0x1
+ 552 0104 30       		.byte	0x30
+ 553 0105 00       		.byte	0
+ 554 0106 09       		.uleb128 0x9
+ 555 0107 0E000000 		.4byte	.LVL3
+ 556 010b 50030000 		.4byte	0x350
+ 557 010f 19010000 		.4byte	0x119
+ 558 0113 07       		.uleb128 0x7
+ 559 0114 01       		.uleb128 0x1
+ 560 0115 50       		.byte	0x50
+ 561 0116 01       		.uleb128 0x1
+ 562 0117 30       		.byte	0x30
+ 563 0118 00       		.byte	0
+ 564 0119 09       		.uleb128 0x9
+ 565 011a 14000000 		.4byte	.LVL4
+ 566 011e 5B030000 		.4byte	0x35b
+ 567 0122 2C010000 		.4byte	0x12c
+ 568 0126 07       		.uleb128 0x7
+ 569 0127 01       		.uleb128 0x1
+ 570 0128 50       		.byte	0x50
+ 571 0129 01       		.uleb128 0x1
+ 572 012a 30       		.byte	0x30
+ 573 012b 00       		.byte	0
+ 574 012c 09       		.uleb128 0x9
+ 575 012d 2A000000 		.4byte	.LVL5
+ 576 0131 50030000 		.4byte	0x350
+ 577 0135 3F010000 		.4byte	0x13f
+ 578 0139 07       		.uleb128 0x7
+ 579 013a 01       		.uleb128 0x1
+ 580 013b 50       		.byte	0x50
+ 581 013c 01       		.uleb128 0x1
+ 582 013d 31       		.byte	0x31
+ 583 013e 00       		.byte	0
+ 584 013f 09       		.uleb128 0x9
+ 585 0140 30000000 		.4byte	.LVL6
+ 586 0144 5B030000 		.4byte	0x35b
+ 587 0148 52010000 		.4byte	0x152
+ 588 014c 07       		.uleb128 0x7
+ 589 014d 01       		.uleb128 0x1
+ 590 014e 50       		.byte	0x50
+ 591 014f 01       		.uleb128 0x1
+ 592 0150 31       		.byte	0x31
+ 593 0151 00       		.byte	0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 13
+
+
+ 594 0152 09       		.uleb128 0x9
+ 595 0153 40000000 		.4byte	.LVL7
+ 596 0157 5B030000 		.4byte	0x35b
+ 597 015b 65010000 		.4byte	0x165
+ 598 015f 07       		.uleb128 0x7
+ 599 0160 01       		.uleb128 0x1
+ 600 0161 50       		.byte	0x50
+ 601 0162 01       		.uleb128 0x1
+ 602 0163 31       		.byte	0x31
+ 603 0164 00       		.byte	0
+ 604 0165 09       		.uleb128 0x9
+ 605 0166 58000000 		.4byte	.LVL8
+ 606 016a 45030000 		.4byte	0x345
+ 607 016e 78010000 		.4byte	0x178
+ 608 0172 07       		.uleb128 0x7
+ 609 0173 01       		.uleb128 0x1
+ 610 0174 50       		.byte	0x50
+ 611 0175 01       		.uleb128 0x1
+ 612 0176 31       		.byte	0x31
+ 613 0177 00       		.byte	0
+ 614 0178 09       		.uleb128 0x9
+ 615 0179 70000000 		.4byte	.LVL9
+ 616 017d 50030000 		.4byte	0x350
+ 617 0181 8B010000 		.4byte	0x18b
+ 618 0185 07       		.uleb128 0x7
+ 619 0186 01       		.uleb128 0x1
+ 620 0187 50       		.byte	0x50
+ 621 0188 01       		.uleb128 0x1
+ 622 0189 31       		.byte	0x31
+ 623 018a 00       		.byte	0
+ 624 018b 09       		.uleb128 0x9
+ 625 018c 78000000 		.4byte	.LVL10
+ 626 0190 45030000 		.4byte	0x345
+ 627 0194 9E010000 		.4byte	0x19e
+ 628 0198 07       		.uleb128 0x7
+ 629 0199 01       		.uleb128 0x1
+ 630 019a 50       		.byte	0x50
+ 631 019b 01       		.uleb128 0x1
+ 632 019c 30       		.byte	0x30
+ 633 019d 00       		.byte	0
+ 634 019e 09       		.uleb128 0x9
+ 635 019f 7E000000 		.4byte	.LVL11
+ 636 01a3 50030000 		.4byte	0x350
+ 637 01a7 B1010000 		.4byte	0x1b1
+ 638 01ab 07       		.uleb128 0x7
+ 639 01ac 01       		.uleb128 0x1
+ 640 01ad 50       		.byte	0x50
+ 641 01ae 01       		.uleb128 0x1
+ 642 01af 30       		.byte	0x30
+ 643 01b0 00       		.byte	0
+ 644 01b1 06       		.uleb128 0x6
+ 645 01b2 84000000 		.4byte	.LVL12
+ 646 01b6 5B030000 		.4byte	0x35b
+ 647 01ba 07       		.uleb128 0x7
+ 648 01bb 01       		.uleb128 0x1
+ 649 01bc 50       		.byte	0x50
+ 650 01bd 01       		.uleb128 0x1
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 14
+
+
+ 651 01be 30       		.byte	0x30
+ 652 01bf 00       		.byte	0
+ 653 01c0 00       		.byte	0
+ 654 01c1 05       		.uleb128 0x5
+ 655 01c2 3E000000 		.4byte	.LASF17
+ 656 01c6 01       		.byte	0x1
+ 657 01c7 3E       		.byte	0x3e
+ 658 01c8 00000000 		.4byte	.LFB38
+ 659 01cc 8C000000 		.4byte	.LFE38-.LFB38
+ 660 01d0 01       		.uleb128 0x1
+ 661 01d1 9C       		.byte	0x9c
+ 662 01d2 A4020000 		.4byte	0x2a4
+ 663 01d6 09       		.uleb128 0x9
+ 664 01d7 08000000 		.4byte	.LVL13
+ 665 01db 45030000 		.4byte	0x345
+ 666 01df E9010000 		.4byte	0x1e9
+ 667 01e3 07       		.uleb128 0x7
+ 668 01e4 01       		.uleb128 0x1
+ 669 01e5 50       		.byte	0x50
+ 670 01e6 01       		.uleb128 0x1
+ 671 01e7 30       		.byte	0x30
+ 672 01e8 00       		.byte	0
+ 673 01e9 09       		.uleb128 0x9
+ 674 01ea 0E000000 		.4byte	.LVL14
+ 675 01ee 50030000 		.4byte	0x350
+ 676 01f2 FC010000 		.4byte	0x1fc
+ 677 01f6 07       		.uleb128 0x7
+ 678 01f7 01       		.uleb128 0x1
+ 679 01f8 50       		.byte	0x50
+ 680 01f9 01       		.uleb128 0x1
+ 681 01fa 30       		.byte	0x30
+ 682 01fb 00       		.byte	0
+ 683 01fc 09       		.uleb128 0x9
+ 684 01fd 14000000 		.4byte	.LVL15
+ 685 0201 5B030000 		.4byte	0x35b
+ 686 0205 0F020000 		.4byte	0x20f
+ 687 0209 07       		.uleb128 0x7
+ 688 020a 01       		.uleb128 0x1
+ 689 020b 50       		.byte	0x50
+ 690 020c 01       		.uleb128 0x1
+ 691 020d 30       		.byte	0x30
+ 692 020e 00       		.byte	0
+ 693 020f 09       		.uleb128 0x9
+ 694 0210 2A000000 		.4byte	.LVL16
+ 695 0214 50030000 		.4byte	0x350
+ 696 0218 22020000 		.4byte	0x222
+ 697 021c 07       		.uleb128 0x7
+ 698 021d 01       		.uleb128 0x1
+ 699 021e 50       		.byte	0x50
+ 700 021f 01       		.uleb128 0x1
+ 701 0220 31       		.byte	0x31
+ 702 0221 00       		.byte	0
+ 703 0222 09       		.uleb128 0x9
+ 704 0223 30000000 		.4byte	.LVL17
+ 705 0227 45030000 		.4byte	0x345
+ 706 022b 35020000 		.4byte	0x235
+ 707 022f 07       		.uleb128 0x7
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 15
+
+
+ 708 0230 01       		.uleb128 0x1
+ 709 0231 50       		.byte	0x50
+ 710 0232 01       		.uleb128 0x1
+ 711 0233 31       		.byte	0x31
+ 712 0234 00       		.byte	0
+ 713 0235 09       		.uleb128 0x9
+ 714 0236 40000000 		.4byte	.LVL18
+ 715 023a 45030000 		.4byte	0x345
+ 716 023e 48020000 		.4byte	0x248
+ 717 0242 07       		.uleb128 0x7
+ 718 0243 01       		.uleb128 0x1
+ 719 0244 50       		.byte	0x50
+ 720 0245 01       		.uleb128 0x1
+ 721 0246 31       		.byte	0x31
+ 722 0247 00       		.byte	0
+ 723 0248 09       		.uleb128 0x9
+ 724 0249 58000000 		.4byte	.LVL19
+ 725 024d 5B030000 		.4byte	0x35b
+ 726 0251 5B020000 		.4byte	0x25b
+ 727 0255 07       		.uleb128 0x7
+ 728 0256 01       		.uleb128 0x1
+ 729 0257 50       		.byte	0x50
+ 730 0258 01       		.uleb128 0x1
+ 731 0259 31       		.byte	0x31
+ 732 025a 00       		.byte	0
+ 733 025b 09       		.uleb128 0x9
+ 734 025c 70000000 		.4byte	.LVL20
+ 735 0260 50030000 		.4byte	0x350
+ 736 0264 6E020000 		.4byte	0x26e
+ 737 0268 07       		.uleb128 0x7
+ 738 0269 01       		.uleb128 0x1
+ 739 026a 50       		.byte	0x50
+ 740 026b 01       		.uleb128 0x1
+ 741 026c 31       		.byte	0x31
+ 742 026d 00       		.byte	0
+ 743 026e 09       		.uleb128 0x9
+ 744 026f 78000000 		.4byte	.LVL21
+ 745 0273 45030000 		.4byte	0x345
+ 746 0277 81020000 		.4byte	0x281
+ 747 027b 07       		.uleb128 0x7
+ 748 027c 01       		.uleb128 0x1
+ 749 027d 50       		.byte	0x50
+ 750 027e 01       		.uleb128 0x1
+ 751 027f 30       		.byte	0x30
+ 752 0280 00       		.byte	0
+ 753 0281 09       		.uleb128 0x9
+ 754 0282 7E000000 		.4byte	.LVL22
+ 755 0286 50030000 		.4byte	0x350
+ 756 028a 94020000 		.4byte	0x294
+ 757 028e 07       		.uleb128 0x7
+ 758 028f 01       		.uleb128 0x1
+ 759 0290 50       		.byte	0x50
+ 760 0291 01       		.uleb128 0x1
+ 761 0292 30       		.byte	0x30
+ 762 0293 00       		.byte	0
+ 763 0294 06       		.uleb128 0x6
+ 764 0295 84000000 		.4byte	.LVL23
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 16
+
+
+ 765 0299 5B030000 		.4byte	0x35b
+ 766 029d 07       		.uleb128 0x7
+ 767 029e 01       		.uleb128 0x1
+ 768 029f 50       		.byte	0x50
+ 769 02a0 01       		.uleb128 0x1
+ 770 02a1 30       		.byte	0x30
+ 771 02a2 00       		.byte	0
+ 772 02a3 00       		.byte	0
+ 773 02a4 0A       		.uleb128 0xa
+ 774 02a5 F4000000 		.4byte	.LASF32
+ 775 02a9 01       		.byte	0x1
+ 776 02aa 13       		.byte	0x13
+ 777 02ab 5D000000 		.4byte	0x5d
+ 778 02af 00000000 		.4byte	.LFB36
+ 779 02b3 50000000 		.4byte	.LFE36-.LFB36
+ 780 02b7 01       		.uleb128 0x1
+ 781 02b8 9C       		.byte	0x9c
+ 782 02b9 07030000 		.4byte	0x307
+ 783 02bd 08       		.uleb128 0x8
+ 784 02be 08000000 		.4byte	.LVL24
+ 785 02c2 66030000 		.4byte	0x366
+ 786 02c6 09       		.uleb128 0x9
+ 787 02c7 0E000000 		.4byte	.LVL25
+ 788 02cb 72030000 		.4byte	0x372
+ 789 02cf DD020000 		.4byte	0x2dd
+ 790 02d3 07       		.uleb128 0x7
+ 791 02d4 01       		.uleb128 0x1
+ 792 02d5 50       		.byte	0x50
+ 793 02d6 05       		.uleb128 0x5
+ 794 02d7 03       		.byte	0x3
+ 795 02d8 00000000 		.4byte	Timer_Handler
+ 796 02dc 00       		.byte	0
+ 797 02dd 09       		.uleb128 0x9
+ 798 02de 14000000 		.4byte	.LVL26
+ 799 02e2 7D030000 		.4byte	0x37d
+ 800 02e6 F4020000 		.4byte	0x2f4
+ 801 02ea 07       		.uleb128 0x7
+ 802 02eb 01       		.uleb128 0x1
+ 803 02ec 50       		.byte	0x50
+ 804 02ed 05       		.uleb128 0x5
+ 805 02ee 03       		.byte	0x3
+ 806 02ef 00000000 		.4byte	SW_Handler
+ 807 02f3 00       		.byte	0
+ 808 02f4 08       		.uleb128 0x8
+ 809 02f5 30000000 		.4byte	.LVL27
+ 810 02f9 DE000000 		.4byte	0xde
+ 811 02fd 08       		.uleb128 0x8
+ 812 02fe 3E000000 		.4byte	.LVL28
+ 813 0302 C1010000 		.4byte	0x1c1
+ 814 0306 00       		.byte	0
+ 815 0307 0B       		.uleb128 0xb
+ 816 0308 47010000 		.4byte	.LASF18
+ 817 030c 01       		.byte	0x1
+ 818 030d 06       		.byte	0x6
+ 819 030e 18030000 		.4byte	0x318
+ 820 0312 05       		.uleb128 0x5
+ 821 0313 03       		.byte	0x3
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 17
+
+
+ 822 0314 00000000 		.4byte	time
+ 823 0318 0C       		.uleb128 0xc
+ 824 0319 5D000000 		.4byte	0x5d
+ 825 031d 0B       		.uleb128 0xb
+ 826 031e 28020000 		.4byte	.LASF19
+ 827 0322 01       		.byte	0x1
+ 828 0323 07       		.byte	0x7
+ 829 0324 18030000 		.4byte	0x318
+ 830 0328 05       		.uleb128 0x5
+ 831 0329 03       		.byte	0x3
+ 832 032a 00000000 		.4byte	number_algorithm
+ 833 032e 0D       		.uleb128 0xd
+ 834 032f 95000000 		.4byte	.LASF20
+ 835 0333 95000000 		.4byte	.LASF20
+ 836 0337 02       		.byte	0x2
+ 837 0338 4701     		.2byte	0x147
+ 838 033a 0E       		.uleb128 0xe
+ 839 033b 50000000 		.4byte	.LASF21
+ 840 033f 50000000 		.4byte	.LASF21
+ 841 0343 03       		.byte	0x3
+ 842 0344 39       		.byte	0x39
+ 843 0345 0E       		.uleb128 0xe
+ 844 0346 37010000 		.4byte	.LASF22
+ 845 034a 37010000 		.4byte	.LASF22
+ 846 034e 04       		.byte	0x4
+ 847 034f 33       		.byte	0x33
+ 848 0350 0E       		.uleb128 0xe
+ 849 0351 21000000 		.4byte	.LASF23
+ 850 0355 21000000 		.4byte	.LASF23
+ 851 0359 05       		.byte	0x5
+ 852 035a 33       		.byte	0x33
+ 853 035b 0E       		.uleb128 0xe
+ 854 035c 29010000 		.4byte	.LASF24
+ 855 0360 29010000 		.4byte	.LASF24
+ 856 0364 06       		.byte	0x6
+ 857 0365 33       		.byte	0x33
+ 858 0366 0D       		.uleb128 0xd
+ 859 0367 F9000000 		.4byte	.LASF25
+ 860 036b F9000000 		.4byte	.LASF25
+ 861 036f 02       		.byte	0x2
+ 862 0370 3201     		.2byte	0x132
+ 863 0372 0E       		.uleb128 0xe
+ 864 0373 0F000000 		.4byte	.LASF26
+ 865 0377 0F000000 		.4byte	.LASF26
+ 866 037b 07       		.byte	0x7
+ 867 037c 18       		.byte	0x18
+ 868 037d 0E       		.uleb128 0xe
+ 869 037e 00000000 		.4byte	.LASF27
+ 870 0382 00000000 		.4byte	.LASF27
+ 871 0386 08       		.byte	0x8
+ 872 0387 18       		.byte	0x18
+ 873 0388 00       		.byte	0
+ 874              		.section	.debug_abbrev,"",%progbits
+ 875              	.Ldebug_abbrev0:
+ 876 0000 01       		.uleb128 0x1
+ 877 0001 11       		.uleb128 0x11
+ 878 0002 01       		.byte	0x1
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 18
+
+
+ 879 0003 25       		.uleb128 0x25
+ 880 0004 0E       		.uleb128 0xe
+ 881 0005 13       		.uleb128 0x13
+ 882 0006 0B       		.uleb128 0xb
+ 883 0007 03       		.uleb128 0x3
+ 884 0008 0E       		.uleb128 0xe
+ 885 0009 1B       		.uleb128 0x1b
+ 886 000a 0E       		.uleb128 0xe
+ 887 000b 55       		.uleb128 0x55
+ 888 000c 17       		.uleb128 0x17
+ 889 000d 11       		.uleb128 0x11
+ 890 000e 01       		.uleb128 0x1
+ 891 000f 10       		.uleb128 0x10
+ 892 0010 17       		.uleb128 0x17
+ 893 0011 00       		.byte	0
+ 894 0012 00       		.byte	0
+ 895 0013 02       		.uleb128 0x2
+ 896 0014 24       		.uleb128 0x24
+ 897 0015 00       		.byte	0
+ 898 0016 0B       		.uleb128 0xb
+ 899 0017 0B       		.uleb128 0xb
+ 900 0018 3E       		.uleb128 0x3e
+ 901 0019 0B       		.uleb128 0xb
+ 902 001a 03       		.uleb128 0x3
+ 903 001b 0E       		.uleb128 0xe
+ 904 001c 00       		.byte	0
+ 905 001d 00       		.byte	0
+ 906 001e 03       		.uleb128 0x3
+ 907 001f 24       		.uleb128 0x24
+ 908 0020 00       		.byte	0
+ 909 0021 0B       		.uleb128 0xb
+ 910 0022 0B       		.uleb128 0xb
+ 911 0023 3E       		.uleb128 0x3e
+ 912 0024 0B       		.uleb128 0xb
+ 913 0025 03       		.uleb128 0x3
+ 914 0026 08       		.uleb128 0x8
+ 915 0027 00       		.byte	0
+ 916 0028 00       		.byte	0
+ 917 0029 04       		.uleb128 0x4
+ 918 002a 16       		.uleb128 0x16
+ 919 002b 00       		.byte	0
+ 920 002c 03       		.uleb128 0x3
+ 921 002d 0E       		.uleb128 0xe
+ 922 002e 3A       		.uleb128 0x3a
+ 923 002f 0B       		.uleb128 0xb
+ 924 0030 3B       		.uleb128 0x3b
+ 925 0031 05       		.uleb128 0x5
+ 926 0032 49       		.uleb128 0x49
+ 927 0033 13       		.uleb128 0x13
+ 928 0034 00       		.byte	0
+ 929 0035 00       		.byte	0
+ 930 0036 05       		.uleb128 0x5
+ 931 0037 2E       		.uleb128 0x2e
+ 932 0038 01       		.byte	0x1
+ 933 0039 3F       		.uleb128 0x3f
+ 934 003a 19       		.uleb128 0x19
+ 935 003b 03       		.uleb128 0x3
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 19
+
+
+ 936 003c 0E       		.uleb128 0xe
+ 937 003d 3A       		.uleb128 0x3a
+ 938 003e 0B       		.uleb128 0xb
+ 939 003f 3B       		.uleb128 0x3b
+ 940 0040 0B       		.uleb128 0xb
+ 941 0041 27       		.uleb128 0x27
+ 942 0042 19       		.uleb128 0x19
+ 943 0043 11       		.uleb128 0x11
+ 944 0044 01       		.uleb128 0x1
+ 945 0045 12       		.uleb128 0x12
+ 946 0046 06       		.uleb128 0x6
+ 947 0047 40       		.uleb128 0x40
+ 948 0048 18       		.uleb128 0x18
+ 949 0049 9742     		.uleb128 0x2117
+ 950 004b 19       		.uleb128 0x19
+ 951 004c 01       		.uleb128 0x1
+ 952 004d 13       		.uleb128 0x13
+ 953 004e 00       		.byte	0
+ 954 004f 00       		.byte	0
+ 955 0050 06       		.uleb128 0x6
+ 956 0051 898201   		.uleb128 0x4109
+ 957 0054 01       		.byte	0x1
+ 958 0055 11       		.uleb128 0x11
+ 959 0056 01       		.uleb128 0x1
+ 960 0057 31       		.uleb128 0x31
+ 961 0058 13       		.uleb128 0x13
+ 962 0059 00       		.byte	0
+ 963 005a 00       		.byte	0
+ 964 005b 07       		.uleb128 0x7
+ 965 005c 8A8201   		.uleb128 0x410a
+ 966 005f 00       		.byte	0
+ 967 0060 02       		.uleb128 0x2
+ 968 0061 18       		.uleb128 0x18
+ 969 0062 9142     		.uleb128 0x2111
+ 970 0064 18       		.uleb128 0x18
+ 971 0065 00       		.byte	0
+ 972 0066 00       		.byte	0
+ 973 0067 08       		.uleb128 0x8
+ 974 0068 898201   		.uleb128 0x4109
+ 975 006b 00       		.byte	0
+ 976 006c 11       		.uleb128 0x11
+ 977 006d 01       		.uleb128 0x1
+ 978 006e 31       		.uleb128 0x31
+ 979 006f 13       		.uleb128 0x13
+ 980 0070 00       		.byte	0
+ 981 0071 00       		.byte	0
+ 982 0072 09       		.uleb128 0x9
+ 983 0073 898201   		.uleb128 0x4109
+ 984 0076 01       		.byte	0x1
+ 985 0077 11       		.uleb128 0x11
+ 986 0078 01       		.uleb128 0x1
+ 987 0079 31       		.uleb128 0x31
+ 988 007a 13       		.uleb128 0x13
+ 989 007b 01       		.uleb128 0x1
+ 990 007c 13       		.uleb128 0x13
+ 991 007d 00       		.byte	0
+ 992 007e 00       		.byte	0
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 20
+
+
+ 993 007f 0A       		.uleb128 0xa
+ 994 0080 2E       		.uleb128 0x2e
+ 995 0081 01       		.byte	0x1
+ 996 0082 3F       		.uleb128 0x3f
+ 997 0083 19       		.uleb128 0x19
+ 998 0084 03       		.uleb128 0x3
+ 999 0085 0E       		.uleb128 0xe
+ 1000 0086 3A       		.uleb128 0x3a
+ 1001 0087 0B       		.uleb128 0xb
+ 1002 0088 3B       		.uleb128 0x3b
+ 1003 0089 0B       		.uleb128 0xb
+ 1004 008a 27       		.uleb128 0x27
+ 1005 008b 19       		.uleb128 0x19
+ 1006 008c 49       		.uleb128 0x49
+ 1007 008d 13       		.uleb128 0x13
+ 1008 008e 8701     		.uleb128 0x87
+ 1009 0090 19       		.uleb128 0x19
+ 1010 0091 11       		.uleb128 0x11
+ 1011 0092 01       		.uleb128 0x1
+ 1012 0093 12       		.uleb128 0x12
+ 1013 0094 06       		.uleb128 0x6
+ 1014 0095 40       		.uleb128 0x40
+ 1015 0096 18       		.uleb128 0x18
+ 1016 0097 9742     		.uleb128 0x2117
+ 1017 0099 19       		.uleb128 0x19
+ 1018 009a 01       		.uleb128 0x1
+ 1019 009b 13       		.uleb128 0x13
+ 1020 009c 00       		.byte	0
+ 1021 009d 00       		.byte	0
+ 1022 009e 0B       		.uleb128 0xb
+ 1023 009f 34       		.uleb128 0x34
+ 1024 00a0 00       		.byte	0
+ 1025 00a1 03       		.uleb128 0x3
+ 1026 00a2 0E       		.uleb128 0xe
+ 1027 00a3 3A       		.uleb128 0x3a
+ 1028 00a4 0B       		.uleb128 0xb
+ 1029 00a5 3B       		.uleb128 0x3b
+ 1030 00a6 0B       		.uleb128 0xb
+ 1031 00a7 49       		.uleb128 0x49
+ 1032 00a8 13       		.uleb128 0x13
+ 1033 00a9 3F       		.uleb128 0x3f
+ 1034 00aa 19       		.uleb128 0x19
+ 1035 00ab 02       		.uleb128 0x2
+ 1036 00ac 18       		.uleb128 0x18
+ 1037 00ad 00       		.byte	0
+ 1038 00ae 00       		.byte	0
+ 1039 00af 0C       		.uleb128 0xc
+ 1040 00b0 35       		.uleb128 0x35
+ 1041 00b1 00       		.byte	0
+ 1042 00b2 49       		.uleb128 0x49
+ 1043 00b3 13       		.uleb128 0x13
+ 1044 00b4 00       		.byte	0
+ 1045 00b5 00       		.byte	0
+ 1046 00b6 0D       		.uleb128 0xd
+ 1047 00b7 2E       		.uleb128 0x2e
+ 1048 00b8 00       		.byte	0
+ 1049 00b9 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 21
+
+
+ 1050 00ba 19       		.uleb128 0x19
+ 1051 00bb 3C       		.uleb128 0x3c
+ 1052 00bc 19       		.uleb128 0x19
+ 1053 00bd 6E       		.uleb128 0x6e
+ 1054 00be 0E       		.uleb128 0xe
+ 1055 00bf 03       		.uleb128 0x3
+ 1056 00c0 0E       		.uleb128 0xe
+ 1057 00c1 3A       		.uleb128 0x3a
+ 1058 00c2 0B       		.uleb128 0xb
+ 1059 00c3 3B       		.uleb128 0x3b
+ 1060 00c4 05       		.uleb128 0x5
+ 1061 00c5 00       		.byte	0
+ 1062 00c6 00       		.byte	0
+ 1063 00c7 0E       		.uleb128 0xe
+ 1064 00c8 2E       		.uleb128 0x2e
+ 1065 00c9 00       		.byte	0
+ 1066 00ca 3F       		.uleb128 0x3f
+ 1067 00cb 19       		.uleb128 0x19
+ 1068 00cc 3C       		.uleb128 0x3c
+ 1069 00cd 19       		.uleb128 0x19
+ 1070 00ce 6E       		.uleb128 0x6e
+ 1071 00cf 0E       		.uleb128 0xe
+ 1072 00d0 03       		.uleb128 0x3
+ 1073 00d1 0E       		.uleb128 0xe
+ 1074 00d2 3A       		.uleb128 0x3a
+ 1075 00d3 0B       		.uleb128 0xb
+ 1076 00d4 3B       		.uleb128 0x3b
+ 1077 00d5 0B       		.uleb128 0xb
+ 1078 00d6 00       		.byte	0
+ 1079 00d7 00       		.byte	0
+ 1080 00d8 00       		.byte	0
+ 1081              		.section	.debug_aranges,"",%progbits
+ 1082 0000 3C000000 		.4byte	0x3c
+ 1083 0004 0200     		.2byte	0x2
+ 1084 0006 00000000 		.4byte	.Ldebug_info0
+ 1085 000a 04       		.byte	0x4
+ 1086 000b 00       		.byte	0
+ 1087 000c 0000     		.2byte	0
+ 1088 000e 0000     		.2byte	0
+ 1089 0010 00000000 		.4byte	.LFB34
+ 1090 0014 18000000 		.4byte	.LFE34-.LFB34
+ 1091 0018 00000000 		.4byte	.LFB35
+ 1092 001c 18000000 		.4byte	.LFE35-.LFB35
+ 1093 0020 00000000 		.4byte	.LFB37
+ 1094 0024 8C000000 		.4byte	.LFE37-.LFB37
+ 1095 0028 00000000 		.4byte	.LFB38
+ 1096 002c 8C000000 		.4byte	.LFE38-.LFB38
+ 1097 0030 00000000 		.4byte	.LFB36
+ 1098 0034 50000000 		.4byte	.LFE36-.LFB36
+ 1099 0038 00000000 		.4byte	0
+ 1100 003c 00000000 		.4byte	0
+ 1101              		.section	.debug_ranges,"",%progbits
+ 1102              	.Ldebug_ranges0:
+ 1103 0000 00000000 		.4byte	.LFB34
+ 1104 0004 18000000 		.4byte	.LFE34
+ 1105 0008 00000000 		.4byte	.LFB35
+ 1106 000c 18000000 		.4byte	.LFE35
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 22
+
+
+ 1107 0010 00000000 		.4byte	.LFB37
+ 1108 0014 8C000000 		.4byte	.LFE37
+ 1109 0018 00000000 		.4byte	.LFB38
+ 1110 001c 8C000000 		.4byte	.LFE38
+ 1111 0020 00000000 		.4byte	.LFB36
+ 1112 0024 50000000 		.4byte	.LFE36
+ 1113 0028 00000000 		.4byte	0
+ 1114 002c 00000000 		.4byte	0
+ 1115              		.section	.debug_line,"",%progbits
+ 1116              	.Ldebug_line0:
+ 1117 0000 44010000 		.section	.debug_str,"MS",%progbits,1
+ 1117      02009B00 
+ 1117      00000201 
+ 1117      FB0E0D00 
+ 1117      01010101 
+ 1118              	.LASF27:
+ 1119 0000 53575F49 		.ascii	"SW_Int_StartEx\000"
+ 1119      6E745F53 
+ 1119      74617274 
+ 1119      457800
+ 1120              	.LASF26:
+ 1121 000f 54696D65 		.ascii	"Timer_Int_StartEx\000"
+ 1121      725F496E 
+ 1121      745F5374 
+ 1121      61727445 
+ 1121      7800
+ 1122              	.LASF23:
+ 1123 0021 50696E5F 		.ascii	"Pin_Yellow_Write\000"
+ 1123      59656C6C 
+ 1123      6F775F57 
+ 1123      72697465 
+ 1123      00
+ 1124              	.LASF16:
+ 1125 0032 616C676F 		.ascii	"algorithm_1\000"
+ 1125      72697468 
+ 1125      6D5F3100 
+ 1126              	.LASF17:
+ 1127 003e 616C676F 		.ascii	"algorithm_2\000"
+ 1127      72697468 
+ 1127      6D5F3200 
+ 1128              	.LASF9:
+ 1129 004a 666C6F61 		.ascii	"float\000"
+ 1129      7400
+ 1130              	.LASF21:
+ 1131 0050 53575F43 		.ascii	"SW_ClearInterrupt\000"
+ 1131      6C656172 
+ 1131      496E7465 
+ 1131      72727570 
+ 1131      7400
+ 1132              	.LASF14:
+ 1133 0062 54696D65 		.ascii	"Timer_Handler\000"
+ 1133      725F4861 
+ 1133      6E646C65 
+ 1133      7200
+ 1134              	.LASF5:
+ 1135 0070 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1135      20756E73 
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 23
+
+
+ 1135      69676E65 
+ 1135      6420696E 
+ 1135      7400
+ 1136              	.LASF3:
+ 1137 0082 73686F72 		.ascii	"short unsigned int\000"
+ 1137      7420756E 
+ 1137      7369676E 
+ 1137      65642069 
+ 1137      6E7400
+ 1138              	.LASF20:
+ 1139 0095 54696D65 		.ascii	"Timer_ClearInterrupt\000"
+ 1139      725F436C 
+ 1139      65617249 
+ 1139      6E746572 
+ 1139      72757074 
+ 1140              	.LASF1:
+ 1141 00aa 756E7369 		.ascii	"unsigned char\000"
+ 1141      676E6564 
+ 1141      20636861 
+ 1141      7200
+ 1142              	.LASF10:
+ 1143 00b8 646F7562 		.ascii	"double\000"
+ 1143      6C6500
+ 1144              	.LASF15:
+ 1145 00bf 53575F48 		.ascii	"SW_Handler\000"
+ 1145      616E646C 
+ 1145      657200
+ 1146              	.LASF30:
+ 1147 00ca 443A5C50 		.ascii	"D:\\Programming\\PSoC\\Lab\\Lab2.cydsn\000"
+ 1147      726F6772 
+ 1147      616D6D69 
+ 1147      6E675C50 
+ 1147      536F435C 
+ 1148              	.LASF31:
+ 1149 00ed 75696E74 		.ascii	"uint32\000"
+ 1149      333200
+ 1150              	.LASF32:
+ 1151 00f4 6D61696E 		.ascii	"main\000"
+ 1151      00
+ 1152              	.LASF25:
+ 1153 00f9 54696D65 		.ascii	"Timer_Start\000"
+ 1153      725F5374 
+ 1153      61727400 
+ 1154              	.LASF8:
+ 1155 0105 756E7369 		.ascii	"unsigned int\000"
+ 1155      676E6564 
+ 1155      20696E74 
+ 1155      00
+ 1156              	.LASF7:
+ 1157 0112 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1157      206C6F6E 
+ 1157      6720756E 
+ 1157      7369676E 
+ 1157      65642069 
+ 1158              	.LASF24:
+ 1159 0129 50696E5F 		.ascii	"Pin_Red_Write\000"
+ 1159      5265645F 
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 24
+
+
+ 1159      57726974 
+ 1159      6500
+ 1160              	.LASF22:
+ 1161 0137 50696E5F 		.ascii	"Pin_Green_Write\000"
+ 1161      47726565 
+ 1161      6E5F5772 
+ 1161      69746500 
+ 1162              	.LASF18:
+ 1163 0147 74696D65 		.ascii	"time\000"
+ 1163      00
+ 1164              	.LASF28:
+ 1165 014c 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1165      43313120 
+ 1165      352E342E 
+ 1165      31203230 
+ 1165      31363036 
+ 1166 017f 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1166      20726576 
+ 1166      6973696F 
+ 1166      6E203233 
+ 1166      37373135 
+ 1167 01b2 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1167      66756E63 
+ 1167      74696F6E 
+ 1167      2D736563 
+ 1167      74696F6E 
+ 1168              	.LASF13:
+ 1169 01da 73697A65 		.ascii	"sizetype\000"
+ 1169      74797065 
+ 1169      00
+ 1170              	.LASF6:
+ 1171 01e3 6C6F6E67 		.ascii	"long long int\000"
+ 1171      206C6F6E 
+ 1171      6720696E 
+ 1171      7400
+ 1172              	.LASF29:
+ 1173 01f1 6D61696E 		.ascii	"main.c\000"
+ 1173      2E6300
+ 1174              	.LASF11:
+ 1175 01f8 63686172 		.ascii	"char\000"
+ 1175      00
+ 1176              	.LASF2:
+ 1177 01fd 73686F72 		.ascii	"short int\000"
+ 1177      7420696E 
+ 1177      7400
+ 1178              	.LASF4:
+ 1179 0207 6C6F6E67 		.ascii	"long int\000"
+ 1179      20696E74 
+ 1179      00
+ 1180              	.LASF12:
+ 1181 0210 6C6F6E67 		.ascii	"long double\000"
+ 1181      20646F75 
+ 1181      626C6500 
+ 1182              	.LASF0:
+ 1183 021c 7369676E 		.ascii	"signed char\000"
+ 1183      65642063 
+ 1183      68617200 
+ARM GAS  C:\Users\ADMIN\AppData\Local\Temp\ccX51MWf.s 			page 25
+
+
+ 1184              	.LASF19:
+ 1185 0228 6E756D62 		.ascii	"number_algorithm\000"
+ 1185      65725F61 
+ 1185      6C676F72 
+ 1185      6974686D 
+ 1185      00
+ 1186              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
